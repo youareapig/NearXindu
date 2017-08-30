@@ -1,18 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.mssd.zl.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/main_Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#bfbfbf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/main_exploration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/exploration_icon"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20px"
+                android:background="#f0f0" />
+
+            <TextView
+                android:id="@+id/exploration_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20px"
+                android:text="探索"
+                android:textColor="@color/mainChecked"
+                android:textSize="42px" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_discover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/discover_icon"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20px"
+                android:background="#f0f0" />
+
+            <TextView
+                android:id="@+id/discover_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20px"
+                android:text="发现"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="42px" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_experience"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/experience_icon"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20px"
+                android:background="#f0f0" />
+
+            <TextView
+                android:id="@+id/experience_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20px"
+                android:text="体验"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="42px" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/mine_icon"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20px"
+                android:background="#f0f0" />
+
+            <TextView
+                android:id="@+id/mine_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20px"
+                android:text="我的"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="42px" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

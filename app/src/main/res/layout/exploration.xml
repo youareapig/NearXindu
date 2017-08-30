@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000px">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/exploration_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/exploration_viewpager_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="60px"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:background="#c5c5">
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="350px">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="650px"
+                    android:layout_height="160px"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="67"
+                            android:background="#888888" />
+
+                        <TextView
+                            android:id="@+id/exploration_tx1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="30"
+                            android:gravity="center"
+                            android:text="来   .   吧"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="72px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="67"
+                            android:background="#888888" />
+
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <TextView
+                        android:id="@+id/exploration_tx2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="像当地人一样生活"
+                        android:textColor="@color/mainUnChecked"
+                        android:textSize="48px" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px">
+
+                <TextView
+                    android:id="@+id/exploration_tx3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:text="吃他们做的饭"
+                    android:textColor="@color/mainUnChecked"
+                    android:textSize="72px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/exploration_recy_food"
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:layout_marginLeft="40px"
+                android:layout_marginTop="60px" />
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150px">
+
+                <TextView
+                    android:id="@+id/exploration_tx4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:text="住他们盖的房子"
+                    android:textColor="@color/mainUnChecked"
+                    android:textSize="72px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/exploration_recy_house"
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:layout_marginLeft="40px"
+                android:layout_marginTop="60px" />
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150px">
+
+                <TextView
+                    android:id="@+id/exploration_tx5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:text="去他们生活的地方"
+                    android:textColor="@color/mainUnChecked"
+                    android:textSize="72px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/exploration_recy_place"
+                android:layout_width="match_parent"
+                android:layout_height="680px"
+                android:layout_marginLeft="40px"
+                android:layout_marginTop="60px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+    </ScrollView>
+</com.zhy.autolayout.AutoLinearLayout>
