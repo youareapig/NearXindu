@@ -1,6 +1,7 @@
 package com.mssd.mfragment;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,9 +25,11 @@ import com.mssd.adapter.Exploration_Recycle_Food;
 import com.mssd.adapter.Exploration_Recycle_House;
 import com.mssd.adapter.Exploration_Recycle_Place;
 import com.mssd.data.FoodBean;
+import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Exploration extends Fragment implements ViewPager.OnPageChangeListener {
+public class Exploration extends Fragment implements ViewPager.OnPageChangeListener, ObservableScrollView.ScrollViewListener {
     @BindView(R.id.exploration_viewpager)
     ViewPager explorationViewpager;
     @BindView(R.id.exploration_viewpager_group)
@@ -59,6 +63,12 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     TextView explorationTx5;
     @BindView(R.id.exploration_recy_place)
     RecyclerView explorationRecyPlace;
+    @BindView(R.id.exploration_scroll)
+    ObservableScrollView explorationScroll;
+    @BindView(R.id.exploration_titleName)
+    TextView explorationTitleName;
+    @BindView(R.id.exploration_title)
+    AutoRelativeLayout explorationTitle;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, viewpagerImage;
     private List<Integer> imgList;
@@ -66,13 +76,14 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     private ViewPagerThread thread;
     private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
     private List<FoodBean> list;
-
+    private int heigh=100;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.exploration, container, false);
         unbinder = ButterKnife.bind(this, view);
         changeFont();
+        changeTitle();
         initbean();
         banner();
         getFood();
@@ -90,6 +101,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         explorationTx3.setTypeface(typeface1);
         explorationTx4.setTypeface(typeface1);
         explorationTx5.setTypeface(typeface1);
+        explorationTitleName.setTypeface(typeface1);
     }
 
     private void banner() {
@@ -145,6 +157,8 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         super.onDestroyView();
     }
 
+
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -167,6 +181,26 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             } else {
                 viewpagerTips[i].setBackgroundResource(R.drawable.vpunchecked);
             }
+        }
+    }
+    private void changeTitle() {
+        ViewTreeObserver observer = explorationViewpager.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                explorationViewpager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                explorationScroll.setScrollViewListener(Exploration.this);
+            }
+        });
+    }
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        if (y <= heigh) {
+            float scale = (float) y / heigh ;
+            float alpha = (255 * scale);
+            explorationTitle.setVisibility(View.VISIBLE);
+            explorationTitle.setAlpha(alpha);
+            explorationTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
         }
     }
 
@@ -198,18 +232,19 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     }
 
     private void getFood() {
-        explorationRecyFood.addItemDecoration(new SpacesItemDecoration(40));
+        explorationRecyFood.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyFood.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         explorationRecyFood.setAdapter(new Exploration_Recycle_Food(list, getActivity()));
     }
 
     private void getHouse() {
-        explorationRecyHouse.addItemDecoration(new SpacesItemDecoration(40));
+        explorationRecyHouse.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyHouse.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         explorationRecyHouse.setAdapter(new Exploration_Recycle_House(list, getActivity()));
     }
-    private void getPlace(){
-        explorationRecyPlace.addItemDecoration(new SpacesItemDecoration(40));
+
+    private void getPlace() {
+        explorationRecyPlace.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyPlace.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         explorationRecyPlace.setAdapter(new Exploration_Recycle_Place(list, getActivity()));
     }

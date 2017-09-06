@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240px"
+    android:layout_height="100px"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/trip_item1_classfiy_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#a4a4a4"
+        android:textSize="48px" />
+
+
+</com.zhy.autolayout.AutoRelativeLayout>

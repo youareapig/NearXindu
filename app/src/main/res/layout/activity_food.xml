@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context="com.mssd.zl.FoodActivity">
 
     <com.mssd.utils.ObservableScrollView
-        android:id="@+id/experence_scroll"
+        android:id="@+id/food_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:orientation="vertical">
-
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="400px">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/experience_recycleTop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px" />
-            </com.zhy.autolayout.AutoRelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20px"
+                android:layout_marginTop="20px"
                 android:background="@color/bottomBG" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/food_recycleTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
@@ -59,12 +51,12 @@
                             android:background="#888888" />
 
                         <TextView
-                            android:id="@+id/experience_tx1"
+                            android:id="@+id/food_tx1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="30"
                             android:gravity="center"
-                            android:text="去   .   吧"
+                            android:text="舌尖  .  之旅"
                             android:textColor="@color/mainUnChecked"
                             android:textSize="72px" />
 
@@ -78,44 +70,73 @@
                     </com.zhy.autolayout.AutoLinearLayout>
 
                     <TextView
-                        android:id="@+id/experience_tx2"
+                        android:id="@+id/food_tx2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_horizontal|bottom"
-                        android:text="体验这里最有趣的事儿"
+                        android:text="陪你寻觅街头巷陌的地道"
                         android:textColor="@color/mainUnChecked"
                         android:textSize="48px" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
             </com.zhy.autolayout.AutoRelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/experence_recycle"
+            <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.zhy.autolayout.AutoLinearLayout>
-    </com.mssd.utils.ObservableScrollView>
+                android:layout_height="800px">
 
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/food_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="600px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/food_viewpager_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="100px"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/food_recycle2"
+                android:layout_width="wrap_content"
+                android:paddingRight="20px"
+                android:paddingLeft="20px"
+                android:layout_height="480px" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/food_recycle3"
+                android:layout_marginTop="100px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </com.mssd.utils.ObservableScrollView>
     <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/experence_title"
+        android:id="@+id/food_title"
         android:layout_width="match_parent"
         android:layout_height="160px"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/experence_titleName"
+            android:id="@+id/food_titleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="体验"
+            android:text="食"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
+            android:background="#bfbfbf"
+            android:layout_alignParentBottom="true"/>
     </com.zhy.autolayout.AutoRelativeLayout>
-</com.zhy.autolayout.AutoFrameLayout>
+</FrameLayout>

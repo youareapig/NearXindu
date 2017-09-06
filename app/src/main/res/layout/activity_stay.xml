@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mssd.zl.StayActivity">
+
+    <com.mssd.utils.ObservableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="390px">
+
+                <RelativeLayout
+                    android:id="@+id/stay_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="160px">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test" />
+                </RelativeLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="200px"
+                    android:layout_height="200px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80px"
+                    android:src="@mipmap/baise" />
+
+                <Gallery
+                    android:id="@+id/stay_gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="280px"
+                    android:layout_marginTop="160px"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </com.mssd.utils.ObservableScrollView>
+</FrameLayout>

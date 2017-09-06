@@ -4,10 +4,10 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+public class SpacesItemDecoration1 extends RecyclerView.ItemDecoration {
     private int space;
 
-    public SpacesItemDecoration(int space) {
+    public SpacesItemDecoration1(int space) {
         this.space = space;
     }
 
@@ -16,5 +16,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
         outRect.right = space;
         outRect.left=space;
+        outRect.bottom=space;
+        outRect.top=space;
     }
 }

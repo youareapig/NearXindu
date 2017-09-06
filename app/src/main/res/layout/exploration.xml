@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.mssd.utils.ObservableScrollView
+        android:id="@+id/exploration_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -126,9 +129,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/exploration_recy_food"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="600px"
-                android:layout_marginLeft="40px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="20px"
                 android:layout_marginTop="60px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -154,9 +159,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/exploration_recy_house"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="600px"
-                android:layout_marginLeft="40px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="20px"
                 android:layout_marginTop="60px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -182,12 +189,34 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/exploration_recy_place"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="680px"
-                android:layout_marginLeft="40px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="20px"
                 android:layout_marginTop="60px" />
         </com.zhy.autolayout.AutoLinearLayout>
 
+    </com.mssd.utils.ObservableScrollView>
 
-    </ScrollView>
-</com.zhy.autolayout.AutoLinearLayout>
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/exploration_title"
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/exploration_titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="探索"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#bfbfbf"
+            android:layout_alignParentBottom="true"/>
+    </com.zhy.autolayout.AutoRelativeLayout>
+</com.zhy.autolayout.AutoFrameLayout>

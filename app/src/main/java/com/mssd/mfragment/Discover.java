@@ -1,6 +1,7 @@
 package com.mssd.mfragment;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.adapter.Discover_Recycle1;
@@ -18,8 +21,10 @@ import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
 import com.mssd.data.FoodBean;
+import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Discover extends Fragment {
+public class Discover extends Fragment implements ObservableScrollView.ScrollViewListener {
     @BindView(R.id.discover_tx1)
     TextView discoverTx1;
     @BindView(R.id.discover_tx2)
@@ -45,9 +50,18 @@ public class Discover extends Fragment {
     RecyclerView discoverRecycle3;
     @BindView(R.id.discover_recycle4)
     RecyclerView discoverRecycle4;
+    @BindView(R.id.discover_Topimg)
+    ImageView discoverTopimg;
+    @BindView(R.id.discover_scroll)
+    ObservableScrollView discoverScroll;
+    @BindView(R.id.discover_titleName)
+    TextView discoverTitleName;
+    @BindView(R.id.discover_title)
+    AutoRelativeLayout discoverTitle;
     private Unbinder unbinder;
     private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
     private List<FoodBean> list;
+    private int heigh=100;
 
     @Nullable
     @Override
@@ -56,6 +70,7 @@ public class Discover extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         initbean();
         changeFont();
+        changeTitle();
         getRecycler1();
         getRecycler2();
         getRecycler3();
@@ -81,25 +96,29 @@ public class Discover extends Fragment {
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         discoverTx1.setTypeface(typeface1);
         discoverTx2.setTypeface(typeface);
+        discoverTitleName.setTypeface(typeface1);
     }
 
     private void getRecycler1() {
-        discoverRecycle1.addItemDecoration(new SpacesItemDecoration(40));
+        discoverRecycle1.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle1.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle1.setAdapter(new Discover_Recycle1(list, getActivity()));
     }
+
     private void getRecycler2() {
-        discoverRecycle2.addItemDecoration(new SpacesItemDecoration(40));
+        discoverRecycle2.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle2.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle2.setAdapter(new Discover_Recycle2(list, getActivity()));
     }
+
     private void getRecycler3() {
-        discoverRecycle3.addItemDecoration(new SpacesItemDecoration(40));
+        discoverRecycle3.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle3.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle3.setAdapter(new Discover_Recycle3(list, getActivity()));
     }
+
     private void getRecycler4() {
-        discoverRecycle4.addItemDecoration(new SpacesItemDecoration(40));
+        discoverRecycle4.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle4.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle4.setAdapter(new Discover_Recycle4(list, getActivity()));
     }
@@ -108,5 +127,27 @@ public class Discover extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void changeTitle() {
+        ViewTreeObserver observer = discoverTopimg.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                discoverTopimg.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                discoverScroll.setScrollViewListener(Discover.this);
+            }
+        });
+    }
+
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        if (y <= heigh) {
+            float scale = (float) y / heigh;
+            float alpha = (255 * scale);
+            discoverTitle.setVisibility(View.VISIBLE);
+            discoverTitle.setAlpha(alpha);
+            discoverTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+        }
     }
 }

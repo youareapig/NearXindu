@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.HistoryActivity">
+
+
+
+    <com.mssd.utils.ObservableScrollView
+        android:id="@+id/history_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px">
+
+                <ImageView
+                    android:id="@+id/history_Topimg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:layout_marginTop="100px">
+
+                <RelativeLayout
+                    android:id="@+id/historyRecycleImg1"
+                    android:layout_width="300px"
+                    android:layout_height="match_parent"
+                    android:background="#c69c36">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="20px"
+                        android:background="@drawable/kong" />
+
+                    <TextView
+                        android:id="@+id/history_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:ems="1"
+                        android:gravity="center_horizontal"
+                        android:text="聊哈文化"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+                </RelativeLayout>
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="500px"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@+id/historyRecycleImg1"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="500px">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/historyRecycle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/historyRecycleEndImg1"
+                            android:layout_width="520px"
+                            android:layout_height="500px"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@+id/historyRecycle"
+                            android:background="#3636"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher" />
+                    </RelativeLayout>
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:layout_marginTop="100px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:layout_marginTop="100px">
+
+                <RelativeLayout
+                    android:id="@+id/historyRecycleImg2"
+                    android:layout_width="300px"
+                    android:layout_height="match_parent"
+                    android:background="#77b6b3">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="20px"
+                        android:background="@drawable/kong" />
+
+                    <TextView
+                        android:id="@+id/history_text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:ems="1"
+                        android:gravity="center_horizontal"
+                        android:text="自然资源"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+                </RelativeLayout>
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="500px"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@+id/historyRecycleImg2"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="500px">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/historyRecycle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/historyRecycleEndImg2"
+                            android:layout_width="520px"
+                            android:layout_height="500px"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@+id/historyRecycle1"
+                            android:background="#3636"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher" />
+                    </RelativeLayout>
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:layout_marginTop="100px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="600px"
+                android:layout_marginBottom="100px"
+                android:layout_marginTop="100px">
+
+                <RelativeLayout
+                    android:id="@+id/historyRecycleImg3"
+                    android:layout_width="300px"
+                    android:layout_height="match_parent"
+                    android:background="#a6937c">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="20px"
+                        android:background="@drawable/kong" />
+
+                    <TextView
+                        android:id="@+id/history_text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:ems="1"
+                        android:gravity="center_horizontal"
+                        android:text="名人堂"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+                </RelativeLayout>
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="600px"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@+id/historyRecycleImg3"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="600px">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/historyRecycle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/historyRecycleEndImg3"
+                            android:layout_width="520px"
+                            android:layout_height="600px"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@+id/historyRecycle2"
+                            android:background="#3636"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher" />
+                    </RelativeLayout>
+                </HorizontalScrollView>
+            </RelativeLayout>
+        </LinearLayout>
+    </com.mssd.utils.ObservableScrollView>
+    <RelativeLayout style="@style/TitleStyle"
+        android:id="@+id/history_Title"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/historyText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="史"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#bfbfbf"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</FrameLayout>

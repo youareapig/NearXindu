@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200px"
+    android:layout_height="wrap_content">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/experience_item_img"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="6px" />
+
+    <TextView
+        android:id="@+id/experience_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/experience_item_img"
+        android:layout_marginTop="40px"
+        android:textColor="@color/mainUnChecked"
+        android:textSize="48px" />
+</com.zhy.autolayout.AutoRelativeLayout>

@@ -1,9 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="我的"/>
+    android:orientation="vertical">
+
+    <com.mssd.utils.HeadZoomScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="700px">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="700px"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.4"
+                    android:background="#000" />
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/mine_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mine_head"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/aaa" />
+
+                    <TextView
+                        android:id="@+id/mine_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mine_head"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20px"
+                        android:text="吃翔翔"
+                        android:textColor="#fff"
+                        android:textSize="52px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <TextView
+                    android:id="@+id/mine_editprofil"
+                    android:layout_width="210px"
+                    android:layout_height="60px"
+                    android:layout_below="@+id/mine_tag"
+                    android:layout_marginLeft="210px"
+                    android:layout_marginTop="130px"
+                    android:layout_toRightOf="@+id/mine_tag"
+                    android:text="编辑资料"
+                    android:textColor="#fff"
+                    android:textSize="48px" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180px">
+
+                <ImageView
+                    android:id="@+id/mine_tag1"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:id="@+id/mine_text_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:layout_toRightOf="@+id/mine_tag1"
+                    android:text="消息"
+                    android:textColor="#515151"
+                    android:textSize="52px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bottomBG" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180px">
+
+                <ImageView
+                    android:id="@+id/mine_tag2"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:id="@+id/mine_text_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:layout_toRightOf="@+id/mine_tag2"
+                    android:text="想去"
+                    android:textColor="#515151"
+                    android:textSize="52px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bottomBG" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180px">
+
+                <ImageView
+                    android:id="@+id/mine_tag3"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:id="@+id/mine_text_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40px"
+                    android:layout_toRightOf="@+id/mine_tag3"
+                    android:text="设置"
+                    android:textColor="#515151"
+                    android:textSize="52px" />
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40px"
+                    android:background="#f6f" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bottomBG" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.mssd.utils.HeadZoomScrollView>
 </com.zhy.autolayout.AutoLinearLayout>
