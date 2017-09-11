@@ -7,12 +7,15 @@
     tools:context="com.mssd.zl.StayActivity">
 
     <com.mssd.utils.ObservableScrollView
+        android:id="@+id/stay_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -42,10 +45,104 @@
                     android:id="@+id/stay_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="280px"
-                    android:layout_marginTop="160px"
-                    />
+                    android:layout_marginTop="160px" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:layout_marginTop="20px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="350px">
+
+                <LinearLayout
+                    android:layout_width="650px"
+                    android:layout_height="160px"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="67"
+                            android:background="#888888" />
+
+                        <TextView
+                            android:id="@+id/stay_tx1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="30"
+                            android:gravity="center"
+                            android:text="香城  .  之宿"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="72px" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="67"
+                            android:background="#888888" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/stay_tx2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="以梦为马随处可栖"
+                        android:textColor="@color/mainUnChecked"
+                        android:textSize="48px" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/stay_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
 
         </LinearLayout>
+
     </com.mssd.utils.ObservableScrollView>
+
+    <RelativeLayout
+        android:id="@+id/stay_Title"
+        style="@style/TitleStyle"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/stayText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="宿"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
+    </RelativeLayout>
 </FrameLayout>

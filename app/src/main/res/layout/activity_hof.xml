@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.mssd.zl.HOFActivity">
+
+
+    <com.mssd.cardslid.CardSlidePanel
+        android:id="@+id/hof_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card:bottomMarginTop="76px"
+        card:itemMarginTop="20px"
+        card:yOffsetStep="26px" />
+
+    <TextView
+        android:id="@+id/hof_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100px"
+        android:layout_marginTop="100px"
+        android:text="第一标题"
+        android:textColor="#fff"
+        android:textSize="72px" />
+
+    <TextView
+        android:id="@+id/hof_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40px"
+        android:layout_marginTop="50px"
+        android:text="第二标题"
+        android:textColor="#fff"
+        android:textSize="52px" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+        <TextView
+            android:id="@+id/hofTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="名人堂"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>
+
+

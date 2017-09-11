@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mssd.zl.TalkHistoryActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/talk_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/talk_viewpager_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="100px"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" />
+        <TextView
+            android:id="@+id/talk_tag"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#fff"
+            android:alpha="0.6"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="200px"/>
+        <TextView
+            android:id="@+id/talk_viewpage_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="52px"
+            android:textColor="#fff"
+            android:layout_above="@+id/talk_tag"
+            android:layout_marginBottom="40px"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+        <TextView
+            android:id="@+id/talk_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="聊哈文化"
+            android:textColor="#fff"
+            android:textSize="72px" />
+    </RelativeLayout>
+</RelativeLayout>

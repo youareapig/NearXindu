@@ -1,5 +1,6 @@
 package com.mssd.mfragment;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -27,7 +28,11 @@ import com.mssd.adapter.Exploration_Recycle_Place;
 import com.mssd.data.FoodBean;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.zl.FoodActivity;
+import com.mssd.zl.HistoryActivity;
 import com.mssd.zl.R;
+import com.mssd.zl.StayActivity;
+import com.mssd.zl.TripActivity;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
@@ -36,6 +41,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -69,6 +75,22 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     TextView explorationTitleName;
     @BindView(R.id.exploration_title)
     AutoRelativeLayout explorationTitle;
+    @BindView(R.id.exploration_classfiy1_name)
+    TextView explorationClassfiy1Name;
+    @BindView(R.id.exploration_classfiy1)
+    AutoRelativeLayout explorationClassfiy1;
+    @BindView(R.id.exploration_classfiy2_name)
+    TextView explorationClassfiy2Name;
+    @BindView(R.id.exploration_classfiy2)
+    AutoRelativeLayout explorationClassfiy2;
+    @BindView(R.id.exploration_classfiy3_name)
+    TextView explorationClassfiy3Name;
+    @BindView(R.id.exploration_classfiy3)
+    AutoRelativeLayout explorationClassfiy3;
+    @BindView(R.id.exploration_classfiy4_name)
+    TextView explorationClassfiy4Name;
+    @BindView(R.id.exploration_classfiy4)
+    AutoRelativeLayout explorationClassfiy4;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, viewpagerImage;
     private List<Integer> imgList;
@@ -76,7 +98,8 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     private ViewPagerThread thread;
     private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
     private List<FoodBean> list;
-    private int heigh=100;
+    private int heigh = 100;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,6 +125,10 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         explorationTx4.setTypeface(typeface1);
         explorationTx5.setTypeface(typeface1);
         explorationTitleName.setTypeface(typeface1);
+        explorationClassfiy1Name.setTypeface(typeface1);
+        explorationClassfiy2Name.setTypeface(typeface1);
+        explorationClassfiy3Name.setTypeface(typeface1);
+        explorationClassfiy4Name.setTypeface(typeface1);
     }
 
     private void banner() {
@@ -140,12 +167,17 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (explorationViewpager.getCurrentItem() == viewpagerImage.length - 1) {
-                    bannerNo = 0;
-                } else {
-                    bannerNo = explorationViewpager.getCurrentItem() + 1;
+                try {
+                    if (explorationViewpager.getCurrentItem() == viewpagerImage.length - 1) {
+                        bannerNo = 0;
+                    } else {
+                        bannerNo = explorationViewpager.getCurrentItem() + 1;
+                    }
+                    explorationViewpager.setCurrentItem(bannerNo, true);
+                }catch (Exception e){
+
                 }
-                explorationViewpager.setCurrentItem(bannerNo, true);
+
             }
         };
         thread.start();
@@ -156,7 +188,6 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         unbinder.unbind();
         super.onDestroyView();
     }
-
 
 
     @Override
@@ -183,6 +214,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             }
         }
     }
+
     private void changeTitle() {
         ViewTreeObserver observer = explorationViewpager.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -193,14 +225,38 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             }
         });
     }
+
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
         if (y <= heigh) {
-            float scale = (float) y / heigh ;
+            float scale = (float) y / heigh;
             float alpha = (255 * scale);
             explorationTitle.setVisibility(View.VISIBLE);
             explorationTitle.setAlpha(alpha);
             explorationTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+        }
+    }
+
+    @OnClick({R.id.exploration_classfiy1, R.id.exploration_classfiy2, R.id.exploration_classfiy3, R.id.exploration_classfiy4})
+    public void onViewClicked(View view) {
+        Intent intent1, intent2, intent3, intent4;
+        switch (view.getId()) {
+            case R.id.exploration_classfiy1:
+                intent1 = new Intent(getActivity(), HistoryActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.exploration_classfiy2:
+                intent2 = new Intent(getActivity(), FoodActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.exploration_classfiy3:
+                intent3 = new Intent(getActivity(), StayActivity.class);
+                startActivity(intent3);
+                break;
+            case R.id.exploration_classfiy4:
+                intent4 = new Intent(getActivity(), TripActivity.class);
+                startActivity(intent4);
+                break;
         }
     }
 

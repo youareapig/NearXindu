@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_item_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_marginTop="200px"
+        android:id="@+id/card_top_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/card_image_view"
+            android:layout_width="900px"
+            android:layout_height="1200px"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="10px"
+            android:background="#fff"
+            android:elevation="30px"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+</com.zhy.autolayout.AutoRelativeLayout>

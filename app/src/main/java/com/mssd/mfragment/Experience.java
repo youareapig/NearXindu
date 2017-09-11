@@ -107,8 +107,15 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
     }
 
     private void getRecycle() {
+        //TODO 禁止recycle滑动
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         experenceRecycle.addItemDecoration(new ListItemDecoration(80));
-        experenceRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        experenceRecycle.setLayoutManager(linearLayoutManager);
         experenceRecycle.setAdapter(new Experience_Recycle(tlist, getActivity()));
     }
 

@@ -7,7 +7,6 @@
     tools:context="com.mssd.zl.TripActivity">
 
 
-
     <com.mssd.utils.ObservableScrollView
         android:id="@+id/trip_scroll"
         android:layout_width="match_parent"
@@ -162,14 +161,22 @@
                 android:paddingRight="20px"
                 android:paddingTop="10px" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/trip_recycle_list"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/trip_recycle_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
         </LinearLayout>
     </com.mssd.utils.ObservableScrollView>
-    <RelativeLayout style="@style/TitleStyle"
+
+    <RelativeLayout
         android:id="@+id/trip_Title"
+        style="@style/TitleStyle"
         android:visibility="gone">
 
         <TextView
@@ -180,10 +187,11 @@
             android:text="行"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#bfbfbf"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
     </RelativeLayout>
 </FrameLayout>

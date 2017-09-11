@@ -34,7 +34,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- =====================极光推送配置================= -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -92,17 +98,14 @@
             android:value="1920" />
 
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".TripActivity"></activity>
-        <activity android:name=".FoodActivity">
-
-        </activity>
-        <activity android:name=".StayActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".TripActivity" />
+        <activity android:name=".FoodActivity" />
+        <activity android:name=".StayActivity" />
+        <activity android:name=".TalkHistoryActivity" />
+        <activity android:name=".HOFActivity" />
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".GoodsActivity" />
+        <activity android:name=".PedestrianActivity"></activity>
     </application>
 
 </manifest>

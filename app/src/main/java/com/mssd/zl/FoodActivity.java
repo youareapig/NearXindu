@@ -15,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mssd.adapter.BannerAdapter;
@@ -48,7 +49,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     @BindView(R.id.food_viewpager)
     ViewPager foodViewpager;
     @BindView(R.id.food_viewpager_group)
-    AutoLinearLayout foodViewpagerGroup;
+    LinearLayout foodViewpagerGroup;
     @BindView(R.id.food_recycle2)
     RecyclerView foodRecycle2;
     @BindView(R.id.food_recycle3)
@@ -58,7 +59,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     @BindView(R.id.food_titleName)
     TextView foodTitleName;
     @BindView(R.id.food_title)
-    AutoRelativeLayout foodTitle;
+    RelativeLayout foodTitle;
     private Unbinder unbinder;
     private List<FoodBean> list;
     private FoodBean foodBean1, foodBean2, foodBean3;
@@ -69,6 +70,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     private List<TestBean> list_2;
     private TestBean testBean1, testBean2;
     private int heigh=100;
+    private int root=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,12 +152,17 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if (foodViewpager.getCurrentItem() == viewpagerImage.length - 1) {
-                    bannerNo = 0;
-                } else {
-                    bannerNo = foodViewpager.getCurrentItem() + 1;
+                try {
+                    if (foodViewpager.getCurrentItem() == viewpagerImage.length - 1) {
+                        bannerNo = 0;
+                    } else {
+                        bannerNo = foodViewpager.getCurrentItem() + 1;
+                    }
+                    foodViewpager.setCurrentItem(bannerNo, true);
+                }catch (Exception e){
+
                 }
-                foodViewpager.setCurrentItem(bannerNo, true);
+
             }
         };
         thread.start();
@@ -177,7 +184,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         @Override
         public void run() {
             super.run();
-            while (true) {
+            while (root!=0) {
                 try {
                     sleep(3000);
                 } catch (InterruptedException e) {
@@ -195,8 +202,14 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     }
 
     private void getRecycle_3() {
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         foodRecycle3.addItemDecoration(new ListItemDecoration(80));
-        foodRecycle3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        foodRecycle3.setLayoutManager(linearLayoutManager);
         foodRecycle3.setAdapter(new Trip_Recycle3(list_2, this));
     }
 
@@ -215,6 +228,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        root=0;
     }
 
     @Override

@@ -27,17 +27,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.zhy.autolayout.AutoRelativeLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="350px">
 
-                <com.zhy.autolayout.AutoLinearLayout
+                <LinearLayout
                     android:layout_width="650px"
                     android:layout_height="160px"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <com.zhy.autolayout.AutoLinearLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -67,7 +67,7 @@
                             android:layout_weight="67"
                             android:background="#888888" />
 
-                    </com.zhy.autolayout.AutoLinearLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/food_tx2"
@@ -79,10 +79,10 @@
                         android:textColor="@color/mainUnChecked"
                         android:textSize="48px" />
 
-                </com.zhy.autolayout.AutoLinearLayout>
-            </com.zhy.autolayout.AutoRelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
 
-            <com.zhy.autolayout.AutoRelativeLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="800px">
 
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="600px" />
 
-                <com.zhy.autolayout.AutoLinearLayout
+                <LinearLayout
                     android:id="@+id/food_viewpager_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                     android:layout_marginBottom="100px"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal" />
-            </com.zhy.autolayout.AutoRelativeLayout>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -109,17 +109,25 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/food_recycle2"
                 android:layout_width="wrap_content"
-                android:paddingRight="20px"
+                android:layout_height="480px"
                 android:paddingLeft="20px"
-                android:layout_height="480px" />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/food_recycle3"
-                android:layout_marginTop="100px"
+                android:paddingRight="20px" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/food_recycle3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
         </LinearLayout>
     </com.mssd.utils.ObservableScrollView>
-    <com.zhy.autolayout.AutoRelativeLayout
+
+    <RelativeLayout
         android:id="@+id/food_title"
         android:layout_width="match_parent"
         android:layout_height="160px"
@@ -133,10 +141,11 @@
             android:text="食"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#bfbfbf"
-            android:layout_alignParentBottom="true"/>
-    </com.zhy.autolayout.AutoRelativeLayout>
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
+    </RelativeLayout>
 </FrameLayout>

@@ -97,8 +97,8 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private void initbean() {
         list = new ArrayList<>();
         foodBean1 = new FoodBean(R.mipmap.test, "画廊");
-        foodBean2 = new FoodBean(R.mipmap.test, "画廊");
-        foodBean3 = new FoodBean(R.mipmap.test, "画廊");
+        foodBean2 = new FoodBean(R.mipmap.test, "好物");
+        foodBean3 = new FoodBean(R.mipmap.test, "行者");
         list.add(foodBean1);
         list.add(foodBean2);
         list.add(foodBean3);
@@ -126,8 +126,14 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     }
 
     private void getRecycle_List() {
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         tripRecycleList.addItemDecoration(new ListItemDecoration(20));
-        tripRecycleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        tripRecycleList.setLayoutManager(linearLayoutManager);
         tripRecycleList.setAdapter(new Trip_Recycle3(list_2, this));
     }
 

@@ -34,12 +34,127 @@
                     android:orientation="horizontal" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
-            <com.zhy.autolayout.AutoRelativeLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="400px"
-                android:background="#c5c5">
+                android:orientation="horizontal">
 
-            </com.zhy.autolayout.AutoRelativeLayout>
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/exploration_classfiy1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/exploration_classfiy1_img"
+                            android:layout_width="200px"
+                            android:layout_height="200px"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:id="@+id/exploration_classfiy1_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/exploration_classfiy1_img"
+                            android:layout_centerHorizontal="true"
+                            android:text="史"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="64px" />
+                    </com.zhy.autolayout.AutoRelativeLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/exploration_classfiy2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/exploration_classfiy2_img"
+                            android:layout_width="200px"
+                            android:layout_height="200px"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:id="@+id/exploration_classfiy2_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/exploration_classfiy2_img"
+                            android:layout_centerHorizontal="true"
+                            android:text="食"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="64px" />
+                    </com.zhy.autolayout.AutoRelativeLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/exploration_classfiy3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/exploration_classfiy3_img"
+                            android:layout_width="200px"
+                            android:layout_height="200px"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:id="@+id/exploration_classfiy3_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/exploration_classfiy3_img"
+                            android:layout_centerHorizontal="true"
+                            android:text="宿"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="64px" />
+                    </com.zhy.autolayout.AutoRelativeLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:id="@+id/exploration_classfiy4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/exploration_classfiy4_img"
+                            android:layout_width="200px"
+                            android:layout_height="200px"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:id="@+id/exploration_classfiy4_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/exploration_classfiy4_img"
+                            android:layout_centerHorizontal="true"
+                            android:text="行"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="64px" />
+                    </com.zhy.autolayout.AutoRelativeLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -213,10 +328,11 @@
             android:text="探索"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#bfbfbf"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
     </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoFrameLayout>
