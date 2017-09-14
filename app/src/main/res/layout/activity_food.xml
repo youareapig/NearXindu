@@ -25,7 +25,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/food_recycleTop"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingRight="-40px"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

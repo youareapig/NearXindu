@@ -89,8 +89,10 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
 
 
         }
+
         talkViewpager.setOnPageChangeListener(this);
         talkViewpager.setAdapter(new BannerAdapter(views));
+        //talkViewpager.setCurrentItem(1);//默认显示第几个
     }
 
     @Override

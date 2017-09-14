@@ -27,6 +27,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+/*    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }*/
+
 }
 
 dependencies {
@@ -34,6 +40,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('libs/AMap2DMap_5.2.0_AMapSearch_5.3.1_AMapLocation_3.5.0_20170817.jar')
+
+    compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:FilePicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:ColorPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'cn.jiguang.sdk:jpush:3.0.3'
@@ -44,6 +61,11 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
+    compile 'com.androidkun:XTabLayout:1.1.3'
+    compile 'com.zhy:mpermission-api:1.0.0'
+    compile 'org.xutils:xutils:3.3.36'
+    compile 'com.alibaba:fastjson:1.1.55.android'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    apt 'com.zhy:mpermission-compiler:1.0.0'
 }

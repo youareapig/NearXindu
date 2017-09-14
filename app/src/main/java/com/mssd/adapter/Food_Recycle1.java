@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.FoodBean;
+import com.mssd.zl.JiaYanActivity;
 import com.mssd.zl.R;
+import com.mssd.zl.ShiJiaActivity;
+import com.mssd.zl.ShiTangActivity;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -31,12 +35,12 @@ public class Food_Recycle1 extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_top, parent,false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_top, parent, false));
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         FoodBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.foodtopname.setText(info.getName());
@@ -45,6 +49,25 @@ public class Food_Recycle1 extends RecyclerView.Adapter {
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         viewHolder.foodtopname.setTypeface(typeface);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (position) {
+                    case 0:
+                        Intent intent = new Intent(v.getContext(), JiaYanActivity.class);
+                        v.getContext().startActivity(intent);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(v.getContext(), ShiTangActivity.class);
+                        v.getContext().startActivity(intent1);
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(v.getContext(), ShiJiaActivity.class);
+                        v.getContext().startActivity(intent2);
+                        break;
+                }
+            }
+        });
     }
 
     @Override

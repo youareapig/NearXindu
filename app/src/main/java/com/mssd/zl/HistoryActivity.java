@@ -1,5 +1,6 @@
 package com.mssd.zl;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import com.mssd.adapter.History_Recycle1;
 import com.mssd.adapter.History_Recycle2;
 import com.mssd.data.FoodBean;
-import com.mssd.mfragment.Exploration;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class HistoryActivity extends AutoLayoutActivity implements ObservableScrollView.ScrollViewListener {
@@ -64,7 +65,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     private Unbinder unbinder;
     private List<FoodBean> list;
     private FoodBean foodBean1, foodBean2, foodBean3;
-    private int heigh=100;
+    private int heigh = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,36 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
             historyTitle.setVisibility(View.VISIBLE);
             historyTitle.setAlpha(alpha);
             historyTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+        }
+    }
+
+    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.historyRecycleImg1:
+                Intent intent = new Intent(this, TalkHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.historyRecycleEndImg1:
+                Intent intent1 = new Intent(this, TalkHistoryActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.historyRecycleImg2:
+                Intent intent5=new Intent(this,NatureActivity.class);
+                startActivity(intent5);
+                break;
+            case R.id.historyRecycleEndImg2:
+                Intent intent6=new Intent(this,NatureActivity.class);
+                startActivity(intent6);
+                break;
+            case R.id.historyRecycleImg3:
+                Intent intent2 = new Intent(this, HOFActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.historyRecycleEndImg3:
+                Intent intent3 = new Intent(this, HOFActivity.class);
+                startActivity(intent3);
+                break;
         }
     }
 }

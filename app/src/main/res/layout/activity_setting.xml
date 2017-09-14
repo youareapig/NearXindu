@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.SettingActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+        <TextView
+            android:id="@+id/setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设置"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/setting_aboutus"
+            android:layout_width="match_parent"
+            android:layout_height="180px">
+
+            <TextView
+                android:id="@+id/setting_aboutus_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:text="关于我们"
+                android:textColor="#515151"
+                android:textSize="52px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:background="#4545" />
+
+            <TextView
+                style="@style/fengexian"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_ideal"
+            android:layout_width="match_parent"
+            android:layout_height="180px">
+
+            <TextView
+                android:id="@+id/setting_ideal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:text="意见反馈"
+                android:textColor="#515151"
+                android:textSize="52px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:background="#4545" />
+
+            <TextView
+                style="@style/fengexian"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_video"
+            android:layout_width="match_parent"
+            android:layout_height="180px">
+
+            <TextView
+                android:id="@+id/setting_video_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:text="开机视频"
+                android:textColor="#515151"
+                android:textSize="52px" />
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:background="#4545" />
+            <TextView
+                style="@style/fengexian"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_update"
+            android:layout_width="match_parent"
+            android:layout_height="180px">
+
+            <TextView
+                android:id="@+id/setting_update_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:text="版本更新"
+                android:textColor="#515151"
+                android:textSize="52px" />
+
+            <TextView
+                android:id="@+id/setting_update_text1"
+                android:layout_width="100px"
+                android:layout_height="50px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:layout_toRightOf="@+id/setting_update_text"
+                android:background="@drawable/update"
+                android:gravity="center"
+                android:text="new"
+                android:textColor="#fff"
+                android:textSize="38px" />
+
+            <ImageView
+                android:id="@+id/setting_update_go"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:background="#4545" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:layout_toLeftOf="@+id/setting_update_go"
+                android:text="1.0.1"
+                android:textColor="#888888"
+                android:textSize="48px" />
+            <TextView
+                style="@style/fengexian"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/setting_loginout"
+        android:layout_width="900px"
+        android:layout_height="130px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="70px"
+        android:layout_marginTop="120px"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="退出登录" />
+</LinearLayout>

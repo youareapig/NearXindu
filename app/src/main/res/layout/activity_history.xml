@@ -8,7 +8,6 @@
     tools:context="com.mssd.zl.HistoryActivity">
 
 
-
     <com.mssd.utils.ObservableScrollView
         android:id="@+id/history_scroll"
         android:layout_width="match_parent"
@@ -29,6 +28,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
+
             </RelativeLayout>
 
             <TextView
@@ -259,8 +259,10 @@
             </RelativeLayout>
         </LinearLayout>
     </com.mssd.utils.ObservableScrollView>
-    <RelativeLayout style="@style/TitleStyle"
+
+    <RelativeLayout
         android:id="@+id/history_Title"
+        style="@style/TitleStyle"
         android:visibility="gone">
 
         <TextView
@@ -271,11 +273,12 @@
             android:text="史"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#bfbfbf"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
     </RelativeLayout>
 
 </FrameLayout>

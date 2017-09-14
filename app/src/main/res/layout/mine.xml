@@ -69,6 +69,7 @@
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/mine_notice"
                 android:layout_width="match_parent"
                 android:layout_height="180px">
 
@@ -100,13 +101,12 @@
                     android:background="#f6f" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bottomBG" />
+                    style="@style/fengexian"
+                    android:layout_alignParentBottom="true" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/mine_place"
                 android:layout_width="match_parent"
                 android:layout_height="180px">
 
@@ -138,13 +138,12 @@
                     android:background="#f6f" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bottomBG" />
+                    style="@style/fengexian"
+                    android:layout_alignParentBottom="true" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/mine_setting"
                 android:layout_width="match_parent"
                 android:layout_height="180px">
 
@@ -176,10 +175,8 @@
                     android:background="#f6f" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bottomBG" />
+                    style="@style/fengexian"
+                    android:layout_alignParentBottom="true" />
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
     </com.mssd.utils.HeadZoomScrollView>

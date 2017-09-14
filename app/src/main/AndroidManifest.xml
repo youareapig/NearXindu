@@ -89,6 +89,7 @@
 
         <activity android:name="com.mssd.jpush.JpushActivity" />
         <!-- ======================极光推送配置======================= -->
+        <service android:name="com.amap.api.location.APSService" />
 
         <meta-data
             android:name="design_width"
@@ -96,6 +97,9 @@
         <meta-data
             android:name="design_height"
             android:value="1920" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c5e922416e61d9c3c5db06c1f7e9f9c6" />
 
         <activity android:name=".HistoryActivity" />
         <activity android:name=".TripActivity" />
@@ -105,7 +109,16 @@
         <activity android:name=".HOFActivity" />
         <activity android:name=".GalleryActivity" />
         <activity android:name=".GoodsActivity" />
-        <activity android:name=".PedestrianActivity"></activity>
+        <activity android:name=".PedestrianActivity" />
+        <activity android:name=".JiaYanActivity" />
+        <activity android:name=".ShiTangActivity" />
+        <activity android:name=".ShiJiaActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".EditdataActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PlaceActivity" />
+        <activity android:name=".NatureActivity"></activity>
     </application>
 
 </manifest>

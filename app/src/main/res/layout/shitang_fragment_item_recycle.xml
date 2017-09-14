@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="870px">
+
+    <TextView
+        android:id="@+id/shitang_tag"
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:background="@color/bottomBG" />
+
+    <ImageView
+        android:id="@+id/shitang_fragment_recycle_img"
+        android:layout_width="match_parent"
+        android:layout_height="600px"
+        android:layout_below="@+id/shitang_tag"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/shitang_fragment_recycle_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shitang_fragment_recycle_img"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="40px"
+        android:textColor="#515151"
+        android:textSize="52px" />
+
+    <TextView
+        android:id="@+id/shitang_fragment_recycle_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shitang_fragment_recycle_text1"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="40px"
+        android:textColor="#888888"
+        android:textSize="44px" />
+
+    <TextView
+        android:id="@+id/shitang_fragment_recycle_text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/shitang_fragment_recycle_text1"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="40px"
+        android:textColor="#888888"
+        android:textSize="44px" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

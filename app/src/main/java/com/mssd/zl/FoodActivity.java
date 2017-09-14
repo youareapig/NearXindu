@@ -83,6 +83,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         banner();
         getRecycle_2();
         getRecycle_3();
+
     }
     private void changeFont() {
         AssetManager assetManager = getAssets();
@@ -124,7 +125,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         viewpagerTips = new ImageView[list_1.size()];
         for (int i = 0; i < viewpagerTips.length; i++) {
             ImageView imageView = new ImageView(this);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(50, 4);
+            AutoLinearLayout.LayoutParams layoutParams = new AutoLinearLayout.LayoutParams(50, 4);
             layoutParams.leftMargin = 10;
             layoutParams.rightMargin = 10;
             imageView.setLayoutParams(layoutParams);

@@ -139,7 +139,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         viewpagerTips = new ImageView[imgList.size()];
         for (int i = 0; i < viewpagerTips.length; i++) {
             ImageView imageView = new ImageView(getActivity());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(15, 15);
+            AutoLinearLayout.LayoutParams layoutParams = new AutoLinearLayout.LayoutParams(15, 15);
             layoutParams.leftMargin = 10;
             layoutParams.rightMargin = 10;
             imageView.setLayoutParams(layoutParams);

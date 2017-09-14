@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.JiaYanActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+        <TextView
+            android:id="@+id/jiayan_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="家宴"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/jiayan_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/jiayan_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="800px"
+                android:layout_marginTop="170px" />
+
+            <TextView
+                android:id="@+id/jiayan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130px"
+                android:text="秘制排骨"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="72px" />
+
+            <LinearLayout
+                android:id="@+id/jiayan_viewpager_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="160px"
+                android:gravity="center_horizontal|bottom"
+                android:orientation="horizontal"/>
+
+            <ImageView
+                android:id="@+id/jiayan_go"
+                android:layout_width="50px"
+                android:layout_height="60px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60px"
+                android:background="#5858" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2200px"
+                android:layout_marginTop="120px"
+                android:gravity="center"
+                android:text="详情"
+                android:textColor="#000" />
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

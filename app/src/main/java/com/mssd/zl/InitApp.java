@@ -1,7 +1,11 @@
 package com.mssd.zl;
 
 import android.app.Application;
+
 import com.zhy.autolayout.config.AutoLayoutConifg;
+
+import org.xutils.x;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -15,6 +19,6 @@ public class InitApp extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
         AutoLayoutConifg.getInstance().useDeviceSize();
-
+        x.Ext.init(this);
     }
 }

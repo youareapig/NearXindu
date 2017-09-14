@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.ShiTangActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+        <TextView
+            android:id="@+id/shitang_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="食堂"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#bfbfbf" />
+    </RelativeLayout>
+
+
+
+        <com.androidkun.xtablayout.XTabLayout
+            android:id="@+id/shitang_tab"
+            android:layout_width="match_parent"
+            android:layout_height="130px"
+            app:xTabDividerWidthWidthText="true"
+            app:xTabMode="scrollable"
+            app:xTabIndicatorColor="@color/mainChecked"
+            app:xTabIndicatorHeight="4px"
+            app:xTabSelectedTextColor="@color/mainChecked"
+            app:xTabTextColor="@color/mainUnChecked"
+            app:xTabTextSize="58px"
+            app:xTabDisplayNum="5" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/shitang_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
