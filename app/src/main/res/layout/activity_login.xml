@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px">
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/login_main1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180px">
+
+            <TextView
+                android:id="@+id/login_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="香城欢迎您"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="92px" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/login_userphone"
+            android:layout_width="800px"
+            android:layout_height="140px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="180px"
+            android:background="@null"
+            android:drawableBottom="@drawable/loginline"
+            android:hint="手机号"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:paddingBottom="30px"
+            android:paddingLeft="30px"
+            android:singleLine="true"
+            android:textColor="@color/mainUnChecked"
+            android:textColorHint="@color/mainUnChecked"
+            android:textCursorDrawable="@drawable/cursor"
+            android:textSize="44px" />
+
+        <LinearLayout
+            android:layout_width="800px"
+            android:layout_height="140px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80px"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/login_usercode"
+                android:layout_width="400px"
+                android:layout_height="140px"
+                android:layout_gravity="center_horizontal"
+                android:background="@null"
+                android:drawableBottom="@drawable/loginline"
+                android:hint="验证码"
+                android:inputType="phone"
+                android:maxLength="6"
+                android:paddingBottom="30px"
+                android:paddingLeft="30px"
+                android:singleLine="true"
+                android:textColor="@color/mainUnChecked"
+                android:textColorHint="@color/mainUnChecked"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="44px" />
+
+            <TextView
+                android:id="@+id/login_getvercode"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="15px"
+                android:layout_marginLeft="100px"
+                android:background="@drawable/vercode"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="44px" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/login_login"
+            android:layout_width="800px"
+            android:layout_height="126px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="110px"
+            android:background="@drawable/loginbutton"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="注册/登录"
+            android:textColor="#fff"
+            android:textSize="48px" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/login_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册即表示您已阅读并同意"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/login_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《用户协议》"
+                android:textColor="@color/mainUnChecked"
+                android:textSize="32px" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

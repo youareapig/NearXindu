@@ -3,16 +3,25 @@ package com.mssd.zl;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mssd.cardslid.CardAdapter;
 import com.mssd.cardslid.CardSlidePanel;
 import com.mssd.data.FoodBean;
+import com.mssd.data.TalkHistoryBean;
+import com.mssd.utils.SingleModleUrl;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.utils.AutoUtils;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +41,16 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     @BindView(R.id.hofTitle)
     TextView hofTitle;
     private Unbinder unbinder;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
-    private Typeface typeface,typeface1;
+    private List<TalkHistoryBean.DataBean> list;
+    private Typeface typeface, typeface1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hof);
         unbinder = ButterKnife.bind(this);
-        initbean();
         changeFont();
+        init();
     }
 
     private void changeFont() {
@@ -54,15 +63,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     }
 
     private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "第一张");
-        foodBean2 = new FoodBean(R.mipmap.test, "第二张");
-        foodBean3 = new FoodBean(R.mipmap.test, "第三张");
-        foodBean4 = new FoodBean(R.mipmap.test, "第四张");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-        list.add(foodBean4);
+        hofText1.setText(list.get(0).getHname());
+        hofText2.setText(list.get(0).getHtag());
         hofCard.setCardSwitchListener(this);
         hofCard.setAdapter(new CardAdapter() {
             @Override
@@ -76,7 +78,7 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
             }
 
             @Override
-            public void bindView(View view, int index) {
+            public void bindView(View view, final int index) {
                 Object tag = view.getTag();
                 ViewHolder viewHolder;
                 if (null != tag) {
@@ -87,12 +89,21 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
                 }
 
                 viewHolder.bindData(list.get(index % list.size()));
+                viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("tag", "点击了" + list.get(index % list.size()).getHname());
+                    }
+                });
 
             }
 
             @Override
             public Object getItem(int index) {
-                return list.get(index % list.size());
+                if (list != null) {
+                    return list.get(index % list.size());
+                }
+                return 0;
             }
 
 
@@ -113,7 +124,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     @Override
     public void onCardVanish(int index, int type) {
         Toast.makeText(this, "-----" + index + "------" + type, Toast.LENGTH_LONG).show();
-        hofText1.setText(list.get(index % list.size()).getName());
+        hofText1.setText(list.get((index + 1) % list.size()).getHname());
+        hofText2.setText(list.get((index + 1) % list.size()).getHtag());
     }
 
     class ViewHolder {
@@ -125,10 +137,49 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
             AutoUtils.autoSize(view);
         }
 
-        public void bindData(FoodBean itemData) {
-            imageView.setImageResource(itemData.getImg());
+        public void bindData(TalkHistoryBean.DataBean itemData) {
+            ImageLoader.getInstance().displayImage(itemData.getUrl(), imageView);
 
 
         }
+    }
+
+    private void init() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "History/culture");
+        params.addBodyParameter("cid", "6");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "名人堂" + result);
+                Gson gson = new Gson();
+                TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
+                list = bean.getData();
+                if (bean.getCode() == 1000) {
+                    initbean();
+                } else {
+                    Toast.makeText(HOFActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "名人堂访问错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 }

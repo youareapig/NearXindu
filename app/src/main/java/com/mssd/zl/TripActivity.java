@@ -4,15 +4,19 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Trip_Recycle1;
 import com.mssd.adapter.Trip_Recycle2;
 import com.mssd.adapter.Trip_Recycle3;
@@ -60,13 +64,15 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     TextView tripText1;
     @BindView(R.id.trip_Title)
     RelativeLayout tripTitle;
+    @BindView(R.id.trip_refresh)
+    PullToRefreshLayout tripRefresh;
     private Unbinder unbinder;
     private List<FoodBean> list;
     private FoodBean foodBean1, foodBean2, foodBean3;
     private List<String> list_1;
     private List<TestBean> list_2;
     private TestBean testBean1, testBean2;
-    private int heigh=100;
+    private int heigh = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,32 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         getRecycle_Top();
         getRecycle_Classfiy();
         getRecycle_List();
+        tripRefresh.setRefreshListener(new BaseRefreshListener() {
+            @Override
+            public void refresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("tag","刷新");
+                        tripRefresh.finishRefresh();
+                    }
+                }, 2000);
+
+            }
+
+            @Override
+            public void loadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("tag","加载");
+                        // 结束加载更多
+                        tripRefresh.finishLoadMore();
+                    }
+                }, 2000);
+
+            }
+        });
     }
 
     private void changeFont() {
@@ -104,7 +136,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         list.add(foodBean3);
         list_1 = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            list_1.add("第" + i + "条目");
+            list_1.add("山野风光" + i);
         }
         list_2 = new ArrayList<>();
         testBean1 = new TestBean(R.mipmap.test, "黄河啊", "你好多水啊");
@@ -126,7 +158,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     }
 
     private void getRecycle_List() {
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;

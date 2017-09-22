@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="460px"
+    android:orientation="vertical"
+    >
+
+   <com.zhy.autolayout.AutoLinearLayout
+       android:layout_width="1000px"
+       android:layout_height="460px"
+       android:layout_gravity="center"
+       android:orientation="vertical">
+       <TextView
+           android:id="@+id/photograph"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:layout_weight="1"
+           android:text="手机拍摄"
+           android:textSize="58px"/>
+       <TextView
+           android:layout_width="800px"
+           android:layout_height="1px"
+           android:background="#d2d2d2"
+           android:layout_gravity="center"/>
+       <TextView
+           android:id="@+id/photo"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:text="相册选取"
+           android:gravity="center"
+           android:textSize="58px"/>
+   </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

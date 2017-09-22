@@ -1,6 +1,7 @@
 package com.mssd.zl;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhy.autolayout.AutoLayoutActivity;
+import com.zhy.autolayout.attr.MarginAttr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,12 +45,15 @@ public class SettingActivity extends AutoLayoutActivity {
     TextView settingLoginout;
     private Unbinder unbinder;
     private Typeface typeface1, typeface;
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         unbinder = ButterKnife.bind(this);
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         changeFont();
     }
 
@@ -85,6 +90,12 @@ public class SettingActivity extends AutoLayoutActivity {
             case R.id.setting_update:
                 break;
             case R.id.setting_loginout:
+                editor.putString("userid","0");
+                editor.putBoolean("islogin",false);
+                editor.commit();
+                Intent intent1=new Intent(SettingActivity.this, MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
                 break;
         }
     }

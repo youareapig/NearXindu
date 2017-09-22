@@ -2,6 +2,7 @@ package com.mssd.zl;
 
 import android.*;
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -73,12 +74,12 @@ public class MainActivity extends AutoLayoutActivity {
     private List<Fragment> list = new ArrayList<>();
     private int currentIndex = 0;
     private FragmentManager fragmentManager;
-
     public AMapLocationClient mLocationClient = null;
     public AMapLocationListener mLocationListener = new MyAMapLocationListener();
     public AMapLocationClientOption mLocationOption = null;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +87,23 @@ public class MainActivity extends AutoLayoutActivity {
         unbinder = ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
+        Intent intent = getIntent();
+        currentIndex = intent.getIntExtra("indextag", 0);
+        if (currentIndex == 3) {
+            explorationName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            mineName.setTextColor(getResources().getColor(R.color.mainChecked));
+        } else if (currentIndex == 0) {
+            explorationName.setTextColor(getResources().getColor(R.color.mainChecked));
+            experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+        }
         changeFont();
-        MPermissions.requestPermissions(MainActivity.this, 55, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        MPermissions.requestPermissions(MainActivity.this, 55, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         mLocationClient = new AMapLocationClient(getApplicationContext());
         mLocationClient.setLocationListener(mLocationListener);
-
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT, 0);
@@ -149,8 +161,8 @@ public class MainActivity extends AutoLayoutActivity {
             if (aMapLocation != null) {
                 if (aMapLocation.getErrorCode() == 0) {
                     Log.e("位置：", aMapLocation.getAddress());
-                    editor.putString("latLng",aMapLocation.getLatitude()+"");
-                    editor.putString("longLng",aMapLocation.getLongitude()+"");
+                    editor.putString("latLng", aMapLocation.getLatitude() + "");
+                    editor.putString("longLng", aMapLocation.getLongitude() + "");
                     editor.commit();
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -241,12 +253,18 @@ public class MainActivity extends AutoLayoutActivity {
                 mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                 break;
             case R.id.main_mine:
-                currentIndex = 3;
-                showFragment();
-                explorationName.setTextColor(getResources().getColor(R.color.mainUnChecked));
-                experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
-                discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
-                mineName.setTextColor(getResources().getColor(R.color.mainChecked));
+                boolean b = sharedPreferences.getBoolean("islogin", false);
+                if (b == false) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    currentIndex = 3;
+                    showFragment();
+                    explorationName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+                    experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+                    discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+                    mineName.setTextColor(getResources().getColor(R.color.mainChecked));
+                }
                 break;
         }
     }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.mssd.utils.HeadZoomScrollView
+    <com.mssd.utils.MyScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -40,7 +40,7 @@
                         android:layout_width="200px"
                         android:layout_height="200px"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/aaa" />
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
                         android:id="@+id/mine_name"
@@ -49,7 +49,6 @@
                         android:layout_below="@+id/mine_head"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20px"
-                        android:text="吃翔翔"
                         android:textColor="#fff"
                         android:textSize="52px" />
                 </com.zhy.autolayout.AutoRelativeLayout>
@@ -58,10 +57,10 @@
                     android:id="@+id/mine_editprofil"
                     android:layout_width="210px"
                     android:layout_height="60px"
-                    android:layout_below="@+id/mine_tag"
-                    android:layout_marginLeft="210px"
-                    android:layout_marginTop="130px"
-                    android:layout_toRightOf="@+id/mine_tag"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="40px"
+                    android:layout_marginRight="40px"
                     android:text="编辑资料"
                     android:textColor="#fff"
                     android:textSize="48px" />
@@ -179,5 +178,5 @@
                     android:layout_alignParentBottom="true" />
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
-    </com.mssd.utils.HeadZoomScrollView>
+    </com.mssd.utils.MyScrollView>
 </com.zhy.autolayout.AutoLinearLayout>

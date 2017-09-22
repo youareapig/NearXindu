@@ -4,13 +4,23 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.FoodBean;
+import com.mssd.data.TalkHistoryBean;
+import com.mssd.utils.SingleModleUrl;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +40,16 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
     TextView talkTitle;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, views;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3;
     private Typeface typeface1, typeface;
+    private List<TalkHistoryBean.DataBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_talk_history);
         unbinder = ButterKnife.bind(this);
-        initbean();
         changeFont();
-        getViewpager();
+        init();
     }
 
     private void changeFont() {
@@ -51,15 +59,6 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
         talkTitle.setTypeface(typeface1);
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "在成都的街头走一走");
-        foodBean2 = new FoodBean(R.mipmap.ic_launcher, "哈哈哈哈哈");
-        foodBean3 = new FoodBean(R.mipmap.test, "杀戮空间发牢骚家乐福就是杀戮空间发牢骚家乐福就是垃杀戮空间发牢骚家乐福就是垃");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-    }
 
     private void getViewpager() {
         viewpagerTips = new ImageView[list.size()];
@@ -70,7 +69,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
             layoutParams.rightMargin = 10;
             imageView.setLayoutParams(layoutParams);
             viewpagerTips[i] = imageView;
-            talkViewpageName.setText(list.get(0).getName());
+            talkViewpageName.setText(list.get(0).getHintro());
             talkViewpageName.setTypeface(typeface1);
             if (i == 0) {
                 viewpagerTips[i].setBackgroundResource(R.drawable.vpchecked);
@@ -85,8 +84,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
             ImageView imageView = new ImageView(this);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             views[i] = imageView;
-            imageView.setImageResource(list.get(i).getImg());
-
+            ImageLoader.getInstance().displayImage(list.get(i).getUrl(), imageView);
 
         }
 
@@ -106,7 +104,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
 
             if (i == selectItems) {
                 viewpagerTips[i].setBackgroundResource(R.drawable.vpchecked);
-                talkViewpageName.setText(list.get(i).getName());
+                talkViewpageName.setText(list.get(i).getHintro());
                 talkViewpageName.setTypeface(typeface1);
             } else {
                 viewpagerTips[i].setBackgroundResource(R.drawable.vpunchecked);
@@ -127,5 +125,45 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    private void init() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "History/culture");
+        params.addBodyParameter("cid", "2");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "聊文化" + result);
+                Gson gson = new Gson();
+                TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
+                list = bean.getData();
+                if (bean.getCode() == 1000) {
+                    getViewpager();
+
+                } else {
+                    Toast.makeText(TalkHistoryActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "聊文化访问错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 }

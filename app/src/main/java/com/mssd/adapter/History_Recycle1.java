@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.FoodBean;
+import com.mssd.data.HistoryIndexBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,26 +23,26 @@ import java.util.List;
  */
 
 public class History_Recycle1 extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<HistoryIndexBean.DataBean.T2Bean> list;
     private Activity activity;
 
-    public History_Recycle1(List<FoodBean> list, Activity activity) {
+    public History_Recycle1(List<HistoryIndexBean.DataBean.T2Bean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_1, parent,false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_1, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        HistoryIndexBean.DataBean.T2Bean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.history1name.setText(info.getName());
-        viewHolder.history1img.setImageResource(info.getImg());
+        viewHolder.history1name.setText(info.getHname());
+        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.history1img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.history1name.setTypeface(typeface);
@@ -48,7 +50,10 @@ public class History_Recycle1 extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

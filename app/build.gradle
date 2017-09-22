@@ -7,7 +7,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.mssd.zl"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -41,16 +41,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('libs/AMap2DMap_5.2.0_AMapSearch_5.3.1_AMapLocation_3.5.0_20170817.jar')
-
-    compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.5') {
-        exclude group: 'com.android.support'
-    }
-    compile('com.github.gzu-liyujiang.AndroidPicker:FilePicker:1.5.5') {
-        exclude group: 'com.android.support'
-    }
-    compile('com.github.gzu-liyujiang.AndroidPicker:ColorPicker:1.5.5') {
-        exclude group: 'com.android.support'
-    }
+    compile files('libs/universal-image-loader-1.9.3.jar')
+    compile 'com.github.addappcn:android-pickers:1.0.1'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'cn.jiguang.sdk:jpush:3.0.3'
@@ -65,7 +58,12 @@ dependencies {
     compile 'com.zhy:mpermission-api:1.0.0'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.alibaba:fastjson:1.1.55.android'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.github.Lauzy:LBehavior:1.0.1'
+    compile 'org.jsoup:jsoup:1.10.3'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     apt 'com.zhy:mpermission-compiler:1.0.0'
+    compile 'com.just.agentweb:agentweb:2.0.1'
+    compile 'com.jwenfeng.pulltorefresh:library:1.2.5'
 }

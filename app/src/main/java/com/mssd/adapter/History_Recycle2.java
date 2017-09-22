@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.FoodBean;
+import com.mssd.data.HistoryIndexBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,26 +23,26 @@ import java.util.List;
  */
 
 public class History_Recycle2 extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<HistoryIndexBean.DataBean.T4Bean> list;
     private Activity activity;
 
-    public History_Recycle2(List<FoodBean> list, Activity activity) {
+    public History_Recycle2(List<HistoryIndexBean.DataBean.T4Bean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_2, parent,false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_1, parent,false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        HistoryIndexBean.DataBean.T4Bean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.history2name.setText(info.getName());
-        viewHolder.history2img.setImageResource(info.getImg());
+        viewHolder.history2name.setText(info.getHname());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.history2img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.history2name.setTypeface(typeface);
@@ -48,7 +50,10 @@ public class History_Recycle2 extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,8 +63,8 @@ public class History_Recycle2 extends RecyclerView.Adapter {
         public ViewHolder(View itemView) {
             super(itemView);
             AutoUtils.autoSize(itemView);
-            history2name = (TextView) itemView.findViewById(R.id.histoty_item2_name);
-            history2img = (ImageView) itemView.findViewById(R.id.histoty_item2_img);
+            history2name = (TextView) itemView.findViewById(R.id.histoty_item1_name);
+            history2img = (ImageView) itemView.findViewById(R.id.histoty_item1_img);
         }
     }
 }

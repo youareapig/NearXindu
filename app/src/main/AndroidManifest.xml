@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -25,6 +26,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".InitApp"
@@ -34,7 +36,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -101,24 +105,75 @@
             android:name="com.amap.api.v2.apikey"
             android:value="c5e922416e61d9c3c5db06c1f7e9f9c6" />
 
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".TripActivity" />
-        <activity android:name=".FoodActivity" />
-        <activity android:name=".StayActivity" />
-        <activity android:name=".TalkHistoryActivity" />
-        <activity android:name=".HOFActivity" />
-        <activity android:name=".GalleryActivity" />
-        <activity android:name=".GoodsActivity" />
-        <activity android:name=".PedestrianActivity" />
-        <activity android:name=".JiaYanActivity" />
-        <activity android:name=".ShiTangActivity" />
-        <activity android:name=".ShiJiaActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".EditdataActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".PlaceActivity" />
-        <activity android:name=".NatureActivity"></activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TripActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TalkHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HOFActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PedestrianActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".JiaYanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShiTangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShiJiaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditdataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PlaceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NatureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TripClassfiyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExperenceClassfiyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WebActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
