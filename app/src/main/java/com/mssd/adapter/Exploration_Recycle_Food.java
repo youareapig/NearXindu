@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.TBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,10 +22,10 @@ import java.util.List;
  */
 
 public class Exploration_Recycle_Food extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<TansuoBean.DataBean.MealBean> list;
     private Activity activity;
 
-    public Exploration_Recycle_Food(List<FoodBean> list, Activity activity) {
+    public Exploration_Recycle_Food(List<TansuoBean.DataBean.MealBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -37,10 +38,10 @@ public class Exploration_Recycle_Food extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        TansuoBean.DataBean.MealBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.foodname.setText(info.getName());
-        viewHolder.foodimg.setImageResource(info.getImg());
+        viewHolder.foodname.setText(info.getFname());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.foodimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.foodname.setTypeface(typeface);

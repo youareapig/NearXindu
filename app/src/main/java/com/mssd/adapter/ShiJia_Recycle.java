@@ -1,7 +1,6 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
-import com.mssd.zl.JiaYanActivity;
+import com.mssd.data.ShijiaBean;
+import com.mssd.data.TBean;
 import com.mssd.zl.R;
-import com.mssd.zl.ShiJiaActivity;
-import com.mssd.zl.ShiTangActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -25,10 +23,10 @@ import java.util.List;
  */
 
 public class ShiJia_Recycle extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<ShijiaBean.DataBean> list;
     private Activity activity;
 
-    public ShiJia_Recycle(List<FoodBean> list, Activity activity) {
+    public ShiJia_Recycle(List<ShijiaBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -41,11 +39,10 @@ public class ShiJia_Recycle extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        FoodBean info = list.get(position);
+        ShijiaBean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.shijianame.setText(info.getName());
-        viewHolder.shijiaimg.setImageResource(info.getImg());
-
+        viewHolder.shijianame.setText(info.getGname());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.shijiaimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shijianame.setTypeface(typeface);

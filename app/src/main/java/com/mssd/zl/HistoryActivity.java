@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.History_Recycle1;
 import com.mssd.adapter.History_Recycle2;
 import com.mssd.adapter.History_Recycle3;
-import com.mssd.data.FoodBean;
+import com.mssd.data.TBean;
 import com.mssd.data.HistoryIndexBean;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -84,8 +84,8 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     @BindView(R.id.history_Toptext2)
     TextView historyToptext2;
     private Unbinder unbinder;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3;
+    private List<TBean> list;
+    private TBean foodBean1, foodBean2, foodBean3;
     private int heigh = 100;
     private List<HistoryIndexBean.DataBean.T2Bean> list1;
     private List<HistoryIndexBean.DataBean.T4Bean> list2;
@@ -118,9 +118,9 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
 
     private void initbean() {
         list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "九大碗");
-        foodBean2 = new FoodBean(R.mipmap.test, "九大碗");
-        foodBean3 = new FoodBean(R.mipmap.test, "九大碗");
+        foodBean1 = new TBean(R.mipmap.test, "九大碗");
+        foodBean2 = new TBean(R.mipmap.test, "九大碗");
+        foodBean3 = new TBean(R.mipmap.test, "九大碗");
         list.add(foodBean1);
         list.add(foodBean2);
         list.add(foodBean3);

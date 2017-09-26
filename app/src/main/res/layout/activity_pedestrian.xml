@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.mssd.zl.PedestrianActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="160px">
@@ -19,18 +20,35 @@
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
     </RelativeLayout>
-    <ScrollView
+
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/pedestrian_pull"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/pedestrian_recycle"
+        <com.mssd.utils.MyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/isShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="1200px"
+                    android:gravity="center"
+                    android:text="暂无更多数据"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/pedestrian_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </com.mssd.utils.MyScrollView>
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 </LinearLayout>

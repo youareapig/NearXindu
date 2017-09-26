@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mssd.adapter.Trip_Recycle3;
-import com.mssd.data.FoodBean;
 import com.mssd.data.TestBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.zl.R;
@@ -57,7 +55,7 @@ public class Trip extends Fragment {
         };
         shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(20));
         shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
-        shitangFragmentRecycle.setAdapter(new Trip_Recycle3(list, getActivity()));
+        //shitangFragmentRecycle.setAdapter(new Trip_Recycle3(list, getActivity()));
     }
     @Override
     public void onDestroyView() {

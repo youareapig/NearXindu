@@ -14,7 +14,8 @@
         <com.mssd.utils.ObservableScrollView
             android:id="@+id/trip_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="600px"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/test" />
+                        />
 
                     <TextView
                         android:id="@+id/trip_show_text1"

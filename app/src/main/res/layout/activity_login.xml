@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《用户协议》"
-                android:textColor="@color/mainUnChecked"
+                android:textColor="@color/mainChecked"
                 android:textSize="32px" />
         </LinearLayout>
 

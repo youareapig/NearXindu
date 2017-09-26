@@ -61,7 +61,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         };
         tripclassfiyrecycle.addItemDecoration(new ListItemDecoration(20));
         tripclassfiyrecycle.setLayoutManager(linearLayoutManager);
-        tripclassfiyrecycle.setAdapter(new Trip_Recycle3(list, this));
+        //tripclassfiyrecycle.setAdapter(new Trip_Recycle3(list, this));
     }
 
     @Override

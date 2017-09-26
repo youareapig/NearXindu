@@ -28,7 +28,6 @@
     </RelativeLayout>
 
 
-
         <com.androidkun.xtablayout.XTabLayout
             android:id="@+id/shitang_tab"
             android:layout_width="match_parent"

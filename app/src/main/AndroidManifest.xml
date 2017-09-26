@@ -6,7 +6,6 @@
     <permission
         android:name="com.mssd.zl.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
     <uses-permission android:name="com.mssd.zl.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -174,6 +173,7 @@
         <activity
             android:name=".WebActivity"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

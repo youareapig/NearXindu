@@ -4,8 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/shitang_fragment_recycle"
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/shitang_fragment_pull"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/shitang_fragment_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/isShow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="暂无更多数据"
+                android:visibility="gone"/>
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
+
 </com.zhy.autolayout.AutoLinearLayout>

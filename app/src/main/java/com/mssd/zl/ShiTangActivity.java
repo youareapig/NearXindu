@@ -5,13 +5,27 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.mssd.adapter.ShiTangTab;
-import com.mssd.mfragment.ShiTang;
+import com.google.gson.Gson;
+import com.mssd.adapter.ShiTangTabAdapter;
+import com.mssd.adapter.TestAdapter;
+import com.mssd.data.ShitangBean;
+import com.mssd.shitangfragment.All;
+import com.mssd.shitangfragment.Cha;
+import com.mssd.shitangfragment.Fan;
+import com.mssd.shitangfragment.Jiu;
+import com.mssd.shitangfragment.Mian;
+import com.mssd.shitangfragment.Su;
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,48 +42,38 @@ public class ShiTangActivity extends AutoLayoutActivity {
     @BindView(R.id.shitang_viewpager)
     ViewPager shitangViewpager;
     private Unbinder unbinder;
-    private List<String> list;
     private List<Fragment> list1;
+    private List<String> titleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shi_tang);
         unbinder = ButterKnife.bind(this);
-        initbean();
+
         changeFont();
+        initview();
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
+    private void initview() {
         list1 = new ArrayList<>();
-        list.add("全部");
-        list.add("酒馆");
-        list.add("饭馆");
-        list.add("面馆");
-        list.add("茶馆");
-        list.add("牌馆");
-        for (int i = 0; i <= 5; i++) {
-            list1.add(new ShiTang());
-        }
-        shitangViewpager.setAdapter(new ShiTangTab(getSupportFragmentManager(), list, list1));
-        shitangViewpager.setOffscreenPageLimit(5);
+        titleList=new ArrayList<>();
+        list1.add(new All());
+        list1.add(new Jiu());
+        list1.add(new Fan());
+        list1.add(new Mian());
+        list1.add(new Cha());
+        list1.add(new Su());
+        titleList.add("全部");
+        titleList.add("酒馆");
+        titleList.add("饭馆");
+        titleList.add("面馆");
+        titleList.add("茶馆");
+        titleList.add("素食");
+        shitangViewpager.setAdapter(new ShiTangTabAdapter(getSupportFragmentManager(), titleList, list1));
+        shitangViewpager.setOffscreenPageLimit(6);
         shitangTab.setupWithViewPager(shitangViewpager);
         shitangViewpager.setCurrentItem(0);
-        shitangTab.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(XTabLayout.Tab tab) {
-                Toast.makeText(ShiTangActivity.this,"选中"+tab.getPosition(),Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onTabUnselected(XTabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(XTabLayout.Tab tab) {
-            }
-        });
     }
 
     private void changeFont() {
@@ -83,4 +87,6 @@ public class ShiTangActivity extends AutoLayoutActivity {
         super.onDestroy();
         unbinder.unbind();
     }
+
+
 }

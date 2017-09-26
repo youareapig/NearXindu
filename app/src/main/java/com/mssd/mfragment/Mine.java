@@ -29,6 +29,7 @@ import com.facebook.rebound.ui.Util;
 import com.google.gson.Gson;
 import com.mssd.data.UpdataHeadBean;
 import com.mssd.data.UserBean;
+import com.mssd.utils.CameraUtil;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.EditdataActivity;
 import com.mssd.zl.PlaceActivity;
@@ -82,6 +83,8 @@ public class Mine extends Fragment {
     private Unbinder unbinder;
     private SharedPreferences sharedPreferences;
     private String userid;
+    private Uri imgUrl;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,7 +140,7 @@ public class Mine extends Fragment {
                 layout.findViewById(R.id.photograph).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MPermissions.requestPermissions(Mine.this, 20, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        MPermissions.requestPermissions(Mine.this, 20, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE);
                         builder.cancel();
                     }
                 });
@@ -162,62 +165,89 @@ public class Mine extends Fragment {
     public void requestCameraSuccess() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 2);
+//        imgUrl = CameraUtil.getTempUri();
+//        startActivityForResult(CameraUtil.takePicture(imgUrl), 2);
     }
 
     @PermissionGrant(30)
     public void requestPhotoSuccess() {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
+//        Intent intent = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent, 1);
+        CameraUtil.selectPhoto();
+        startActivityForResult(Intent.createChooser(CameraUtil.selectPhoto(), "选择照片"), 1);
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == getActivity().RESULT_OK && requestCode == 1) {
-            final Uri uri = data.getData();
-            String[] filePathColumns = {MediaStore.Images.Media.DATA};
-            Cursor c = getActivity().getContentResolver().query(uri, filePathColumns, null, null, null);
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(filePathColumns[0]);
-            final String imagePath = c.getString(columnIndex);
-            uploadhead(imagePath);
-        } else if (requestCode == 2) {
-            String sdStatus = Environment.getExternalStorageState();
-            if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-                Log.i("TestFile",
-                        "SD card is not avaiable/writeable right now.");
-                return;
-            }
-            String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-            Bundle bundle = data.getExtras();
-            Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-            FileOutputStream fileOutputStream = null;
-            File file = new File("/sdcard/myImage/");
-            file.mkdirs();// 创建文件夹
-            String fileName = "/sdcard/myImage/" + name;
-            try {
-                fileOutputStream = new FileOutputStream(fileName);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-                uploadhead(fileName);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    fileOutputStream.close();
-                    fileOutputStream.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
+        //TODO 防止调用相机后不拍照后退程序崩溃
+        if (resultCode == getActivity().RESULT_CANCELED) {
+            return;
         }
+        switch (requestCode) {
+            case 1:
+//                final Uri uri = data.getData();
+//                String[] filePathColumns = {MediaStore.Images.Media.DATA};
+//                Cursor c = getActivity().getContentResolver().query(uri, filePathColumns, null, null, null);
+//                c.moveToFirst();
+//                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+//                final String imagePath = c.getString(columnIndex);
+//                uploadhead(imagePath);
+                if (data != null) {
+                    imgUrl = CameraUtil.getTempUri();
+                    startActivityForResult(CameraUtil.cropPhoto(data.getData(), imgUrl, 200, 200), 3);
+                } else {
+                    startActivityForResult(CameraUtil.cropPhoto(imgUrl, imgUrl, 200, 200), 3);
+                }
+                break;
+            case 2:
+                String sdStatus = Environment.getExternalStorageState();
+                if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+                    Log.i("TestFile",
+                            "SD card is not avaiable/writeable right now.");
+                    return;
+                }
+                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
+                FileOutputStream fileOutputStream = null;
+                File file = new File("/sdcard/myImage/");
+                file.mkdirs();// 创建文件夹
+                String fileName = "/sdcard/myImage/" + name;
+                try {
+                    fileOutputStream = new FileOutputStream(fileName);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    uploadhead(fileName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        fileOutputStream.close();
+                        fileOutputStream.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+//                if(data != null){
+//                    Uri uri = data.getData();
+//                    startActivityForResult(CameraUtil.cropPhoto(uri,imgUrl,150,150), 3);
+//                }else{
+//                    startActivityForResult(CameraUtil.cropPhoto(imgUrl,imgUrl,150,150), 3);
+//                }
+                break;
+            case 3:
+                String imgpath = CameraUtil.getPathFromUri(getActivity(), imgUrl);
+                uploadhead(imgpath);
+                break;
+        }
+
     }
 
     private void uploadhead(String path) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/setHead");
-        params.addBodyParameter("uid",userid );
+        params.addBodyParameter("uid", userid);
         params.addBodyParameter("headpic", new File(path));
         params.setMultipart(true);
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -259,21 +289,11 @@ public class Mine extends Fragment {
     private void requestNet() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/myInfo");
         params.addBodyParameter("uid", userid);
-        Log.e("tag","userID"+userid);
+        Log.e("tag", "userID" + userid);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag","获取用户信息"+result);
-                Gson gson = new Gson();
-                UserBean bean = gson.fromJson(result, UserBean.class);
-                if (bean.getCode() == 3000) {
-                    if (bean.getData().getHeadpic() != "") {
-                        ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
-                    }
-                    if (bean.getData().getUname() != "") {
-                        mineName.setText(bean.getData().getUname());
-                    }
-                }
+
             }
 
             @Override
@@ -293,6 +313,17 @@ public class Mine extends Fragment {
 
             @Override
             public boolean onCache(String result) {
+                Log.e("tag", "获取用户信息" + result);
+                Gson gson = new Gson();
+                UserBean bean = gson.fromJson(result, UserBean.class);
+                if (bean.getCode() == 3000) {
+                    if (bean.getData().getHeadpic() != "") {
+                        ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
+                    }
+                    if (bean.getData().getUname() != "") {
+                        mineName.setText(bean.getData().getUname());
+                    }
+                }
                 return false;
             }
         });

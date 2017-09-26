@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mssd.adapter.ShiTang_Fragment_recycle;
+import com.mssd.adapter.Test1;
 import com.mssd.data.TestBean;
 import com.mssd.zl.R;
 
@@ -50,7 +51,7 @@ public class Eat extends Fragment {
     }
     private void getBean() {
         shitangFragmentRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        shitangFragmentRecycle.setAdapter(new ShiTang_Fragment_recycle(list, getActivity()));
+        shitangFragmentRecycle.setAdapter(new Test1(list, getActivity()));
     }
     @Override
     public void onDestroyView() {

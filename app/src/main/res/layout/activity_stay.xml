@@ -6,124 +6,142 @@
     android:layout_height="match_parent"
     tools:context="com.mssd.zl.StayActivity">
 
-    <com.mssd.utils.ObservableScrollView
-        android:id="@+id/stay_scroll"
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/stay_pull"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.mssd.utils.ObservableScrollView
+            android:id="@+id/stay_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:scrollbars="none">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="390px">
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/stay_tag"
                     android:layout_width="match_parent"
-                    android:layout_height="160px">
+                    android:layout_height="390px">
 
-                    <ImageView
+                    <RelativeLayout
+                        android:id="@+id/stay_tag"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/test" />
-                </RelativeLayout>
+                        android:layout_height="160px">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="200px"
-                    android:layout_height="200px"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="80px"
-                    android:src="@mipmap/baise" />
-
-                <Gallery
-                    android:id="@+id/stay_gallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="280px"
-                    android:layout_marginTop="160px" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20px"
-                android:layout_marginTop="20px"
-                android:background="@color/bottomBG" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="350px">
-
-                <LinearLayout
-                    android:layout_width="650px"
-                    android:layout_height="160px"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="67"
-                            android:background="#888888" />
-
-                        <TextView
-                            android:id="@+id/stay_tx1"
+                        <ImageView
+                            android:id="@+id/stay_top_bg"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="30"
-                            android:gravity="center"
-                            android:text="香城  .  之宿"
-                            android:textColor="@color/mainUnChecked"
-                            android:textSize="72px" />
+                            android:scaleType="centerCrop" />
+                    </RelativeLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="80px"
+                        android:src="@mipmap/baise" />
+
+                    <Gallery
+                        android:id="@+id/stay_gallery"
+                        android:layout_width="match_parent"
+                        android:layout_height="280px"
+                        android:layout_marginTop="160px" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20px"
+                    android:layout_marginTop="20px"
+                    android:background="@color/bottomBG" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="350px">
+
+                    <LinearLayout
+                        android:layout_width="650px"
+                        android:layout_height="160px"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="67"
+                                android:background="#888888" />
+
+                            <TextView
+                                android:id="@+id/stay_tx1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="30"
+                                android:gravity="center"
+                                android:text="香城  .  之宿"
+                                android:textColor="@color/mainUnChecked"
+                                android:textSize="72px" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="67"
+                                android:background="#888888" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/stay_tx2"
                             android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="67"
-                            android:background="#888888" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|bottom"
+                            android:text="以梦为马随处可栖"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="48px" />
 
                     </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/stay_recycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
 
                     <TextView
-                        android:id="@+id/stay_tx2"
+                        android:id="@+id/isShow"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:text="以梦为马随处可栖"
-                        android:textColor="@color/mainUnChecked"
-                        android:textSize="48px" />
+                        android:layout_height="500px"
+                        android:gravity="center"
+                        android:text="暂无更多数据"
+                        android:visibility="gone"/>
+                </RelativeLayout>
 
-                </LinearLayout>
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40px"
-                android:layout_marginRight="40px">
+            </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/stay_recycle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </com.mssd.utils.ObservableScrollView>
+        </com.mssd.utils.ObservableScrollView>
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/stay_Title"

@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.LocationBean;
+import com.mssd.data.TBean;
 import com.mssd.zl.JiaYanActivity;
 import com.mssd.zl.R;
 import com.mssd.zl.ShiJiaActivity;
@@ -25,10 +26,10 @@ import java.util.List;
  */
 
 public class Food_Recycle1 extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<LocationBean> list;
     private Activity activity;
 
-    public Food_Recycle1(List<FoodBean> list, Activity activity) {
+    public Food_Recycle1(List<LocationBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -41,7 +42,7 @@ public class Food_Recycle1 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        FoodBean info = list.get(position);
+        LocationBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.foodtopname.setText(info.getName());
         viewHolder.foodtopimg.setImageResource(info.getImg());

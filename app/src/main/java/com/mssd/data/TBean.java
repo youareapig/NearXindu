@@ -4,11 +4,11 @@ package com.mssd.data;
  * Created by DELL on 2017/8/30.
  */
 
-public class FoodBean {
+public class TBean {
     private int img;
     private String name;
 
-    public FoodBean(int img, String name) {
+    public TBean(int img, String name) {
         this.img = img;
         this.name = name;
     }

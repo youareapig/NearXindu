@@ -8,8 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.mssd.adapter.ShiTangTab;
-import com.mssd.mfragment.ShiTang;
+import com.mssd.adapter.TestAdapter;
 import com.mssd.place.Eat;
 import com.mssd.place.Stay;
 import com.mssd.place.Trip;
@@ -55,7 +54,7 @@ public class PlaceActivity extends AutoLayoutActivity {
         list1.add(new Eat());
         list1.add(new Stay());
         list1.add(new Trip());
-        placeViewpager.setAdapter(new ShiTangTab(getSupportFragmentManager(), list, list1));
+        placeViewpager.setAdapter(new TestAdapter(getSupportFragmentManager(), list, list1));
         placeViewpager.setOffscreenPageLimit(3);
         placeTab.setupWithViewPager(placeViewpager);
         placeViewpager.setCurrentItem(0);

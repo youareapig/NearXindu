@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
-import com.mssd.data.FoodBean;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.utils.SingleModleUrl;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,7 +21,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

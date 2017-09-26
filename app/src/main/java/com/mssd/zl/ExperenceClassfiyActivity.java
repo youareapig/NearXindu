@@ -61,7 +61,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         };
         experenceclassfiyRecycle.addItemDecoration(new ListItemDecoration(80));
         experenceclassfiyRecycle.setLayoutManager(linearLayoutManager);
-        experenceclassfiyRecycle.setAdapter(new Experience_Recycle(list, this));
+        //experenceclassfiyRecycle.setAdapter(new Experience_Recycle(list, this));
     }
 
     @Override

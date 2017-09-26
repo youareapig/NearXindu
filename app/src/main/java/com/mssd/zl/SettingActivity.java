@@ -5,13 +5,16 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mssd.utils.CacheDataManager;
 import com.zhy.autolayout.AutoLayoutActivity;
-import com.zhy.autolayout.attr.MarginAttr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,10 +46,32 @@ public class SettingActivity extends AutoLayoutActivity {
     RelativeLayout settingUpdate;
     @BindView(R.id.setting_loginout)
     TextView settingLoginout;
+    @BindView(R.id.setting_cache_text)
+    TextView settingCacheText;
+    @BindView(R.id.setting_cache_size)
+    TextView settingCacheSize;
+    @BindView(R.id.setting_cache)
+    RelativeLayout settingCache;
     private Unbinder unbinder;
     private Typeface typeface1, typeface;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(SettingActivity.this, "清理完成", Toast.LENGTH_SHORT).show();
+                    try {
+                        settingCacheSize.setText(CacheDataManager.getTotalCacheSize(SettingActivity.this));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +93,14 @@ public class SettingActivity extends AutoLayoutActivity {
         settingUpdateText.setTypeface(typeface);
         settingUpdateText1.setTypeface(typeface);
         settingLoginout.setTypeface(typeface);
+        settingCacheText.setTypeface(typeface);
+        try {
+            settingCacheSize.setText(CacheDataManager.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -76,11 +109,11 @@ public class SettingActivity extends AutoLayoutActivity {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout})
+    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout, R.id.setting_cache})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_aboutus:
-                Intent intent=new Intent(SettingActivity.this,AboutUsActivity.class);
+                Intent intent = new Intent(SettingActivity.this, AboutUsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.setting_ideal:
@@ -90,13 +123,33 @@ public class SettingActivity extends AutoLayoutActivity {
             case R.id.setting_update:
                 break;
             case R.id.setting_loginout:
-                editor.putString("userid","0");
-                editor.putBoolean("islogin",false);
+                editor.putString("userid", "0");
+                editor.putBoolean("islogin", false);
                 editor.commit();
-                Intent intent1=new Intent(SettingActivity.this, MainActivity.class);
+                Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
                 break;
+            case R.id.setting_cache:
+                new Thread(new clearCache()).start();
+                break;
         }
     }
+
+    class clearCache implements Runnable {
+        @Override
+        public void run() {
+            try {
+                CacheDataManager.clearAllCache(SettingActivity.this);
+                Thread.sleep(2000);
+                if (CacheDataManager.getTotalCacheSize(SettingActivity.this).startsWith("0")) {
+                    handler.sendEmptyMessage(0);
+                }
+            } catch (Exception e) {
+                return;
+            }
+        }
+    }
+
+
 }

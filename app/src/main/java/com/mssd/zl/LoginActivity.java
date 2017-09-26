@@ -100,13 +100,9 @@ public class LoginActivity extends AutoLayoutActivity {
                 if (!TextUtils.isEmpty(string_userphone)) {
                     loginLogin.setBackgroundResource(R.drawable.loginbutton1);
                     loginLogin.setEnabled(true);
-                    loginText2.setTextColor(Color.parseColor("#c69c36"));
-                    loginText2.setEnabled(true);
                 } else {
                     loginLogin.setBackgroundResource(R.drawable.loginbutton);
                     loginLogin.setEnabled(false);
-                    loginText2.setTextColor(Color.parseColor("#a0a0a0"));
-                    loginText2.setEnabled(false);
                 }
             }
         });

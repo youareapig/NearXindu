@@ -4,25 +4,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.mssd.data.ShitangBean;
+
 import java.util.List;
 
 /**
  * Created by DELL on 2017/9/12.
  */
 
-public class ShiTangTab extends FragmentPagerAdapter {
+public class ShiTangTabAdapter extends FragmentPagerAdapter {
     private List<String> list;
     private List<Fragment> list1;
 
-    public ShiTangTab(FragmentManager fm, List<String> list, List<Fragment> list1) {
+    public ShiTangTabAdapter(FragmentManager fm, List<String> list,List<Fragment> list1) {
         super(fm);
         this.list = list;
-        this.list1 = list1;
+        this.list1=list1;
     }
 
     @Override
     public Fragment getItem(int position) {
         return list1.get(position);
+
     }
 
     @Override

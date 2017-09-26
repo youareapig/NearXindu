@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
@@ -18,19 +19,28 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
+import com.mssd.adapter.FoodAdapter;
 import com.mssd.adapter.Food_Recycle1;
 import com.mssd.adapter.Food_Recycle2;
 import com.mssd.adapter.Trip_Recycle3;
-import com.mssd.data.FoodBean;
+import com.mssd.data.FoodDateBean;
+import com.mssd.data.LocationBean;
+import com.mssd.data.TBean;
 import com.mssd.data.TestBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.SpacesItemDecoration2;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.AutoRelativeLayout;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +71,14 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     @BindView(R.id.food_title)
     RelativeLayout foodTitle;
     private Unbinder unbinder;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3;
-    private List<Integer> list_1;
+    private List<LocationBean> list;
+    private LocationBean locationBean1, locationBean2, locationBean3;
+    private List<FoodDateBean.DataBean.GastronomeBean> bannerList;
     private ImageView[] viewpagerTips, viewpagerImage;
     private Handler handler;
     private ViewPagerThread thread;
-    private List<TestBean> list_2;
-    private TestBean testBean1, testBean2;
+    private List<FoodDateBean.DataBean.FeastBean> list_2;
+    private List<FoodDateBean.DataBean.CanteenBean> list_1;
     private int heigh=100;
     private int root=1;
     @Override
@@ -80,9 +90,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         changeTitle();
         changeFont();
         getRecycle_Top();
-        banner();
-        getRecycle_2();
-        getRecycle_3();
+        getNetBean();
 
     }
     private void changeFont() {
@@ -97,21 +105,12 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
 
     private void initbean() {
         list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "家  .宴");
-        foodBean2 = new FoodBean(R.mipmap.test, "食  .堂");
-        foodBean3 = new FoodBean(R.mipmap.test, "食  .家");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-        list_1 = new ArrayList<>();
-        list_1.add(R.mipmap.test);
-        list_1.add(R.mipmap.test);
-        list_1.add(R.mipmap.test);
-        list_2 = new ArrayList<>();
-        testBean1 = new TestBean(R.mipmap.test, "黄河啊", "你好多水啊");
-        testBean2 = new TestBean(R.mipmap.test, "黄河啊", "你好多水啊");
-        list_2.add(testBean1);
-        list_2.add(testBean2);
+        locationBean1 = new LocationBean("家  .宴",R.mipmap.test );
+        locationBean2 = new LocationBean("食  .堂",R.mipmap.test );
+        locationBean3 = new LocationBean("食  .家",R.mipmap.test );
+        list.add(locationBean1);
+        list.add(locationBean2);
+        list.add(locationBean3);
     }
 
     private void getRecycle_Top() {
@@ -120,54 +119,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         foodRecycleTop.setAdapter(new Food_Recycle1(list, this));
     }
 
-    private void banner() {
-        thread = new ViewPagerThread();
-        viewpagerTips = new ImageView[list_1.size()];
-        for (int i = 0; i < viewpagerTips.length; i++) {
-            ImageView imageView = new ImageView(this);
-            AutoLinearLayout.LayoutParams layoutParams = new AutoLinearLayout.LayoutParams(50, 4);
-            layoutParams.leftMargin = 10;
-            layoutParams.rightMargin = 10;
-            imageView.setLayoutParams(layoutParams);
-            viewpagerTips[i] = imageView;
-            if (i == 0) {
-                viewpagerTips[i].setBackgroundResource(R.drawable.foodvpchecked);
-            } else {
-                viewpagerTips[i].setBackgroundResource(R.drawable.foodvpunchecked);
-
-            }
-            foodViewpagerGroup.addView(imageView);
-        }
-        viewpagerImage = new ImageView[list_1.size()];
-        for (int i = 0; i < viewpagerImage.length; i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            viewpagerImage[i] = imageView;
-            imageView.setImageResource(list_1.get(i));
-        }
-        foodViewpager.setOnPageChangeListener(FoodActivity.this);
-        foodViewpager.setAdapter(new BannerAdapter(viewpagerImage));
-        handler = new Handler() {
-            int bannerNo = 0;
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                try {
-                    if (foodViewpager.getCurrentItem() == viewpagerImage.length - 1) {
-                        bannerNo = 0;
-                    } else {
-                        bannerNo = foodViewpager.getCurrentItem() + 1;
-                    }
-                    foodViewpager.setCurrentItem(bannerNo, true);
-                }catch (Exception e){
-
-                }
-
-            }
-        };
-        thread.start();
-    }
 
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
@@ -196,23 +147,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         }
     }
 
-    private void getRecycle_2() {
-        foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
-        foodRecycle2.setLayoutManager(new GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false));
-        foodRecycle2.setAdapter(new Food_Recycle2(list, this));
-    }
-
-    private void getRecycle_3() {
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        foodRecycle3.addItemDecoration(new ListItemDecoration(80));
-        foodRecycle3.setLayoutManager(linearLayoutManager);
-        foodRecycle3.setAdapter(new Trip_Recycle3(list_2, this));
-    }
 
     private void changeTitle() {
         ViewTreeObserver observer = foodRecycleTop.getViewTreeObserver();
@@ -261,5 +195,103 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 viewpagerTips[i].setBackgroundResource(R.drawable.foodvpunchecked);
             }
         }
+    }
+    private void getNetBean(){
+        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Eatlive/eat");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag","食主页错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                Log.e("tag","食主页"+result);
+                Gson gson=new Gson();
+                FoodDateBean bean=gson.fromJson(result,FoodDateBean.class);
+                if (bean.getCode()==2000){
+                    bannerList=bean.getData().getGastronome();
+                    list_1=bean.getData().getCanteen();
+                    list_2=bean.getData().getFeast();
+                    //TODO banner
+                    thread = new ViewPagerThread();
+                    viewpagerTips = new ImageView[bannerList.size()];
+                    for (int i = 0; i < viewpagerTips.length; i++) {
+                        ImageView imageView = new ImageView(FoodActivity.this);
+                        AutoLinearLayout.LayoutParams layoutParams = new AutoLinearLayout.LayoutParams(50, 4);
+                        layoutParams.leftMargin = 10;
+                        layoutParams.rightMargin = 10;
+                        imageView.setLayoutParams(layoutParams);
+                        viewpagerTips[i] = imageView;
+                        if (i == 0) {
+                            viewpagerTips[i].setBackgroundResource(R.drawable.foodvpchecked);
+                        } else {
+                            viewpagerTips[i].setBackgroundResource(R.drawable.foodvpunchecked);
+
+                        }
+                        foodViewpagerGroup.addView(imageView);
+                    }
+                    viewpagerImage = new ImageView[bannerList.size()];
+                    for (int i = 0; i < viewpagerImage.length; i++) {
+                        ImageView imageView = new ImageView(FoodActivity.this);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        viewpagerImage[i] = imageView;
+                        ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(),imageView);
+                    }
+                    foodViewpager.setOnPageChangeListener(FoodActivity.this);
+                    foodViewpager.setAdapter(new BannerAdapter(viewpagerImage));
+                    handler = new Handler() {
+                        int bannerNo = 0;
+
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            try {
+                                if (foodViewpager.getCurrentItem() == viewpagerImage.length - 1) {
+                                    bannerNo = 0;
+                                } else {
+                                    bannerNo = foodViewpager.getCurrentItem() + 1;
+                                }
+                                foodViewpager.setCurrentItem(bannerNo, true);
+                            }catch (Exception e){
+
+                            }
+
+                        }
+                    };
+                    thread.start();
+                }
+                //TODO 左右滑动列表
+                foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
+                foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
+                foodRecycle2.setAdapter(new Food_Recycle2(list_2,FoodActivity.this));
+                //TODO 底部列表
+                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(FoodActivity.this,LinearLayoutManager.VERTICAL, false){
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                };
+                foodRecycle3.addItemDecoration(new ListItemDecoration(80));
+                foodRecycle3.setLayoutManager(linearLayoutManager);
+                foodRecycle3.setAdapter(new FoodAdapter(list_1,FoodActivity.this));
+                return false;
+            }
+        });
     }
 }

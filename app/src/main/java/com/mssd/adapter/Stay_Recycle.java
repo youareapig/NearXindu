@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.StayNextBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,10 +22,10 @@ import java.util.List;
  */
 
 public class Stay_Recycle extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<StayNextBean.DataBean> list;
     private Activity activity;
 
-    public Stay_Recycle(List<FoodBean> list, Activity activity) {
+    public Stay_Recycle(List<StayNextBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -37,10 +38,10 @@ public class Stay_Recycle extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        StayNextBean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.stayname.setText(info.getName());
-        viewHolder.stayimg.setImageResource(info.getImg());
+        viewHolder.stayname.setText(info.getStitle());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.stayname.setTypeface(typeface);
@@ -48,7 +49,10 @@ public class Stay_Recycle extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

@@ -9,8 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mssd.adapter.Stay_Recycle;
-import com.mssd.data.FoodBean;
+import com.mssd.data.TBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.zl.R;
 
@@ -29,8 +28,8 @@ public class Stay extends Fragment {
     @BindView(R.id.shitang_fragment_recycle)
     RecyclerView shitangFragmentRecycle;
     private Unbinder unbinder;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2;
+    private List<TBean> list;
+    private TBean foodBean1, foodBean2;
 
     @Nullable
     @Override
@@ -45,8 +44,8 @@ public class Stay extends Fragment {
 
     private void initbean() {
         list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "少林功夫好啊");
-        foodBean2 = new FoodBean(R.mipmap.test, "少林功夫好啊");
+        foodBean1 = new TBean(R.mipmap.test, "少林功夫好啊");
+        foodBean2 = new TBean(R.mipmap.test, "少林功夫好啊");
         list.add(foodBean1);
         list.add(foodBean2);
 
@@ -61,7 +60,7 @@ public class Stay extends Fragment {
         };
         shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(120));
         shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
-        shitangFragmentRecycle.setAdapter(new Stay_Recycle(list, getActivity()));
+        //shitangFragmentRecycle.setAdapter(new Stay_Recycle(list, getActivity()));
     }
 
     @Override

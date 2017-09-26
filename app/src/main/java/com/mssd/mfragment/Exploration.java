@@ -13,28 +13,36 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.Exploration_Recycle_Food;
 import com.mssd.adapter.Exploration_Recycle_House;
 import com.mssd.adapter.Exploration_Recycle_Place;
-import com.mssd.data.FoodBean;
+import com.mssd.adapter.TansuoBean;
+import com.mssd.data.TBean;
 import com.mssd.utils.ObservableScrollView;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.FoodActivity;
 import com.mssd.zl.HistoryActivity;
 import com.mssd.zl.R;
 import com.mssd.zl.StayActivity;
 import com.mssd.zl.TripActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,12 +101,13 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     AutoRelativeLayout explorationClassfiy4;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, viewpagerImage;
-    private List<Integer> imgList;
     private Handler handler;
     private ViewPagerThread thread;
-    private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
-    private List<FoodBean> list;
     private int heigh = 100;
+    private List<TansuoBean.DataBean.BannerBean> bannerList;
+    private List<TansuoBean.DataBean.MealBean> list1;
+    private List<TansuoBean.DataBean.StayBean> list2;
+    private List<TansuoBean.DataBean.LineBean> list3;
 
     @Nullable
     @Override
@@ -107,11 +116,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         unbinder = ButterKnife.bind(this, view);
         changeFont();
         changeTitle();
-        initbean();
-        banner();
-        getFood();
-        getHouse();
-        getPlace();
+        getNetBean();
         return view;
     }
 
@@ -133,10 +138,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
 
     private void banner() {
         thread = new ViewPagerThread();
-        imgList = new ArrayList<>();
-        imgList.add(R.mipmap.test);
-        imgList.add(R.mipmap.test);
-        viewpagerTips = new ImageView[imgList.size()];
+        viewpagerTips = new ImageView[bannerList.size()];
         for (int i = 0; i < viewpagerTips.length; i++) {
             ImageView imageView = new ImageView(getActivity());
             AutoLinearLayout.LayoutParams layoutParams = new AutoLinearLayout.LayoutParams(15, 15);
@@ -152,12 +154,12 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             }
             explorationViewpagerGroup.addView(imageView);
         }
-        viewpagerImage = new ImageView[imgList.size()];
+        viewpagerImage = new ImageView[bannerList.size()];
         for (int i = 0; i < viewpagerImage.length; i++) {
             ImageView imageView = new ImageView(getActivity());
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             viewpagerImage[i] = imageView;
-            imageView.setImageResource(imgList.get(i));
+            ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(), imageView);
         }
         explorationViewpager.setOnPageChangeListener(Exploration.this);
         explorationViewpager.setAdapter(new BannerAdapter(viewpagerImage));
@@ -174,7 +176,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
                         bannerNo = explorationViewpager.getCurrentItem() + 1;
                     }
                     explorationViewpager.setCurrentItem(bannerNo, true);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -275,33 +277,64 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         }
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "蛋炒饭");
-        foodBean2 = new FoodBean(R.mipmap.test, "黄焖鸡");
-        foodBean3 = new FoodBean(R.mipmap.test, "翘脚牛肉");
-        foodBean4 = new FoodBean(R.mipmap.test, "翘脚牛肉");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-        list.add(foodBean4);
-    }
-
     private void getFood() {
         explorationRecyFood.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyFood.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
-        explorationRecyFood.setAdapter(new Exploration_Recycle_Food(list, getActivity()));
+        explorationRecyFood.setAdapter(new Exploration_Recycle_Food(list1, getActivity()));
     }
 
     private void getHouse() {
         explorationRecyHouse.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyHouse.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        explorationRecyHouse.setAdapter(new Exploration_Recycle_House(list, getActivity()));
+        explorationRecyHouse.setAdapter(new Exploration_Recycle_House(list2, getActivity()));
     }
 
     private void getPlace() {
         explorationRecyPlace.addItemDecoration(new SpacesItemDecoration(20));
         explorationRecyPlace.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        explorationRecyPlace.setAdapter(new Exploration_Recycle_Place(list, getActivity()));
+        explorationRecyPlace.setAdapter(new Exploration_Recycle_Place(list3, getActivity()));
+    }
+
+    private void getNetBean() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/index");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                Log.e("tag", "探索" + result);
+                Gson gson = new Gson();
+                TansuoBean bean = gson.fromJson(result, TansuoBean.class);
+                if (bean.getCode() == 1000) {
+                    bannerList = bean.getData().getBanner();
+                    list1 = bean.getData().getMeal();
+                    list2 = bean.getData().getStay();
+                    list3 = bean.getData().getLine();
+                    banner();
+                    getFood();
+                    getHouse();
+                    getPlace();
+                }
+                return false;
+            }
+        });
     }
 }

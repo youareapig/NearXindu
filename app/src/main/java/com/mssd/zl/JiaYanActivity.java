@@ -2,12 +2,11 @@ package com.mssd.zl;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,10 +15,18 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
-import com.mssd.data.FoodBean;
+import com.mssd.data.JiaYanBean;
+import com.mssd.data.TBean;
+import com.mssd.utils.SingleModleUrl;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +51,8 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
     ScrollView jiayanScroll;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, views;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3;
     private Typeface typeface, typeface1;
-
+    private List<JiaYanBean.DataBean> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +60,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         unbinder = ButterKnife.bind(this);
         initbean();
         changeFont();
-        getViewpager();
+        getNetBean();
     }
 
     private void changeFont() {
@@ -66,13 +71,6 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
     }
 
     private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test1, "红烧排骨");
-        foodBean2 = new FoodBean(R.mipmap.test1, "宫保鸡丁");
-        foodBean3 = new FoodBean(R.mipmap.test1, "白宰鸡");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
         jiayanScroll.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -91,7 +89,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
             imageView.setLayoutParams(layoutParams);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             viewpagerTips[i] = imageView;
-            jiayanName.setText(list.get(0).getName());
+            jiayanName.setText(list.get(0).getFname());
             jiayanName.setTypeface(typeface1);
             if (i == 0) {
                 viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
@@ -112,7 +110,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             views[i] = imageView;
-            imageView.setImageResource(list.get(i).getImg());
+            ImageLoader.getInstance().displayImage(list.get(i).getUrl(),imageView);
 
         }
         jiayanViewpager.setOnPageChangeListener(this);
@@ -147,7 +145,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
                 AutoLinearLayout.LayoutParams layoutParams3 = new AutoLinearLayout.LayoutParams(38, 38);
                 viewpagerTips[i].setLayoutParams(layoutParams3);
                 viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
-                jiayanName.setText(list.get(i).getName());
+                jiayanName.setText(list.get(i).getFname());
                 jiayanName.setTypeface(typeface1);
             } else {
                 AutoLinearLayout.LayoutParams layoutParams4 = new AutoLinearLayout.LayoutParams(28, 28);
@@ -175,5 +173,41 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return new int[]{outMetrics.widthPixels, outMetrics.heightPixels};
+    }
+    private void getNetBean(){
+        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Eatlive/feast");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag","家宴错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                Log.e("tag","家宴"+result);
+                Gson gson=new Gson();
+                JiaYanBean bean=gson.fromJson(result,JiaYanBean.class);
+                if (bean.getCode()==2000){
+                    list=bean.getData();
+                    getViewpager();
+                }
+                return false;
+            }
+        });
     }
 }

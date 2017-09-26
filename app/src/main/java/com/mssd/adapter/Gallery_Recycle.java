@@ -1,17 +1,15 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.GalleryBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,10 +19,10 @@ import java.util.List;
  */
 
 public class Gallery_Recycle extends RecyclerView.Adapter {
-    private List<Integer> list;
+    private List<GalleryBean.DataBean> list;
     private Activity activity;
 
-    public Gallery_Recycle(List<Integer> list, Activity activity) {
+    public Gallery_Recycle(List<GalleryBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -37,8 +35,9 @@ public class Gallery_Recycle extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        GalleryBean.DataBean bean=list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.galleryrecycleimg.setImageResource(list.get(position));
+        ImageLoader.getInstance().displayImage(bean.getUrl(),viewHolder.galleryrecycleimg);
     }
 
     @Override

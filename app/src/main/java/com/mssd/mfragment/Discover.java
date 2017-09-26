@@ -20,7 +20,7 @@ import com.mssd.adapter.Discover_Recycle1;
 import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
-import com.mssd.data.FoodBean;
+import com.mssd.data.TBean;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
@@ -59,8 +59,8 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
     @BindView(R.id.discover_title)
     AutoRelativeLayout discoverTitle;
     private Unbinder unbinder;
-    private FoodBean foodBean1, foodBean2, foodBean3, foodBean4;
-    private List<FoodBean> list;
+    private TBean foodBean1, foodBean2, foodBean3, foodBean4;
+    private List<TBean> list;
     private int heigh=100;
 
     @Nullable
@@ -80,10 +80,10 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
 
     private void initbean() {
         list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "蛋炒饭");
-        foodBean2 = new FoodBean(R.mipmap.test, "黄焖鸡");
-        foodBean3 = new FoodBean(R.mipmap.test, "翘脚牛肉");
-        foodBean4 = new FoodBean(R.mipmap.test, "翘脚牛肉");
+        foodBean1 = new TBean(R.mipmap.test, "蛋炒饭");
+        foodBean2 = new TBean(R.mipmap.test, "黄焖鸡");
+        foodBean3 = new TBean(R.mipmap.test, "翘脚牛肉");
+        foodBean4 = new TBean(R.mipmap.test, "翘脚牛肉");
         list.add(foodBean1);
         list.add(foodBean2);
         list.add(foodBean3);

@@ -14,7 +14,7 @@ public class MyScrollView extends ScrollView {
     private static final int size = 4;  
     private View inner;
     private float y;  
-    private Rect normal = new Rect();;
+    private Rect normal = new Rect();
   
     public MyScrollView(Context context) {
         super(context);  

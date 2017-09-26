@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.LocationBean;
 import com.mssd.zl.ExperenceClassfiyActivity;
 import com.mssd.zl.R;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -23,10 +23,10 @@ import java.util.List;
  */
 
 public class Experience_Recycle_Top extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<LocationBean> list;
     private Activity activity;
 
-    public Experience_Recycle_Top(List<FoodBean> list, Activity activity) {
+    public Experience_Recycle_Top(List<LocationBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -39,7 +39,7 @@ public class Experience_Recycle_Top extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        LocationBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.experienceTopname.setText(info.getName());
         viewHolder.experienceTopimg.setImageResource(info.getImg());
@@ -57,7 +57,10 @@ public class Experience_Recycle_Top extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+       return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

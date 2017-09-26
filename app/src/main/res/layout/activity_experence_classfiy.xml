@@ -28,9 +28,10 @@
         android:layout_height="20px"
         android:background="@color/bottomBG" />
 
-    <ScrollView
+    <com.mssd.utils.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,5 +42,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
-    </ScrollView>
+    </com.mssd.utils.MyScrollView>
 </LinearLayout>

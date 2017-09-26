@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
 import com.mssd.data.HistoryIndexBean;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;

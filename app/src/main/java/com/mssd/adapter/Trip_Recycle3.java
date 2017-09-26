@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
-import com.mssd.data.TestBean;
+import com.mssd.data.TripNeatBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -22,10 +22,10 @@ import java.util.List;
  */
 
 public class Trip_Recycle3 extends RecyclerView.Adapter {
-    private List<TestBean> list;
+    private List<TripNeatBean.DataBean> list;
     private Activity activity;
 
-    public Trip_Recycle3(List<TestBean> list, Activity activity) {
+    public Trip_Recycle3(List<TripNeatBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -38,11 +38,11 @@ public class Trip_Recycle3 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TestBean info = list.get(position);
+        TripNeatBean.DataBean info = list.get(position+2);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.trip1name.setText(info.getTitle1());
-        viewHolder.trip2name.setText(info.getTitle2());
-        viewHolder.tripimg.setImageResource(info.getImg());
+        viewHolder.trip1name.setText(info.getStitle());
+        viewHolder.trip2name.setText(info.getSname());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.tripimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.trip1name.setTypeface(typeface);
@@ -51,7 +51,10 @@ public class Trip_Recycle3 extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size()-2;
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

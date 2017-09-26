@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.FoodBean;
+import com.mssd.data.TBean;
 import com.mssd.zl.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -21,10 +21,10 @@ import java.util.List;
  */
 
 public class Discover_Recycle1 extends RecyclerView.Adapter {
-    private List<FoodBean> list;
+    private List<TBean> list;
     private Activity activity;
 
-    public Discover_Recycle1(List<FoodBean> list, Activity activity) {
+    public Discover_Recycle1(List<TBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -37,7 +37,7 @@ public class Discover_Recycle1 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodBean info = list.get(position);
+        TBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.discover1name.setText(info.getName());
         viewHolder.discover1img.setImageResource(info.getImg());

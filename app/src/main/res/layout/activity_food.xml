@@ -9,7 +9,8 @@
     <com.mssd.utils.ObservableScrollView
         android:id="@+id/food_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:id="@+id/food_recycleTop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="-40px"/>
+                android:paddingRight="-40px" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -107,12 +108,19 @@
                 android:layout_height="20px"
                 android:background="@color/bottomBG" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/food_recycle2"
-                android:layout_width="wrap_content"
-                android:layout_height="480px"
-                android:paddingLeft="20px"
-                android:paddingRight="20px" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="480px">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/food_recycle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="480px"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px" />
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

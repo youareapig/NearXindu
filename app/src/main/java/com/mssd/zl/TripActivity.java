@@ -15,18 +15,26 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Trip_Recycle1;
 import com.mssd.adapter.Trip_Recycle2;
 import com.mssd.adapter.Trip_Recycle3;
-import com.mssd.data.FoodBean;
-import com.mssd.data.TestBean;
+import com.mssd.data.LocationBean;
+import com.mssd.data.TripNeatBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.SpacesItemDecoration1;
+import com.mssd.utils.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,31 +75,37 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     @BindView(R.id.trip_refresh)
     PullToRefreshLayout tripRefresh;
     private Unbinder unbinder;
-    private List<FoodBean> list;
-    private FoodBean foodBean1, foodBean2, foodBean3;
-    private List<String> list_1;
-    private List<TestBean> list_2;
-    private TestBean testBean1, testBean2;
+    private List<LocationBean> mlist = new ArrayList<>();
+    private LocationBean locationBean1, locationBean2, locationBean3;
+    private List<String> clist = new ArrayList<>();
+    private List<TripNeatBean.DataBean> list;
     private int heigh = 100;
+    private Trip_Recycle3 adapter;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
         unbinder = ButterKnife.bind(this);
-        initbean();
         changeFont();
         changeTitle();
-        getRecycle_Top();
-        getRecycle_Classfiy();
-        getRecycle_List();
+        initbean();
+
+        getNetListBean();
+
+
         tripRefresh.setRefreshListener(new BaseRefreshListener() {
             @Override
             public void refresh() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("tag","刷新");
+                        if (list != null) {
+                            list.clear();
+                        }
+                        page = 1;
+                        getNetListBean();
                         tripRefresh.finishRefresh();
                     }
                 }, 2000);
@@ -103,14 +117,52 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("tag","加载");
                         // 结束加载更多
+                        page++;
+                        getNetListBean();
+                        adapter.notifyDataSetChanged();
                         tripRefresh.finishLoadMore();
                     }
                 }, 2000);
 
             }
         });
+        addline();
+    }
+
+    private void initbean() {
+        locationBean1 = new LocationBean("画廊", R.mipmap.test);
+        locationBean2 = new LocationBean("好物", R.mipmap.test);
+        locationBean3 = new LocationBean("行者", R.mipmap.test);
+        mlist.add(locationBean1);
+        mlist.add(locationBean2);
+        mlist.add(locationBean3);
+        clist.add("茶空间");
+        clist.add("山野风光");
+        clist.add("城市小景");
+        clist.add("艺术人文");
+        clist.add("博物馆");
+        clist.add("建筑群");
+        clist.add("美学馆");
+        clist.add("书院");
+        tripRecycleTop.setAdapter(new Trip_Recycle1(mlist, TripActivity.this));
+
+        tripRecycleclassify.setAdapter(new Trip_Recycle2(clist, TripActivity.this));
+    }
+
+    private void addline() {
+        tripRecycleTop.addItemDecoration(new SpacesItemDecoration(20));
+        tripRecycleTop.setLayoutManager(new GridLayoutManager(TripActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
+        tripRecycleclassify.addItemDecoration(new SpacesItemDecoration1(20));
+        tripRecycleclassify.setLayoutManager(new GridLayoutManager(TripActivity.this, 4, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        tripRecycleList.addItemDecoration(new ListItemDecoration(20));
+        tripRecycleList.setLayoutManager(linearLayoutManager);
     }
 
     private void changeFont() {
@@ -124,50 +176,9 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         tripTx1.setTypeface(typeface1);
         tripTx2.setTypeface(typeface);
         tripText1.setTypeface(typeface1);
+
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new FoodBean(R.mipmap.test, "画廊");
-        foodBean2 = new FoodBean(R.mipmap.test, "好物");
-        foodBean3 = new FoodBean(R.mipmap.test, "行者");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-        list_1 = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            list_1.add("山野风光" + i);
-        }
-        list_2 = new ArrayList<>();
-        testBean1 = new TestBean(R.mipmap.test, "黄河啊", "你好多水啊");
-        testBean2 = new TestBean(R.mipmap.test, "黄河啊", "你好多水啊");
-        list_2.add(testBean1);
-        list_2.add(testBean2);
-    }
-
-    private void getRecycle_Top() {
-        tripRecycleTop.addItemDecoration(new SpacesItemDecoration(20));
-        tripRecycleTop.setLayoutManager(new GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false));
-        tripRecycleTop.setAdapter(new Trip_Recycle1(list, this));
-    }
-
-    private void getRecycle_Classfiy() {
-        tripRecycleclassify.addItemDecoration(new SpacesItemDecoration1(20));
-        tripRecycleclassify.setLayoutManager(new GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false));
-        tripRecycleclassify.setAdapter(new Trip_Recycle2(list_1, this));
-    }
-
-    private void getRecycle_List() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        tripRecycleList.addItemDecoration(new ListItemDecoration(20));
-        tripRecycleList.setLayoutManager(linearLayoutManager);
-        tripRecycleList.setAdapter(new Trip_Recycle3(list_2, this));
-    }
 
     @Override
     protected void onDestroy() {
@@ -195,5 +206,57 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
             tripTitle.setAlpha(alpha);
             tripTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
         }
+    }
+
+
+    private void getNetListBean() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
+        params.addBodyParameter("type", "3");
+        params.addBodyParameter("page", page + "");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "秘境数据请求错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                Log.e("tag", "秘境数据" + result);
+                list = new ArrayList<TripNeatBean.DataBean>();
+                Gson gson = new Gson();
+                TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    adapter = new Trip_Recycle3(list, TripActivity.this);
+                    tripRecycleList.setAdapter(adapter);
+                    ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
+                    tripShowText1.setText(list.get(0).getStitle());
+                    tripShowText2.setText(list.get(0).getStitle());
+                    ImageLoader.getInstance().displayImage(list.get(1).getUrl(), tripShow1Img);
+                    tripShow1Text1.setText(list.get(1).getStitle());
+                    tripShow1Text2.setText(list.get(1).getSname());
+                } else if (bean.getCode() == -2000) {
+                    ToastUtils.showShort(TripActivity.this, "没有更多数据");
+                } else {
+                    ToastUtils.showShort(TripActivity.this, "数据异常");
+                }
+                return false;
+            }
+        });
     }
 }

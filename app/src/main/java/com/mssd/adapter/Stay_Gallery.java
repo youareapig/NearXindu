@@ -3,15 +3,14 @@ package com.mssd.adapter;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.mssd.data.StayBean;
 import com.mssd.zl.R;
-import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -33,7 +32,10 @@ public class Stay_Gallery extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        if (list!=null){
+            return Integer.MAX_VALUE;
+        }
+        return 0;
     }
 
     @Override
@@ -65,15 +67,16 @@ public class Stay_Gallery extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.textView.setText(list.get(position % list.size()));
+        holder.textView.setText(list.get(position%list.size()));
+
         AssetManager assetManager = convertView.getContext().getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         holder.textView.setTypeface(typeface);
         if (selectItem == position % list.size()) {
-            holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 72);
+           // holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 72);
             holder.textView.setTextColor(android.graphics.Color.parseColor("#c69d39"));
         } else {
-            holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 62);
+           // holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 62);
         }
         return convertView;
     }
