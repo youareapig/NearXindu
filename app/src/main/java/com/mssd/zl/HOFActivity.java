@@ -176,6 +176,7 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
 
             @Override
             public boolean onCache(String result) {
+
                 return false;
             }
         });

@@ -109,9 +109,11 @@ public class Jiu extends Fragment {
                     list.addAll(bean.getData());
                     adapter = new ShiTang_Fragment_recycle(list, getActivity());
                     shitangFragmentRecycle.setAdapter(adapter);
+                    shitangFragmentPull.setCanLoadMore(true);
                 } else {
                     shitangFragmentRecycle.setVisibility(View.GONE);
                     isShow.setVisibility(View.VISIBLE);
+                    shitangFragmentPull.setCanLoadMore(false);
                 }
             }
 
@@ -151,8 +153,6 @@ public class Jiu extends Fragment {
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-//                    adapter = new ShiTang_Fragment_recycle(list, getActivity());
-//                    shitangFragmentRecycle.setAdapter(adapter);
                 }
             }
 

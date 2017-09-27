@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 
 
-        <com.mssd.utils.ObservableScrollView
+        <com.mssd.utils.MyScrollView
             android:id="@+id/experence_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -105,28 +105,8 @@
                 </com.zhy.autolayout.AutoRelativeLayout>
 
             </com.zhy.autolayout.AutoLinearLayout>
-        </com.mssd.utils.ObservableScrollView>
+        </com.mssd.utils.MyScrollView>
     </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/experence_title"
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/experence_titleName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="体验"
-            android:textColor="@color/mainUnChecked"
-            android:textSize="72px" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
-    </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoFrameLayout>

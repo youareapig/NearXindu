@@ -59,7 +59,7 @@ public class Experience_Recycle extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView experienceRecycletitle1,experienceRecycletitle2;
-        private ImageView experienceRecycleimg;
+        private ImageView experienceRecycleimg,shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +67,7 @@ public class Experience_Recycle extends RecyclerView.Adapter {
             experienceRecycletitle1 = (TextView) itemView.findViewById(R.id.experience_item_recycle_title1);
             experienceRecycletitle2 = (TextView) itemView.findViewById(R.id.experience_item_recycle_title2);
             experienceRecycleimg = (ImageView) itemView.findViewById(R.id.experience_item_recycle_img);
+            shoucang= (ImageView) itemView.findViewById(R.id.experience_item_recycle_shoucang);
         }
     }
 }

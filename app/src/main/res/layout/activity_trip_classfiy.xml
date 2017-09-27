@@ -8,13 +8,21 @@
     tools:context="com.mssd.zl.TripClassfiyActivity">
 
     <RelativeLayout style="@style/TitleStyle">
+        <RelativeLayout
+            android:id="@+id/tripclassfiy_back"
+            style="@style/backview">
 
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/tripclassfiyText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="山野风光"
             android:textColor="@color/mainUnChecked"
             android:textSize="72px" />
 
@@ -25,20 +33,35 @@
         android:layout_height="20px"
         android:background="@color/bottomBG" />
 
-    <ScrollView
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/tripclassfiy_pull"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="-20px">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tripclassfiyrecycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
 
-    </ScrollView>
+        <com.mssd.utils.MyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20px">
+
+                <TextView
+                    android:id="@+id/isShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="1200px"
+                    android:gravity="center"
+                    android:text="暂无更多数据"
+                    android:visibility="gone"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/tripclassfiyrecycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </com.mssd.utils.MyScrollView>
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 </LinearLayout>

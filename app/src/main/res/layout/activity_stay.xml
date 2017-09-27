@@ -30,14 +30,30 @@
 
                     <RelativeLayout
                         android:id="@+id/stay_tag"
-                        android:layout_width="match_parent"
-                        android:layout_height="160px">
+                        style="@style/TitleStyle">
+                        <RelativeLayout
+                            android:id="@+id/stay_back"
+                            style="@style/backview">
 
+                            <ImageView
+                                android:layout_width="26px"
+                                android:layout_height="49px"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/back_bai_icon" />
+                        </RelativeLayout>
                         <ImageView
                             android:id="@+id/stay_top_bg"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop" />
+                        <ImageView
+                            android:id="@+id/stay_search"
+                            android:layout_width="52px"
+                            android:layout_height="52px"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40px"
+                            android:src="@mipmap/search_hei" />
                     </RelativeLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView

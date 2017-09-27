@@ -26,8 +26,8 @@ import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.Exploration_Recycle_Food;
 import com.mssd.adapter.Exploration_Recycle_House;
 import com.mssd.adapter.Exploration_Recycle_Place;
-import com.mssd.adapter.TansuoBean;
-import com.mssd.data.TBean;
+import com.mssd.data.TansuoBean;
+import com.mssd.utils.MyScrollView;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
@@ -44,7 +44,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,7 +55,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Exploration extends Fragment implements ViewPager.OnPageChangeListener, ObservableScrollView.ScrollViewListener {
+public class Exploration extends Fragment implements ViewPager.OnPageChangeListener{
     @BindView(R.id.exploration_viewpager)
     ViewPager explorationViewpager;
     @BindView(R.id.exploration_viewpager_group)
@@ -78,32 +77,27 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     @BindView(R.id.exploration_recy_place)
     RecyclerView explorationRecyPlace;
     @BindView(R.id.exploration_scroll)
-    ObservableScrollView explorationScroll;
-    @BindView(R.id.exploration_titleName)
-    TextView explorationTitleName;
-    @BindView(R.id.exploration_title)
-    AutoRelativeLayout explorationTitle;
+    MyScrollView explorationScroll;
     @BindView(R.id.exploration_classfiy1_name)
     TextView explorationClassfiy1Name;
     @BindView(R.id.exploration_classfiy1)
-    AutoRelativeLayout explorationClassfiy1;
+    AutoLinearLayout explorationClassfiy1;
     @BindView(R.id.exploration_classfiy2_name)
     TextView explorationClassfiy2Name;
     @BindView(R.id.exploration_classfiy2)
-    AutoRelativeLayout explorationClassfiy2;
+    AutoLinearLayout explorationClassfiy2;
     @BindView(R.id.exploration_classfiy3_name)
     TextView explorationClassfiy3Name;
     @BindView(R.id.exploration_classfiy3)
-    AutoRelativeLayout explorationClassfiy3;
+    AutoLinearLayout explorationClassfiy3;
     @BindView(R.id.exploration_classfiy4_name)
     TextView explorationClassfiy4Name;
     @BindView(R.id.exploration_classfiy4)
-    AutoRelativeLayout explorationClassfiy4;
+    AutoLinearLayout explorationClassfiy4;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, viewpagerImage;
     private Handler handler;
     private ViewPagerThread thread;
-    private int heigh = 100;
     private List<TansuoBean.DataBean.BannerBean> bannerList;
     private List<TansuoBean.DataBean.MealBean> list1;
     private List<TansuoBean.DataBean.StayBean> list2;
@@ -115,7 +109,6 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         View view = inflater.inflate(R.layout.exploration, container, false);
         unbinder = ButterKnife.bind(this, view);
         changeFont();
-        changeTitle();
         getNetBean();
         return view;
     }
@@ -129,7 +122,6 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         explorationTx3.setTypeface(typeface1);
         explorationTx4.setTypeface(typeface1);
         explorationTx5.setTypeface(typeface1);
-        explorationTitleName.setTypeface(typeface1);
         explorationClassfiy1Name.setTypeface(typeface1);
         explorationClassfiy2Name.setTypeface(typeface1);
         explorationClassfiy3Name.setTypeface(typeface1);
@@ -217,27 +209,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         }
     }
 
-    private void changeTitle() {
-        ViewTreeObserver observer = explorationViewpager.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                explorationViewpager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                explorationScroll.setScrollViewListener(Exploration.this);
-            }
-        });
-    }
 
-    @Override
-    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-        if (y <= heigh) {
-            float scale = (float) y / heigh;
-            float alpha = (255 * scale);
-            explorationTitle.setVisibility(View.VISIBLE);
-            explorationTitle.setAlpha(alpha);
-            explorationTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        }
-    }
 
     @OnClick({R.id.exploration_classfiy1, R.id.exploration_classfiy2, R.id.exploration_classfiy3, R.id.exploration_classfiy4})
     public void onViewClicked(View view) {
@@ -300,7 +272,19 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "探索" + result);
+                Gson gson = new Gson();
+                TansuoBean bean = gson.fromJson(result, TansuoBean.class);
+                if (bean.getCode() == 1000) {
+                    bannerList = bean.getData().getBanner();
+                    list1 = bean.getData().getMeal();
+                    list2 = bean.getData().getStay();
+                    list3 = bean.getData().getLine();
+                    banner();
+                    getFood();
+                    getHouse();
+                    getPlace();
+                }
             }
 
             @Override
@@ -320,19 +304,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "探索" + result);
-                Gson gson = new Gson();
-                TansuoBean bean = gson.fromJson(result, TansuoBean.class);
-                if (bean.getCode() == 1000) {
-                    bannerList = bean.getData().getBanner();
-                    list1 = bean.getData().getMeal();
-                    list2 = bean.getData().getStay();
-                    list3 = bean.getData().getLine();
-                    banner();
-                    getFood();
-                    getHouse();
-                    getPlace();
-                }
+
                 return false;
             }
         });

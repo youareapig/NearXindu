@@ -207,6 +207,26 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "历史首页访问错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
                 Log.e("tag", "历史首页" + result);
                 Gson gson = new Gson();
                 HistoryIndexBean bean = gson.fromJson(result, HistoryIndexBean.class);
@@ -227,25 +247,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                 }else {
                     Toast.makeText(HistoryActivity.this,"请求错误",Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "历史首页访问错误");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-
-            @Override
-            public boolean onCache(String result) {
                 return false;
             }
         });

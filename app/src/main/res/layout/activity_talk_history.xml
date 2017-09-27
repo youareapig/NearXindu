@@ -14,6 +14,7 @@
             android:id="@+id/talk_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
         <LinearLayout
             android:id="@+id/talk_viewpager_group"
             android:layout_width="match_parent"
@@ -22,33 +23,43 @@
             android:layout_marginBottom="100px"
             android:gravity="center_horizontal"
             android:orientation="horizontal" />
+
         <TextView
             android:id="@+id/talk_tag"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#fff"
-            android:alpha="0.6"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="200px"
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="200px"/>
+            android:alpha="0.6"
+            android:background="#fff" />
+
         <TextView
             android:id="@+id/talk_viewpage_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="52px"
-            android:textColor="#fff"
             android:layout_above="@+id/talk_tag"
             android:layout_marginBottom="40px"
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
-            />
+            android:textColor="#fff"
+            android:textSize="52px" />
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px">
+    <RelativeLayout style="@style/TitleStyle">
+
+        <RelativeLayout
+            android:id="@+id/talk_back"
+            style="@style/backview">
+
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_bai_icon" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/talk_title"

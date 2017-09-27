@@ -57,13 +57,14 @@ public class Stay_Recycle extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView stayname;
-        private ImageView stayimg;
+        private ImageView stayimg,shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
             AutoUtils.autoSize(itemView);
             stayname = (TextView) itemView.findViewById(R.id.stay_item_recycle_text);
             stayimg = (ImageView) itemView.findViewById(R.id.stay_item_recycle_img);
+            shoucang= (ImageView) itemView.findViewById(R.id.stay_item_recycle_shoucang);
         }
     }
 }

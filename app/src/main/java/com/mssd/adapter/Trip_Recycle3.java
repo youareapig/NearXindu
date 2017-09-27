@@ -59,7 +59,7 @@ public class Trip_Recycle3 extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView trip1name,trip2name;
-        private ImageView tripimg;
+        private ImageView tripimg,shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +67,7 @@ public class Trip_Recycle3 extends RecyclerView.Adapter {
             trip1name = (TextView) itemView.findViewById(R.id.trip_item1_list_text1);
             trip2name = (TextView) itemView.findViewById(R.id.trip_item1_list_text2);
             tripimg = (ImageView) itemView.findViewById(R.id.trip_item1_list_img);
+            shoucang= (ImageView) itemView.findViewById(R.id.trip_item1_list_shoucang);
         }
     }
 }

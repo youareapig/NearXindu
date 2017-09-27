@@ -49,7 +49,10 @@ public class History_Recycle3 extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

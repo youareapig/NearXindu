@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mssd.data.TripClassfiyBean;
 import com.mssd.zl.R;
 import com.mssd.zl.TripClassfiyActivity;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -21,10 +22,10 @@ import java.util.List;
  */
 
 public class Trip_Recycle2 extends RecyclerView.Adapter {
-    private List<String> list;
+    private List<TripClassfiyBean> list;
     private Activity activity;
 
-    public Trip_Recycle2(List<String> list, Activity activity) {
+    public Trip_Recycle2(List<TripClassfiyBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -36,16 +37,19 @@ public class Trip_Recycle2 extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final TripClassfiyBean bean=list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.trip1name.setText(list.get(position));
+        viewHolder.trip1name.setText(bean.getName());
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.trip1name.setTypeface(typeface);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), TripClassfiyActivity.class);
+                Intent intent=new Intent(v.getContext(),TripClassfiyActivity.class);
+                intent.putExtra("cid",bean.getCid());
+                intent.putExtra("name",bean.getName());
                 v.getContext().startActivity(intent);
             }
         });

@@ -126,7 +126,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView shitangtext1, shitangtext2, shitangtext3;
-        private ImageView shitangimg;
+        private ImageView shitangimg,shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -135,6 +135,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
             shitangtext2 = (TextView) itemView.findViewById(R.id.shitang_fragment_recycle_text2);
             shitangtext3 = (TextView) itemView.findViewById(R.id.shitang_fragment_recycle_text3);
             shitangimg = (ImageView) itemView.findViewById(R.id.shitang_fragment_recycle_img);
+            shoucang= (ImageView) itemView.findViewById(R.id.shitang_fragment_recycle_shoucang);
         }
     }
 

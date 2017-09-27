@@ -72,8 +72,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     private int heigh = 100;
     private Stay_Recycle stay_recycle;
     private int page = 1;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private String mID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +123,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     }
 
     private void titleBean() {
-        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         list = new ArrayList<>();
         list.add("酒店");
         list.add("客栈");
@@ -148,29 +145,24 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                 page = 1;
                 switch (position % list.size()) {
                     case 0:
-                        editor.putString("cid", "8");
-                        editor.commit();
                         getBean("8");
+                        mID = "8";
                         break;
                     case 1:
-                        editor.putString("cid", "7");
-                        editor.commit();
                         getBean("7");
+                        mID = "7";
                         break;
                     case 2:
-                        editor.putString("cid", "6");
-                        editor.commit();
                         getBean("6");
+                        mID = "6";
                         break;
                     case 3:
-                        editor.putString("cid", "9");
-                        editor.commit();
                         getBean("9");
+                        mID = "9";
                         break;
                     case 4:
-                        editor.putString("cid", "10");
-                        editor.commit();
                         getBean("10");
+                        mID = "10";
                         break;
                 }
             }
@@ -240,10 +232,11 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                     stay_recycle = new Stay_Recycle(list_1, StayActivity.this);
                     stayRecycle.setAdapter(stay_recycle);
                     stay_recycle.notifyDataSetChanged();
+                    stayPull.setCanLoadMore(true);
                 } else if (bean.getCode() == -2000) {
-                    Log.e("tag", "没有数据");
                     stayRecycle.setVisibility(View.GONE);
                     isShow.setVisibility(View.VISIBLE);
+                    stayPull.setCanLoadMore(false);
                 }
             }
 
@@ -271,10 +264,9 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     }
 
     private void getLoadmore() {
-        String pullcid = sharedPreferences.getString("cid", "0");
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "2");
-        params.addBodyParameter("cid", pullcid);
+        params.addBodyParameter("cid", mID);
         params.addBodyParameter("page", page + "");
         Log.e("tag", "分页码" + page);
         x.http().post(params, new Callback.CacheCallback<String>() {

@@ -303,7 +303,16 @@
         android:id="@+id/history_Title"
         style="@style/TitleStyle"
         android:visibility="gone">
+        <RelativeLayout
+            android:id="@+id/history_back"
+            style="@style/backview">
 
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/historyText1"
             android:layout_width="wrap_content"

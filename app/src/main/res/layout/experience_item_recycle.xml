@@ -30,5 +30,12 @@
         android:layout_marginTop="40px"
         android:textColor="#888888"
         android:textSize="44px" />
-
+    <ImageView
+        android:id="@+id/experience_item_recycle_shoucang"
+        android:layout_width="58px"
+        android:layout_height="54px"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="40px"
+        android:src="@mipmap/shoucang" />
 </com.zhy.autolayout.AutoRelativeLayout>

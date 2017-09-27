@@ -26,7 +26,9 @@ import com.mssd.data.ExperienceBean;
 import com.mssd.data.ExperienceNextBean;
 import com.mssd.data.LocationBean;
 import com.mssd.data.TestBean;
+import com.mssd.data.TiyanClassfiyBean;
 import com.mssd.utils.ListItemDecoration;
+import com.mssd.utils.MyScrollView;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
@@ -48,7 +50,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Experience extends Fragment implements ObservableScrollView.ScrollViewListener {
+public class Experience extends Fragment {
     @BindView(R.id.experience_recycleTop)
     RecyclerView experienceRecycleTop;
     @BindView(R.id.experience_tx1)
@@ -58,28 +60,21 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
     @BindView(R.id.experence_recycle)
     RecyclerView experenceRecycle;
     @BindView(R.id.experence_scroll)
-    ObservableScrollView experenceScroll;
-    @BindView(R.id.experence_titleName)
-    TextView experenceTitleName;
-    @BindView(R.id.experence_title)
-    AutoRelativeLayout experenceTitle;
+    MyScrollView experenceScroll;
     @BindView(R.id.experence_pull)
     PullToRefreshLayout experencePull;
     private Unbinder unbinder;
-    private List<LocationBean> list = new ArrayList<>();
     private List<ExperienceNextBean.DataBean> tlist;
-    private LocationBean locationBean1, locationBean2, locationBean3, locationBean4, locationBean5;
     private Experience_Recycle adapter;
-    private int heigh = 100;
     private int page = 1;
-
+    private List<TiyanClassfiyBean> mlist;
+    private TiyanClassfiyBean bean1,bean2,bean3,bean4,bean5;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.experience, container, false);
         unbinder = ButterKnife.bind(this, view);
         changeFont();
-        changeTitle();
         initbean();
         getNetListBean();
 
@@ -117,18 +112,19 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
     }
 
     private void initbean() {
-        locationBean1 = new LocationBean("户外活动", R.mipmap.test);
-        locationBean2 = new LocationBean("艺术探究", R.mipmap.test);
-        locationBean3 = new LocationBean("匠心手作", R.mipmap.test);
-        locationBean4 = new LocationBean("茶会雅事", R.mipmap.test);
-        locationBean5 = new LocationBean("生活美学", R.mipmap.test);
-        list.add(locationBean1);
-        list.add(locationBean2);
-        list.add(locationBean3);
-        list.add(locationBean4);
-        list.add(locationBean5);
+        mlist=new ArrayList<>();
+        bean1=new TiyanClassfiyBean("户外活动", R.mipmap.test,"19");
+        bean2=new TiyanClassfiyBean("艺术探究", R.mipmap.test,"20");
+        bean3=new TiyanClassfiyBean("匠心手作", R.mipmap.test,"21");
+        bean4=new TiyanClassfiyBean("茶会雅事", R.mipmap.test,"22");
+        bean5=new TiyanClassfiyBean("生活美学", R.mipmap.test,"23");
+        mlist.add(bean1);
+        mlist.add(bean2);
+        mlist.add(bean3);
+        mlist.add(bean4);
+        mlist.add(bean5);
 
-        experienceRecycleTop.setAdapter(new Experience_Recycle_Top(list, getActivity()));
+        experienceRecycleTop.setAdapter(new Experience_Recycle_Top(mlist, getActivity()));
 
     }
 
@@ -151,7 +147,6 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         experienceTx1.setTypeface(typeface1);
         experienceTx2.setTypeface(typeface);
-        experenceTitleName.setTypeface(typeface1);
     }
 
 
@@ -161,27 +156,7 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
         unbinder.unbind();
     }
 
-    private void changeTitle() {
-        ViewTreeObserver observer = experienceRecycleTop.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                experienceRecycleTop.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                experenceScroll.setScrollViewListener(Experience.this);
-            }
-        });
-    }
 
-    @Override
-    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-        if (y <= heigh) {
-            float scale = (float) y / heigh;
-            float alpha = (255 * scale);
-            experenceTitle.setVisibility(View.VISIBLE);
-            experenceTitle.setAlpha(alpha);
-            experenceTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        }
-    }
 
 
     private void getNetListBean() {
@@ -191,7 +166,18 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "体验数据" + result);
+                tlist = new ArrayList<ExperienceNextBean.DataBean>();
+                Gson gson = new Gson();
+                ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
+                if (bean.getCode() == 2000) {
+                    tlist.addAll(bean.getData());
+                    adapter = new Experience_Recycle(tlist, getActivity());
+                    experenceRecycle.setAdapter(adapter);
+                    experencePull.setCanLoadMore(true);
+                }else {
+                    experencePull.setCanLoadMore(false);
+                }
             }
 
             @Override
@@ -211,15 +197,7 @@ public class Experience extends Fragment implements ObservableScrollView.ScrollV
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "体验数据" + result);
-                tlist = new ArrayList<ExperienceNextBean.DataBean>();
-                Gson gson = new Gson();
-                ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
-                if (bean.getCode() == 2000) {
-                    tlist.addAll(bean.getData());
-                    adapter = new Experience_Recycle(tlist, getActivity());
-                    experenceRecycle.setAdapter(adapter);
-                }
+
                 return false;
             }
         });

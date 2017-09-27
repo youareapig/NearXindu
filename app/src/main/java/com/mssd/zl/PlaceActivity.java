@@ -11,6 +11,7 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.mssd.adapter.TestAdapter;
 import com.mssd.place.Eat;
 import com.mssd.place.Stay;
+import com.mssd.place.Tiyan;
 import com.mssd.place.Trip;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -51,11 +52,13 @@ public class PlaceActivity extends AutoLayoutActivity {
         list.add("食");
         list.add("宿");
         list.add("行");
+        list.add("体验");
         list1.add(new Eat());
         list1.add(new Stay());
         list1.add(new Trip());
+        list1.add(new Tiyan());
         placeViewpager.setAdapter(new TestAdapter(getSupportFragmentManager(), list, list1));
-        placeViewpager.setOffscreenPageLimit(3);
+        placeViewpager.setOffscreenPageLimit(4);
         placeTab.setupWithViewPager(placeViewpager);
         placeViewpager.setCurrentItem(0);
 

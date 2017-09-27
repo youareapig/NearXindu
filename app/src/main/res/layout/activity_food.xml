@@ -113,10 +113,10 @@
                 android:layout_height="480px">
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/food_recycle2"
                     android:layout_width="wrap_content"
                     android:layout_height="480px"
+                    android:layout_centerHorizontal="true"
                     android:paddingLeft="20px"
                     android:paddingRight="20px" />
             </RelativeLayout>
@@ -138,9 +138,19 @@
 
     <RelativeLayout
         android:id="@+id/food_title"
-        android:layout_width="match_parent"
-        android:layout_height="160px"
+        style="@style/TitleStyle"
         android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/food_back"
+            style="@style/backview">
+
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/food_titleName"
@@ -156,5 +166,14 @@
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="#bfbfbf" />
+
+        <ImageView
+            android:id="@+id/food_search"
+            android:layout_width="52px"
+            android:layout_height="52px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40px"
+            android:src="@mipmap/search_hei" />
     </RelativeLayout>
 </FrameLayout>

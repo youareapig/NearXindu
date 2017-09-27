@@ -21,6 +21,7 @@ import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
 import com.mssd.data.TBean;
+import com.mssd.utils.MyScrollView;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
@@ -37,7 +38,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Discover extends Fragment implements ObservableScrollView.ScrollViewListener {
+public class Discover extends Fragment{
     @BindView(R.id.discover_tx1)
     TextView discoverTx1;
     @BindView(R.id.discover_tx2)
@@ -53,15 +54,10 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
     @BindView(R.id.discover_Topimg)
     ImageView discoverTopimg;
     @BindView(R.id.discover_scroll)
-    ObservableScrollView discoverScroll;
-    @BindView(R.id.discover_titleName)
-    TextView discoverTitleName;
-    @BindView(R.id.discover_title)
-    AutoRelativeLayout discoverTitle;
+    MyScrollView discoverScroll;
     private Unbinder unbinder;
     private TBean foodBean1, foodBean2, foodBean3, foodBean4;
     private List<TBean> list;
-    private int heigh=100;
 
     @Nullable
     @Override
@@ -70,7 +66,6 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
         unbinder = ButterKnife.bind(this, view);
         initbean();
         changeFont();
-        changeTitle();
         getRecycler1();
         getRecycler2();
         getRecycler3();
@@ -96,7 +91,6 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         discoverTx1.setTypeface(typeface1);
         discoverTx2.setTypeface(typeface);
-        discoverTitleName.setTypeface(typeface1);
     }
 
     private void getRecycler1() {
@@ -129,25 +123,5 @@ public class Discover extends Fragment implements ObservableScrollView.ScrollVie
         unbinder.unbind();
     }
 
-    private void changeTitle() {
-        ViewTreeObserver observer = discoverTopimg.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                discoverTopimg.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                discoverScroll.setScrollViewListener(Discover.this);
-            }
-        });
-    }
 
-    @Override
-    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-        if (y <= heigh) {
-            float scale = (float) y / heigh;
-            float alpha = (255 * scale);
-            discoverTitle.setVisibility(View.VISIBLE);
-            discoverTitle.setAlpha(alpha);
-            discoverTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        }
-    }
 }

@@ -179,7 +179,13 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag","家宴"+result);
+                Gson gson=new Gson();
+                JiaYanBean bean=gson.fromJson(result,JiaYanBean.class);
+                if (bean.getCode()==2000){
+                    list=bean.getData();
+                    getViewpager();
+                }
             }
 
             @Override
@@ -199,13 +205,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag","家宴"+result);
-                Gson gson=new Gson();
-                JiaYanBean bean=gson.fromJson(result,JiaYanBean.class);
-                if (bean.getCode()==2000){
-                    list=bean.getData();
-                    getViewpager();
-                }
+
                 return false;
             }
         });

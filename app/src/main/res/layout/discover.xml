@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.mssd.utils.ObservableScrollView
+    <com.mssd.utils.MyScrollView
         android:id="@+id/discover_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -96,20 +96,20 @@
                     android:src="@mipmap/test" />
 
                 <ImageView
-                    android:layout_width="50px"
-                    android:layout_height="50px"
+                    android:layout_width="55px"
+                    android:layout_height="48px"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#fff" />
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/discover_recycle1"
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20px"
                 android:layout_marginRight="20px"
-                android:layout_gravity="center"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -124,20 +124,20 @@
                     android:src="@mipmap/test" />
 
                 <ImageView
-                    android:layout_width="50px"
-                    android:layout_height="50px"
+                    android:layout_width="55px"
+                    android:layout_height="48px"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#fff" />
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/discover_recycle2"
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20px"
                 android:layout_marginRight="20px"
-                android:layout_gravity="center"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -152,20 +152,20 @@
                     android:src="@mipmap/test" />
 
                 <ImageView
-                    android:layout_width="50px"
-                    android:layout_height="50px"
+                    android:layout_width="55px"
+                    android:layout_height="48px"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#fff" />
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/discover_recycle3"
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20px"
                 android:layout_marginRight="20px"
-                android:layout_gravity="center"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -191,33 +191,15 @@
                 android:id="@+id/discover_recycle4"
                 android:layout_width="wrap_content"
                 android:layout_height="680px"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20px"
                 android:layout_marginRight="20px"
-                android:layout_marginTop="40px"
-                android:layout_gravity="center"/>
+                android:layout_marginTop="40px" />
         </com.zhy.autolayout.AutoLinearLayout>
 
 
-    </com.mssd.utils.ObservableScrollView>
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/discover_title"
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:visibility="gone">
+    </com.mssd.utils.MyScrollView>
 
-        <TextView
-            android:id="@+id/discover_titleName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="发现"
-            android:textColor="@color/mainUnChecked"
-            android:textSize="72px" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#bfbfbf"
-            android:layout_alignParentBottom="true"/>
-    </com.zhy.autolayout.AutoRelativeLayout>
+
 
 </com.zhy.autolayout.AutoFrameLayout>

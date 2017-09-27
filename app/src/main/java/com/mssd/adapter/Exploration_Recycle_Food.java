@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.TBean;
+import com.mssd.data.TansuoBean;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -49,7 +49,10 @@ public class Exploration_Recycle_Food extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+        return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

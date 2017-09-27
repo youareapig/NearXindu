@@ -1,18 +1,27 @@
 package com.mssd.place;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.mssd.adapter.ShiTang_Fragment_recycle;
-import com.mssd.adapter.Test1;
+import com.google.gson.Gson;
+import com.mssd.adapter.WantEatAdapter;
 import com.mssd.data.TestBean;
+import com.mssd.data.WantEatBean;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,36 +35,78 @@ import butterknife.Unbinder;
  */
 
 public class Eat extends Fragment {
-    @BindView(R.id.shitang_fragment_recycle)
-    RecyclerView shitangFragmentRecycle;
+    @BindView(R.id.want_eat_recycle)
+    RecyclerView wantEatRecycle;
+    @BindView(R.id.isShow)
+    TextView isShow;
     private Unbinder unbinder;
-    private List<TestBean> list;
-    private TestBean testBean1, testBean2;
+    private List<WantEatBean.DataBean> list;
+    private SharedPreferences sharedPreferences;
+    private String userID;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.shitangfragment, container, false);
+        View view = inflater.inflate(R.layout.want, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
-        getBean();
+        getNetBean();
         return view;
     }
 
     private void initbean() {
-        list = new ArrayList<>();
-        testBean1 = new TestBean(R.mipmap.test, "一个神奇的地方", "洪雅县");
-        testBean2 = new TestBean(R.mipmap.test, "一个很神奇的地方", "九寨沟");
-        list.add(testBean1);
-        list.add(testBean2);
+        sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
     }
-    private void getBean() {
-        shitangFragmentRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        shitangFragmentRecycle.setAdapter(new Test1(list, getActivity()));
-    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void getNetBean() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
+        params.addBodyParameter("type", "1");
+        params.addBodyParameter("uid", "1");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "想去吃" + result);
+                Gson gson=new Gson();
+                WantEatBean bean=gson.fromJson(result,WantEatBean.class);
+                if (bean.getCode()==3000){
+                    list=bean.getData();
+                    wantEatRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                    wantEatRecycle.setAdapter(new WantEatAdapter(list, getActivity()));
+                    wantEatRecycle.setVisibility(View.VISIBLE);
+                    isShow.setVisibility(View.GONE);
+                }else {
+                    wantEatRecycle.setVisibility(View.GONE);
+                    isShow.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 }

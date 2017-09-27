@@ -79,7 +79,13 @@ public class GalleryActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "画廊数据" + result);
+                Gson gson = new Gson();
+                GalleryBean bean = gson.fromJson(result, GalleryBean.class);
+                if (bean.getCode() == 2000) {
+                    list = bean.getData();
+                    getBean();
+                }
             }
 
             @Override
@@ -99,13 +105,7 @@ public class GalleryActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "画廊数据" + result);
-                Gson gson = new Gson();
-                GalleryBean bean = gson.fromJson(result, GalleryBean.class);
-                if (bean.getCode() == 2000) {
-                    list = bean.getData();
-                    getBean();
-                }
+
                 return false;
             }
         });

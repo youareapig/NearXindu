@@ -114,7 +114,21 @@ public class PedestrianActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "行者" + result);
+                Gson gson = new Gson();
+                PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    pedestrianRecycle.setVisibility(View.VISIBLE);
+                    isShow.setVisibility(View.GONE);
+                    adapter = new Pedestrian_Recycle(list, PedestrianActivity.this);
+                    pedestrianRecycle.setAdapter(adapter);
+                    pedestrianPull.setCanLoadMore(true);
+                } else if (bean.getCode() == -2000) {
+                    pedestrianRecycle.setVisibility(View.GONE);
+                    isShow.setVisibility(View.VISIBLE);
+                    pedestrianPull.setCanLoadMore(false);
+                }
             }
 
             @Override
@@ -134,19 +148,7 @@ public class PedestrianActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "行者" + result);
-                Gson gson = new Gson();
-                PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
-                    pedestrianRecycle.setVisibility(View.VISIBLE);
-                    isShow.setVisibility(View.GONE);
-                    adapter = new Pedestrian_Recycle(list, PedestrianActivity.this);
-                    pedestrianRecycle.setAdapter(adapter);
-                } else if (bean.getCode() == -2000) {
-                    pedestrianRecycle.setVisibility(View.GONE);
-                    isShow.setVisibility(View.VISIBLE);
-                }
+
                 return false;
             }
         });
@@ -159,7 +161,14 @@ public class PedestrianActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "行者" + result);
+                Gson gson = new Gson();
+                PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                } else if (bean.getCode() == -2000) {
+                    ToastUtils.showShort(PedestrianActivity.this, "加载完成");
+                }
             }
 
             @Override
@@ -179,14 +188,7 @@ public class PedestrianActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "行者" + result);
-                Gson gson = new Gson();
-                PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
-                } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(PedestrianActivity.this, "加载完成");
-                }
+
                 return false;
             }
         });

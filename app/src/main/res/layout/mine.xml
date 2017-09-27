@@ -40,8 +40,8 @@
                         android:id="@+id/mine_head"
                         android:layout_width="200px"
                         android:layout_height="200px"
-                        android:scaleType="centerCrop"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/mine_name"
@@ -75,11 +75,11 @@
 
                 <ImageView
                     android:id="@+id/mine_tag1"
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="54px"
+                    android:layout_height="51px"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/notice_icon" />
 
                 <TextView
                     android:id="@+id/mine_text_notice"
@@ -93,12 +93,12 @@
                     android:textSize="52px" />
 
                 <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="18px"
+                    android:layout_height="30px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/right_small_icon"/>
 
                 <TextView
                     style="@style/fengexian"
@@ -112,11 +112,11 @@
 
                 <ImageView
                     android:id="@+id/mine_tag2"
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="56px"
+                    android:layout_height="52px"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/place_icon" />
 
                 <TextView
                     android:id="@+id/mine_text_place"
@@ -130,12 +130,12 @@
                     android:textSize="52px" />
 
                 <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="18px"
+                    android:layout_height="30px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/right_small_icon"/>
 
                 <TextView
                     style="@style/fengexian"
@@ -149,11 +149,11 @@
 
                 <ImageView
                     android:id="@+id/mine_tag3"
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="58px"
+                    android:layout_height="54px"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/setting_cion" />
 
                 <TextView
                     android:id="@+id/mine_text_setting"
@@ -167,12 +167,12 @@
                     android:textSize="52px" />
 
                 <ImageView
-                    android:layout_width="40px"
-                    android:layout_height="40px"
+                    android:layout_width="18px"
+                    android:layout_height="30px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40px"
-                    android:background="#f6f" />
+                    android:src="@mipmap/right_small_icon" />
 
                 <TextView
                     style="@style/fengexian"

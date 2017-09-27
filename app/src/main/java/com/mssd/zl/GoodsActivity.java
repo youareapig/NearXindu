@@ -42,7 +42,6 @@ public class GoodsActivity extends AutoLayoutActivity {
     PullToRefreshLayout goodsPull;
     private Unbinder unbinder;
     private List<GoodsBean.DataBean> list = new ArrayList<>();
-    private TBean foodBean1, foodBean2;
     private Goods_Recycle adapter;
     private int page = 1;
 
@@ -116,7 +115,21 @@ public class GoodsActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "好物" + result);
+                Gson gson = new Gson();
+                GoodsBean bean = gson.fromJson(result, GoodsBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    adapter = new Goods_Recycle(list, GoodsActivity.this);
+                    goodsRecycle.setAdapter(adapter);
+                    goodsRecycle.setVisibility(View.VISIBLE);
+                    isShow.setVisibility(View.GONE);
+                    goodsPull.setCanLoadMore(true);
+                } else if (bean.getCode() == -2000) {
+                    goodsRecycle.setVisibility(View.GONE);
+                    isShow.setVisibility(View.VISIBLE);
+                    goodsPull.setCanLoadMore(false);
+                }
             }
 
             @Override
@@ -136,19 +149,7 @@ public class GoodsActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "好物" + result);
-                Gson gson = new Gson();
-                GoodsBean bean = gson.fromJson(result, GoodsBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
-                    adapter = new Goods_Recycle(list, GoodsActivity.this);
-                    goodsRecycle.setAdapter(adapter);
-                    goodsRecycle.setVisibility(View.VISIBLE);
-                    isShow.setVisibility(View.GONE);
-                } else if (bean.getCode() == -2000) {
-                    goodsRecycle.setVisibility(View.GONE);
-                    isShow.setVisibility(View.VISIBLE);
-                }
+
                 return false;
             }
         });
@@ -161,7 +162,15 @@ public class GoodsActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.e("tag", "好物" + result);
+                Gson gson = new Gson();
+                GoodsBean bean = gson.fromJson(result, GoodsBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
 
+                } else if (bean.getCode() == -2000) {
+                    ToastUtils.showShort(GoodsActivity.this, "加载完成");
+                }
             }
 
             @Override
@@ -181,15 +190,7 @@ public class GoodsActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "好物" + result);
-                Gson gson = new Gson();
-                GoodsBean bean = gson.fromJson(result, GoodsBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
 
-                } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(GoodsActivity.this, "加载完成");
-                }
                 return false;
             }
         });

@@ -293,7 +293,17 @@ public class Mine extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "获取用户信息" + result);
+                Gson gson = new Gson();
+                UserBean bean = gson.fromJson(result, UserBean.class);
+                if (bean.getCode() == 3000) {
+                    if (bean.getData().getHeadpic() != "") {
+                        ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
+                    }
+                    if (bean.getData().getUname() != "") {
+                        mineName.setText(bean.getData().getUname());
+                    }
+                }
             }
 
             @Override
@@ -313,17 +323,6 @@ public class Mine extends Fragment {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "获取用户信息" + result);
-                Gson gson = new Gson();
-                UserBean bean = gson.fromJson(result, UserBean.class);
-                if (bean.getCode() == 3000) {
-                    if (bean.getData().getHeadpic() != "") {
-                        ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
-                    }
-                    if (bean.getData().getUname() != "") {
-                        mineName.setText(bean.getData().getUname());
-                    }
-                }
                 return false;
             }
         });

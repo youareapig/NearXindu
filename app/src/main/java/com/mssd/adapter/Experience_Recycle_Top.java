@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.LocationBean;
+import com.mssd.data.TiyanClassfiyBean;
 import com.mssd.zl.ExperenceClassfiyActivity;
 import com.mssd.zl.R;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -23,10 +24,10 @@ import java.util.List;
  */
 
 public class Experience_Recycle_Top extends RecyclerView.Adapter {
-    private List<LocationBean> list;
+    private List<TiyanClassfiyBean> list;
     private Activity activity;
 
-    public Experience_Recycle_Top(List<LocationBean> list, Activity activity) {
+    public Experience_Recycle_Top(List<TiyanClassfiyBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -39,10 +40,10 @@ public class Experience_Recycle_Top extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LocationBean info = list.get(position);
+        final TiyanClassfiyBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.experienceTopname.setText(info.getName());
-        viewHolder.experienceTopimg.setImageResource(info.getImg());
+        viewHolder.experienceTopimg.setImageResource(info.getIcon());
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.experienceTopname.setTypeface(typeface);
@@ -50,6 +51,8 @@ public class Experience_Recycle_Top extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ExperenceClassfiyActivity.class);
+                intent.putExtra("cid",info.getId());
+                intent.putExtra("name",info.getName());
                 v.getContext().startActivity(intent);
             }
         });

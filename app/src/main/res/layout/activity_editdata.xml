@@ -8,8 +8,18 @@
     tools:context="com.mssd.zl.EditdataActivity">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px">
+        style="@style/TitleStyle">
+
+        <RelativeLayout
+            android:id="@+id/bianji_back"
+            style="@style/backview">
+
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/bianji_title"
@@ -147,8 +157,8 @@
                 android:layout_marginLeft="152px"
                 android:layout_toRightOf="@+id/bianji_site"
                 android:gravity="center_vertical"
-                android:textColor="#515151"
                 android:text="请选择"
+                android:textColor="#515151"
                 android:textSize="50px" />
 
             <TextView
@@ -180,8 +190,8 @@
                 android:layout_toRightOf="@+id/bianji_sign"
                 android:background="@null"
                 android:gravity="start"
-                android:maxLength="50"
                 android:hint="个性签名....."
+                android:maxLength="50"
                 android:textColor="#515151"
                 android:textCursorDrawable="@drawable/cursor"
                 android:textSize="50px" />

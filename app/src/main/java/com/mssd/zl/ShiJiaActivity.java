@@ -118,7 +118,21 @@ public class ShiJiaActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "食家" + result);
+                Gson gson = new Gson();
+                ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
+                if (bean.getCode() == 2000) {
+                    shijiaRecycle.setVisibility(View.VISIBLE);
+                    isShow.setVisibility(View.GONE);
+                    list.addAll(bean.getData());
+                    adapter = new ShiJia_Recycle(list, ShiJiaActivity.this);
+                    shijiaRecycle.setAdapter(adapter);
+                    shijiaPull.setCanLoadMore(true);
+                } else if (bean.getCode() == -2000) {
+                    shijiaRecycle.setVisibility(View.GONE);
+                    isShow.setVisibility(View.VISIBLE);
+                    shijiaPull.setCanLoadMore(false);
+                }
             }
 
             @Override
@@ -138,19 +152,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "食家" + result);
-                Gson gson = new Gson();
-                ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
-                if (bean.getCode() == 2000) {
-                    shijiaRecycle.setVisibility(View.VISIBLE);
-                    isShow.setVisibility(View.GONE);
-                    list.addAll(bean.getData());
-                    adapter = new ShiJia_Recycle(list, ShiJiaActivity.this);
-                    shijiaRecycle.setAdapter(adapter);
-                } else if (bean.getCode() == -2000) {
-                    shijiaRecycle.setVisibility(View.GONE);
-                    isShow.setVisibility(View.VISIBLE);
-                }
+
                 return false;
             }
         });
@@ -162,7 +164,14 @@ public class ShiJiaActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "食家" + result);
+                Gson gson = new Gson();
+                ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                } else if (bean.getCode() == -2000) {
+                    ToastUtils.showShort(ShiJiaActivity.this, "加载完成");
+                }
             }
 
             @Override
@@ -182,14 +191,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "食家" + result);
-                Gson gson = new Gson();
-                ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
-                } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(ShiJiaActivity.this, "加载完成");
-                }
+
                 return false;
             }
         });

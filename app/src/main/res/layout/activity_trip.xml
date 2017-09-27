@@ -91,8 +91,7 @@
                         android:id="@+id/trip_show_img"
                         android:layout_width="match_parent"
                         android:layout_height="600px"
-                        android:scaleType="centerCrop"
-                        />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/trip_show_text1"
@@ -115,6 +114,14 @@
                         android:text="山岔沟"
                         android:textColor="#888888"
                         android:textSize="44px" />
+                    <ImageView
+                        android:id="@+id/trip_show_shoucang1"
+                        android:layout_width="58px"
+                        android:layout_height="54px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="40px"
+                        android:layout_marginTop="40px"
+                        android:src="@mipmap/shoucang" />
                 </RelativeLayout>
 
                 <TextView
@@ -155,6 +162,14 @@
                         android:text="升庵桂湖"
                         android:textColor="#888888"
                         android:textSize="44px" />
+                    <ImageView
+                        android:id="@+id/trip_show_shoucang2"
+                        android:layout_width="58px"
+                        android:layout_height="54px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="40px"
+                        android:layout_marginTop="40px"
+                        android:src="@mipmap/shoucang" />
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -183,7 +198,16 @@
             android:id="@+id/trip_Title"
             style="@style/TitleStyle"
             android:visibility="gone">
+            <RelativeLayout
+                android:id="@+id/trip_back"
+                style="@style/backview">
 
+                <ImageView
+                    android:layout_width="26px"
+                    android:layout_height="49px"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/back_hei_icon" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/tripText1"
                 android:layout_width="wrap_content"
@@ -198,6 +222,15 @@
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
                 android:background="#bfbfbf" />
+
+            <ImageView
+                android:id="@+id/trip_search"
+                android:layout_width="52px"
+                android:layout_height="52px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40px"
+                android:src="@mipmap/search_hei" />
         </RelativeLayout>
     </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 </FrameLayout>

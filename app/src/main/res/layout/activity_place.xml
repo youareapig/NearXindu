@@ -8,9 +8,17 @@
     tools:context="com.mssd.zl.ShiTangActivity">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px">
+        style="@style/TitleStyle">
+        <RelativeLayout
+            android:id="@+id/place_back"
+            style="@style/backview">
 
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/place_title"
             android:layout_width="wrap_content"
@@ -34,13 +42,14 @@
         android:layout_width="match_parent"
         android:layout_height="130px"
         app:xTabIndicatorWidth="90px"
+        app:xTabDividerWidthWidthText="true"
         app:xTabMode="scrollable"
         app:xTabIndicatorColor="@color/mainChecked"
         app:xTabIndicatorHeight="4px"
         app:xTabSelectedTextColor="@color/mainChecked"
         app:xTabTextColor="@color/mainUnChecked"
         app:xTabTextSize="62px"
-        app:xTabDisplayNum="3" />
+        app:xTabDisplayNum="4" />
 
 
     <android.support.v4.view.ViewPager

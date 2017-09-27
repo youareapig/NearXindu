@@ -1,4 +1,4 @@
-package com.mssd.adapter;
+package com.mssd.data;
 
 import java.util.List;
 

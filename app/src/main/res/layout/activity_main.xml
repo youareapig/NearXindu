@@ -32,11 +32,11 @@
 
             <ImageView
                 android:id="@+id/exploration_icon"
-                android:layout_width="50px"
-                android:layout_height="50px"
+                android:layout_width="68px"
+                android:layout_height="69px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20px"
-                android:background="#f0f0" />
+                android:src="@mipmap/tansuo1_icon" />
 
             <TextView
                 android:id="@+id/exploration_name"
@@ -58,11 +58,11 @@
 
             <ImageView
                 android:id="@+id/discover_icon"
-                android:layout_width="50px"
-                android:layout_height="50px"
+                android:layout_width="75px"
+                android:layout_height="68px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20px"
-                android:background="#f0f0" />
+                android:src="@mipmap/faxian_icon" />
 
             <TextView
                 android:id="@+id/discover_name"
@@ -84,11 +84,11 @@
 
             <ImageView
                 android:id="@+id/experience_icon"
-                android:layout_width="50px"
-                android:layout_height="50px"
+                android:layout_width="76px"
+                android:layout_height="69px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20px"
-                android:background="#f0f0" />
+                android:src="@mipmap/tiyan_icon"/>
 
             <TextView
                 android:id="@+id/experience_name"
@@ -110,11 +110,11 @@
 
             <ImageView
                 android:id="@+id/mine_icon"
-                android:layout_width="50px"
-                android:layout_height="50px"
+                android:layout_width="63px"
+                android:layout_height="64px"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20px"
-                android:background="#f0f0" />
+                android:src="@mipmap/wode_icon" />
 
             <TextView
                 android:id="@+id/mine_name"

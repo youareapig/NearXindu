@@ -94,6 +94,10 @@ public class MainActivity extends AutoLayoutActivity {
             experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
             discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
             mineName.setTextColor(getResources().getColor(R.color.mainChecked));
+            explorationIcon.setImageResource(R.mipmap.tansuo_icon);
+            experienceIcon.setImageResource(R.mipmap.tiyan_icon);
+            discoverIcon.setImageResource(R.mipmap.faxian_icon);
+            mineIcon.setImageResource(R.mipmap.wode1_icon);
         } else if (currentIndex == 0) {
             explorationName.setTextColor(getResources().getColor(R.color.mainChecked));
             experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
@@ -235,6 +239,11 @@ public class MainActivity extends AutoLayoutActivity {
                 experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                 discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                 mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+
+                explorationIcon.setImageResource(R.mipmap.tansuo1_icon);
+                experienceIcon.setImageResource(R.mipmap.tiyan_icon);
+                discoverIcon.setImageResource(R.mipmap.faxian_icon);
+                mineIcon.setImageResource(R.mipmap.wode_icon);
                 break;
             case R.id.main_discover:
                 currentIndex = 1;
@@ -243,6 +252,11 @@ public class MainActivity extends AutoLayoutActivity {
                 experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                 discoverName.setTextColor(getResources().getColor(R.color.mainChecked));
                 mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+
+                explorationIcon.setImageResource(R.mipmap.tansuo_icon);
+                experienceIcon.setImageResource(R.mipmap.tiyan_icon);
+                discoverIcon.setImageResource(R.mipmap.faxian1_icon);
+                mineIcon.setImageResource(R.mipmap.wode_icon);
                 break;
             case R.id.main_experience:
                 currentIndex = 2;
@@ -251,6 +265,10 @@ public class MainActivity extends AutoLayoutActivity {
                 experienceName.setTextColor(getResources().getColor(R.color.mainChecked));
                 discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                 mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+                explorationIcon.setImageResource(R.mipmap.tansuo_icon);
+                experienceIcon.setImageResource(R.mipmap.tiyan1_icon);
+                discoverIcon.setImageResource(R.mipmap.faxian_icon);
+                mineIcon.setImageResource(R.mipmap.wode_icon);
                 break;
             case R.id.main_mine:
                 boolean b = sharedPreferences.getBoolean("islogin", false);
@@ -264,6 +282,10 @@ public class MainActivity extends AutoLayoutActivity {
                     experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                     discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
                     mineName.setTextColor(getResources().getColor(R.color.mainChecked));
+                    explorationIcon.setImageResource(R.mipmap.tansuo_icon);
+                    experienceIcon.setImageResource(R.mipmap.tiyan_icon);
+                    discoverIcon.setImageResource(R.mipmap.faxian_icon);
+                    mineIcon.setImageResource(R.mipmap.wode1_icon);
                 }
                 break;
         }

@@ -4,11 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginLeft="40px"
-        android:layout_marginRight="40px"
-        android:layout_marginTop="20px"
-        android:id="@+id/shitang_fragment_recycle"
+    <com.mssd.utils.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/shitang_fragment_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:layout_marginTop="20px" />
+
+            <TextView
+                android:id="@+id/isShow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="暂无更多数据"
+                android:visibility="gone" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.mssd.utils.MyScrollView>
 </com.zhy.autolayout.AutoLinearLayout>

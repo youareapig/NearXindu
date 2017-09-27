@@ -22,6 +22,7 @@ import com.mssd.adapter.Trip_Recycle1;
 import com.mssd.adapter.Trip_Recycle2;
 import com.mssd.adapter.Trip_Recycle3;
 import com.mssd.data.LocationBean;
+import com.mssd.data.TripClassfiyBean;
 import com.mssd.data.TripNeatBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
@@ -77,12 +78,12 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private Unbinder unbinder;
     private List<LocationBean> mlist = new ArrayList<>();
     private LocationBean locationBean1, locationBean2, locationBean3;
-    private List<String> clist = new ArrayList<>();
+    private List<TripClassfiyBean> clist = new ArrayList<>();
     private List<TripNeatBean.DataBean> list;
     private int heigh = 100;
     private Trip_Recycle3 adapter;
     private int page = 1;
-
+    private TripClassfiyBean bean1,bean2,bean3,bean4,bean5,bean6,bean7,bean8;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,14 +138,22 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         mlist.add(locationBean1);
         mlist.add(locationBean2);
         mlist.add(locationBean3);
-        clist.add("茶空间");
-        clist.add("山野风光");
-        clist.add("城市小景");
-        clist.add("艺术人文");
-        clist.add("博物馆");
-        clist.add("建筑群");
-        clist.add("美学馆");
-        clist.add("书院");
+        bean1=new TripClassfiyBean("茶空间","11");
+        bean2=new TripClassfiyBean("山野风光","12");
+        bean3=new TripClassfiyBean("城市小景","13");
+        bean4=new TripClassfiyBean("艺术人文","14");
+        bean5=new TripClassfiyBean("博物馆","15");
+        bean6=new TripClassfiyBean("建筑群","16");
+        bean7=new TripClassfiyBean("美学馆","17");
+        bean8=new TripClassfiyBean("书院","18");
+        clist.add(bean1);
+        clist.add(bean2);
+        clist.add(bean3);
+        clist.add(bean4);
+        clist.add(bean5);
+        clist.add(bean6);
+        clist.add(bean7);
+        clist.add(bean8);
         tripRecycleTop.setAdapter(new Trip_Recycle1(mlist, TripActivity.this));
 
         tripRecycleclassify.setAdapter(new Trip_Recycle2(clist, TripActivity.this));
@@ -216,7 +225,28 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                Log.e("tag", "秘境数据" + result);
+                list = new ArrayList<TripNeatBean.DataBean>();
+                Gson gson = new Gson();
+                TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    adapter = new Trip_Recycle3(list, TripActivity.this);
+                    tripRecycleList.setAdapter(adapter);
+                    ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
+                    tripShowText1.setText(list.get(0).getStitle());
+                    tripShowText2.setText(list.get(0).getStitle());
+                    ImageLoader.getInstance().displayImage(list.get(1).getUrl(), tripShow1Img);
+                    tripShow1Text1.setText(list.get(1).getStitle());
+                    tripShow1Text2.setText(list.get(1).getSname());
+                    tripRefresh.setCanLoadMore(true);
+                } else if (bean.getCode() == -2000) {
+                    tripRefresh.setCanLoadMore(false);
+                    ToastUtils.showShort(TripActivity.this, "没有更多数据");
+                } else {
+                    tripRefresh.setCanLoadMore(false);
+                    ToastUtils.showShort(TripActivity.this, "数据异常");
+                }
             }
 
             @Override
@@ -236,25 +266,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
 
             @Override
             public boolean onCache(String result) {
-                Log.e("tag", "秘境数据" + result);
-                list = new ArrayList<TripNeatBean.DataBean>();
-                Gson gson = new Gson();
-                TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
-                if (bean.getCode() == 2000) {
-                    list.addAll(bean.getData());
-                    adapter = new Trip_Recycle3(list, TripActivity.this);
-                    tripRecycleList.setAdapter(adapter);
-                    ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
-                    tripShowText1.setText(list.get(0).getStitle());
-                    tripShowText2.setText(list.get(0).getStitle());
-                    ImageLoader.getInstance().displayImage(list.get(1).getUrl(), tripShow1Img);
-                    tripShow1Text1.setText(list.get(1).getStitle());
-                    tripShow1Text2.setText(list.get(1).getSname());
-                } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(TripActivity.this, "没有更多数据");
-                } else {
-                    ToastUtils.showShort(TripActivity.this, "数据异常");
-                }
+
                 return false;
             }
         });
