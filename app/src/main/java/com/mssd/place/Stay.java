@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.mssd.adapter.WantEatAdapter;
 import com.mssd.adapter.WantStayAdapter;
-import com.mssd.data.TBean;
 import com.mssd.data.WantEatBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
@@ -44,10 +44,11 @@ public class Stay extends Fragment {
     private List<WantEatBean.DataBean> list;
     private SharedPreferences sharedPreferences;
     private String userID;
+    private WantStayAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.placestayfragment, container, false);
+        View view = inflater.inflate(R.layout.wantstay, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
@@ -65,7 +66,7 @@ public class Stay extends Fragment {
     private void getNetBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
         params.addBodyParameter("type", "2");
-        params.addBodyParameter("uid", "1");
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -77,14 +78,27 @@ public class Stay extends Fragment {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
                         @Override
                         public boolean canScrollVertically() {
-                            return true;
+                            return false;
                         }
                     };
+                    adapter=new WantStayAdapter(list, getActivity());
                     shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(120));
                     shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
-                    shitangFragmentRecycle.setAdapter(new WantStayAdapter(list, getActivity()));
+                    shitangFragmentRecycle.setAdapter(adapter);
                     shitangFragmentRecycle.setVisibility(View.VISIBLE);
                     isShow.setVisibility(View.GONE);
+                    adapter.callBack(new WantStayAdapter.MyShow() {
+                        @Override
+                        public void mShow(boolean b) {
+                            if (b == true) {
+                                shitangFragmentRecycle.setVisibility(View.GONE);
+                                isShow.setVisibility(View.VISIBLE);
+                            } else {
+                                shitangFragmentRecycle.setVisibility(View.VISIBLE);
+                                isShow.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                 }else {
                     shitangFragmentRecycle.setVisibility(View.GONE);
                     isShow.setVisibility(View.VISIBLE);

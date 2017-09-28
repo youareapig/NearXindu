@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.FoodDateBean;
-import com.mssd.data.TBean;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;

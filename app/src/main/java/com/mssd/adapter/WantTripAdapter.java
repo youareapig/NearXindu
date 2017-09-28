@@ -1,9 +1,11 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,16 @@ import android.widget.TextView;
 
 import com.mssd.data.TripNeatBean;
 import com.mssd.data.WantEatBean;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.List;
 
@@ -25,10 +34,14 @@ import java.util.List;
 public class WantTripAdapter extends RecyclerView.Adapter {
     private List<WantEatBean.DataBean> list;
     private Activity activity;
-
+    private String userID, tID;
+    private SharedPreferences sharedPreferences;
+    private MyShow myShow;
     public WantTripAdapter(List<WantEatBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
     }
 
     @Override
@@ -38,8 +51,8 @@ public class WantTripAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        WantEatBean.DataBean info = list.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final WantEatBean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.trip1name.setText(info.getStitle());
         viewHolder.trip2name.setText(info.getSname());
@@ -49,8 +62,56 @@ public class WantTripAdapter extends RecyclerView.Adapter {
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.trip1name.setTypeface(typeface);
         viewHolder.trip2name.setTypeface(typeface);
+        viewHolder.shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getTid()+"";
+                offCollect(position);
+            }
+        });
     }
+    private void offCollect(final int position) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("tid", tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3006")) {
+                        list.remove(position);
+                        notifyDataSetChanged();
+                        if (list.size()==0){
+                            myShow.mShow(true);
+                        }else {
+                            myShow.mShow(false);
+                        }
+                    } else {
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "取消收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
     @Override
     public int getItemCount() {
         if (list!=null){
@@ -71,5 +132,11 @@ public class WantTripAdapter extends RecyclerView.Adapter {
             tripimg = (ImageView) itemView.findViewById(R.id.trip_item1_list_img);
             shoucang= (ImageView) itemView.findViewById(R.id.trip_item1_list_shoucang);
         }
+    }
+    public interface MyShow{
+        void mShow(boolean b);
+    }
+    public void callBack(MyShow myShow){
+        this.myShow=myShow;
     }
 }

@@ -1,5 +1,6 @@
 package com.mssd.shitangfragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -46,12 +47,15 @@ public class Su extends Fragment {
     private List<ShitangNextBean.DataBean> list = new ArrayList<>();
     private int page = 1;
     private ShiTang_Fragment_recycle adapter;
-
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shitangfragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+        sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
+        userID= sharedPreferences.getString("userid", "0");
         firstBean();
         shitangFragmentRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
@@ -78,7 +82,6 @@ public class Su extends Fragment {
                     public void run() {
                         page++;
                         loadBean();
-                        adapter.notifyDataSetChanged();
                         shitangFragmentPull.finishLoadMore();
                     }
                 }, 2000);
@@ -98,6 +101,7 @@ public class Su extends Fragment {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("cid", "5");
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -146,6 +150,7 @@ public class Su extends Fragment {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("cid", "5");
+        params.addBodyParameter("uid",userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -155,6 +160,7 @@ public class Su extends Fragment {
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 }
             }
 

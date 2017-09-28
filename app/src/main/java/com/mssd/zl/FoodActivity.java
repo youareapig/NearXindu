@@ -1,5 +1,6 @@
 package com.mssd.zl;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -24,11 +25,8 @@ import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.FoodAdapter;
 import com.mssd.adapter.Food_Recycle1;
 import com.mssd.adapter.Food_Recycle2;
-import com.mssd.adapter.Trip_Recycle3;
 import com.mssd.data.FoodDateBean;
 import com.mssd.data.LocationBean;
-import com.mssd.data.TBean;
-import com.mssd.data.TestBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -81,6 +79,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     private List<FoodDateBean.DataBean.CanteenBean> list_1;
     private int heigh=100;
     private int root=1;
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +104,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     }
 
     private void initbean() {
+        sharedPreferences = getSharedPreferences("xindu",MODE_PRIVATE);
+        userID= sharedPreferences.getString("userid", "0");
         list = new ArrayList<>();
         locationBean1 = new LocationBean("家  .宴",R.mipmap.test );
         locationBean2 = new LocationBean("食  .堂",R.mipmap.test );
@@ -198,29 +200,10 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     }
     private void getNetBean(){
         RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Eatlive/eat");
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag","食主页错误");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-
-            @Override
-            public boolean onCache(String result) {
                 Log.e("tag","食主页"+result);
                 Gson gson=new Gson();
                 FoodDateBean bean=gson.fromJson(result,FoodDateBean.class);
@@ -290,6 +273,26 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                 foodRecycle3.setLayoutManager(linearLayoutManager);
                 foodRecycle3.setAdapter(new FoodAdapter(list_1,FoodActivity.this));
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag","食主页错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
                 return false;
             }
         });

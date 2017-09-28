@@ -1,6 +1,7 @@
 package com.mssd.zl;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,9 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
-import com.mssd.adapter.Trip_Recycle3;
 import com.mssd.adapter.XingAdapter;
-import com.mssd.data.TestBean;
 import com.mssd.data.XingBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
@@ -48,12 +47,14 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     private String cid, name;
     private XingAdapter adapter;
     private int page = 1;
-
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_classfiy);
         unbinder = ButterKnife.bind(this);
+
         initbean();
         changeFont();
 
@@ -81,7 +82,6 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
                     public void run() {
                         page++;
                         loadmorer();
-                        adapter.notifyDataSetChanged();
                         tripclassfiyPull.finishLoadMore();
                     }
                 }, 2000);
@@ -91,9 +91,10 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void initbean() {
-        Intent intent = getIntent();
-        cid = intent.getStringExtra("cid");
-        name = intent.getStringExtra("name");
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
+        name = sharedPreferences.getString("mName", "0");
+        cid = sharedPreferences.getString("mID", "0");
         tripclassfiyText1.setText(name);
 
     }
@@ -119,6 +120,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("cid", cid);
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -166,6 +168,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("cid", cid);
+        params.addBodyParameter("uid",userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -175,6 +178,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
                 XingBean bean = gson.fromJson(result, XingBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 } else {
                     ToastUtils.showShort(TripClassfiyActivity.this, "加载完成");
                 }

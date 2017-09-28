@@ -98,11 +98,25 @@ public class MainActivity extends AutoLayoutActivity {
             experienceIcon.setImageResource(R.mipmap.tiyan_icon);
             discoverIcon.setImageResource(R.mipmap.faxian_icon);
             mineIcon.setImageResource(R.mipmap.wode1_icon);
+        } else if (currentIndex == 2) {
+            explorationName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            experienceName.setTextColor(getResources().getColor(R.color.mainChecked));
+            discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            explorationIcon.setImageResource(R.mipmap.tansuo_icon);
+            experienceIcon.setImageResource(R.mipmap.tiyan1_icon);
+            discoverIcon.setImageResource(R.mipmap.faxian_icon);
+            mineIcon.setImageResource(R.mipmap.wode_icon);
+
         } else if (currentIndex == 0) {
             explorationName.setTextColor(getResources().getColor(R.color.mainChecked));
             experienceName.setTextColor(getResources().getColor(R.color.mainUnChecked));
             discoverName.setTextColor(getResources().getColor(R.color.mainUnChecked));
             mineName.setTextColor(getResources().getColor(R.color.mainUnChecked));
+            explorationIcon.setImageResource(R.mipmap.tansuo1_icon);
+            experienceIcon.setImageResource(R.mipmap.tiyan_icon);
+            discoverIcon.setImageResource(R.mipmap.faxian_icon);
+            mineIcon.setImageResource(R.mipmap.wode_icon);
         }
         changeFont();
         MPermissions.requestPermissions(MainActivity.this, 55, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -274,6 +288,7 @@ public class MainActivity extends AutoLayoutActivity {
                 boolean b = sharedPreferences.getBoolean("islogin", false);
                 if (b == false) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.putExtra("intentTag", 1);
                     startActivity(intent);
                 } else {
                     currentIndex = 3;

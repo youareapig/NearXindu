@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.LocationBean;
-import com.mssd.data.TBean;
 import com.mssd.zl.JiaYanActivity;
 import com.mssd.zl.R;
 import com.mssd.zl.ShiJiaActivity;

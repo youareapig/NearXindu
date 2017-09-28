@@ -1,19 +1,31 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.StayNextBean;
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.List;
 
@@ -24,10 +36,15 @@ import java.util.List;
 public class Stay_Recycle extends RecyclerView.Adapter {
     private List<StayNextBean.DataBean> list;
     private Activity activity;
-
+    private SharedPreferences sharedPreferences;
+    private String userID, tID;
+    private boolean isLogin;
     public Stay_Recycle(List<StayNextBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
+        isLogin = sharedPreferences.getBoolean("islogin", false);
     }
 
     @Override
@@ -38,15 +55,115 @@ public class Stay_Recycle extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        StayNextBean.DataBean info = list.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final StayNextBean.DataBean info = list.get(position);
+        final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.stayname.setText(info.getStitle());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.stayname.setTypeface(typeface);
-    }
+        if (info.getIscheck() == 0) {
+            viewHolder.shoucang.setImageResource(R.mipmap.shoucang);
+        } else {
+            viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
+        }
+        viewHolder.shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isLogin == true) {
+                    tID = info.getId() + "";
+                    addCollect(viewHolder);
+                } else {
+                    Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                    intent.putExtra("intentTag", 4);
+                    v.getContext().startActivity(intent);
+                }
 
+            }
+        });
+    }
+    private void addCollect(final ViewHolder hodler) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("type", "2");
+        params.addBodyParameter("tid", tID);
+        Log.e("tag", "参数说明----->" + userID + "   " + tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3004")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        hodler.shoucang.startAnimation(animation);
+                        hodler.shoucang.setImageResource(R.mipmap.shoucang1);
+                    } else if (json.getString("code").equals("-3000")) {
+                        offCollect(hodler);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+    private void offCollect(final ViewHolder hodler) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("tid", tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "取消收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3006")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        hodler.shoucang.startAnimation(animation);
+                        hodler.shoucang.setImageResource(R.mipmap.shoucang);
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "取消收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
     @Override
     public int getItemCount() {
         if (list!=null){

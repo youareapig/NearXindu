@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mssd.data.TBean;
+import com.mssd.data.DiscoverBean;
 import com.mssd.zl.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -21,10 +22,10 @@ import java.util.List;
  */
 
 public class Discover_Recycle3 extends RecyclerView.Adapter {
-    private List<TBean> list;
+    private List<DiscoverBean.DataBeanXXXX.T3Bean.DataBeanXX> list;
     private Activity activity;
 
-    public Discover_Recycle3(List<TBean> list, Activity activity) {
+    public Discover_Recycle3(List<DiscoverBean.DataBeanXXXX.T3Bean.DataBeanXX> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }
@@ -37,10 +38,10 @@ public class Discover_Recycle3 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TBean info = list.get(position);
+        DiscoverBean.DataBeanXXXX.T3Bean.DataBeanXX info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.discover3name.setText(info.getName());
-        viewHolder.discover3img.setImageResource(info.getImg());
+        viewHolder.discover3name.setText(info.getPname());
+        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.discover3img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.discover3name.setTypeface(typeface);

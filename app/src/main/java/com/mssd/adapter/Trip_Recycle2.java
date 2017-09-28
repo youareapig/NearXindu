@@ -2,6 +2,7 @@ package com.mssd.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +25,13 @@ import java.util.List;
 public class Trip_Recycle2 extends RecyclerView.Adapter {
     private List<TripClassfiyBean> list;
     private Activity activity;
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     public Trip_Recycle2(List<TripClassfiyBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     @Override
@@ -48,8 +52,9 @@ public class Trip_Recycle2 extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(v.getContext(),TripClassfiyActivity.class);
-                intent.putExtra("cid",bean.getCid());
-                intent.putExtra("name",bean.getName());
+                editor.putString("mName",bean.getName());
+                editor.putString("mID",bean.getCid());
+                editor.commit();
                 v.getContext().startActivity(intent);
             }
         });

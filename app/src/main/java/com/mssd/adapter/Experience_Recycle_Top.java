@@ -2,6 +2,7 @@ package com.mssd.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -26,10 +27,13 @@ import java.util.List;
 public class Experience_Recycle_Top extends RecyclerView.Adapter {
     private List<TiyanClassfiyBean> list;
     private Activity activity;
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     public Experience_Recycle_Top(List<TiyanClassfiyBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     @Override
@@ -51,8 +55,9 @@ public class Experience_Recycle_Top extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ExperenceClassfiyActivity.class);
-                intent.putExtra("cid",info.getId());
-                intent.putExtra("name",info.getName());
+                editor.putString("nName",info.getName());
+                editor.putString("nID",info.getId());
+                editor.commit();
                 v.getContext().startActivity(intent);
             }
         });

@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.mssd.adapter.Trip_Recycle3;
-import com.mssd.adapter.WantEatAdapter;
+import com.mssd.adapter.WantTiyanAdapter;
 import com.mssd.adapter.WantTripAdapter;
-import com.mssd.data.TestBean;
 import com.mssd.data.WantEatBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
@@ -26,7 +24,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,10 +43,11 @@ public class Trip extends Fragment {
     private List<WantEatBean.DataBean> list;
     private SharedPreferences sharedPreferences;
     private String userID;
+    private WantTripAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.want, container, false);
+        View view = inflater.inflate(R.layout.wanttrip, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
@@ -65,7 +63,7 @@ public class Trip extends Fragment {
     private void getNetBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
         params.addBodyParameter("type", "3");
-        params.addBodyParameter("uid", "1");
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -74,8 +72,29 @@ public class Trip extends Fragment {
                 WantEatBean bean=gson.fromJson(result,WantEatBean.class);
                 if (bean.getCode()==3000){
                     list=bean.getData();
-                    wantEatRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    wantEatRecycle.setAdapter(new WantTripAdapter(list, getActivity()));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    wantEatRecycle.addItemDecoration(new ListItemDecoration(20));
+                    wantEatRecycle.setLayoutManager(linearLayoutManager);
+                    adapter=new WantTripAdapter(list, getActivity());
+                    adapter.callBack(new WantTripAdapter.MyShow() {
+                        @Override
+                        public void mShow(boolean b) {
+                            if (b == true) {
+                                wantEatRecycle.setVisibility(View.GONE);
+                                isShow.setVisibility(View.VISIBLE);
+                            } else {
+                                wantEatRecycle.setVisibility(View.VISIBLE);
+                                isShow.setVisibility(View.GONE);
+                            }
+                        }
+
+                    });
+                    wantEatRecycle.setAdapter(adapter);
                     wantEatRecycle.setVisibility(View.VISIBLE);
                     isShow.setVisibility(View.GONE);
                 }else {

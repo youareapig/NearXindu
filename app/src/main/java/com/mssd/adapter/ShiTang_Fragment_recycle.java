@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -9,23 +10,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.maps2d.AMapUtils;
-import com.amap.api.services.geocoder.GeocodeAddress;
-import com.amap.api.services.geocoder.GeocodeQuery;
-import com.amap.api.services.geocoder.GeocodeResult;
-import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeResult;
 import com.mssd.data.ShitangNextBean;
-import com.mssd.data.TestBean;
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
 
-import java.math.BigDecimal;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.List;
 
 /**
@@ -35,6 +36,9 @@ import java.util.List;
 public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
     private List<ShitangNextBean.DataBean> list;
     private Activity activity;
+    private SharedPreferences sharedPreferences;
+    private String userID, tID;
+    private boolean isLogin;
 //    private double dangqianweidu, dangqianjingdu, latitude, longititude;
 //    private SharedPreferences sharedPreferences;
 //    private String location1, location2;
@@ -43,6 +47,9 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
     public ShiTang_Fragment_recycle(List<ShitangNextBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
+        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
+        isLogin = sharedPreferences.getBoolean("islogin", false);
 //        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
 //        location1 = sharedPreferences.getString("latLng", "未知");
 //        location2 = sharedPreferences.getString("longLng", "未知");
@@ -63,7 +70,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final ShitangNextBean.DataBean info = list.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.shitangtext1.setText(info.getStitle());
         viewHolder.shitangtext2.setText(info.getSname());
         Log.e("tag","数据测试-------------"+info.getSname());
@@ -72,6 +79,27 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shitangtext1.setTypeface(typeface);
         viewHolder.shitangtext2.setTypeface(typeface);
+        if (info.getIscheck() == 0) {
+            viewHolder.shoucang.setImageResource(R.mipmap.shoucang);
+        } else {
+            viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
+        }
+        viewHolder.shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isLogin == true) {
+                    tID = info.getId() + "";
+                    addCollect(viewHolder);
+                } else {
+                    Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                    intent.putExtra("intentTag", 4);
+                    v.getContext().startActivity(intent);
+                }
+
+            }
+        });
+
+
 //        GeocodeSearch geocodeSearch = new GeocodeSearch(activity);
 //        geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
 //            @Override
@@ -115,7 +143,89 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
 
 
     }
+    private void addCollect(final ViewHolder hodler) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("type", "1");
+        params.addBodyParameter("tid", tID);
+        Log.e("tag", "参数说明----->" + userID + "   " + tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3004")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        hodler.shoucang.startAnimation(animation);
+                        hodler.shoucang.setImageResource(R.mipmap.shoucang1);
+                    } else if (json.getString("code").equals("-3000")) {
+                        offCollect(hodler);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
+    private void offCollect(final ViewHolder hodler) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("tid", tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "取消收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3006")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        hodler.shoucang.startAnimation(animation);
+                        hodler.shoucang.setImageResource(R.mipmap.shoucang);
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "取消收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
     @Override
     public int getItemCount() {
         if (list!=null){

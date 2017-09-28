@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.WantEatAdapter;
-import com.mssd.data.TestBean;
 import com.mssd.data.WantEatBean;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
@@ -43,14 +43,16 @@ public class Eat extends Fragment {
     private List<WantEatBean.DataBean> list;
     private SharedPreferences sharedPreferences;
     private String userID;
+    private WantEatAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.want, container, false);
+        View view = inflater.inflate(R.layout.wanteat, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
+
         return view;
     }
 
@@ -69,20 +71,40 @@ public class Eat extends Fragment {
     private void getNetBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
         params.addBodyParameter("type", "1");
-        params.addBodyParameter("uid", "1");
+        params.addBodyParameter("uid", userID);
+        Log.e("tag", "userID---->" + userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("tag", "想去吃" + result);
-                Gson gson=new Gson();
-                WantEatBean bean=gson.fromJson(result,WantEatBean.class);
-                if (bean.getCode()==3000){
-                    list=bean.getData();
-                    wantEatRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    wantEatRecycle.setAdapter(new WantEatAdapter(list, getActivity()));
+                Gson gson = new Gson();
+                WantEatBean bean = gson.fromJson(result, WantEatBean.class);
+                if (bean.getCode() == 3000) {
+                    list = bean.getData();
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    wantEatRecycle.setLayoutManager(linearLayoutManager);
+                    adapter = new WantEatAdapter(list, getActivity());
+                    wantEatRecycle.setAdapter(adapter);
                     wantEatRecycle.setVisibility(View.VISIBLE);
                     isShow.setVisibility(View.GONE);
-                }else {
+                    adapter.callBack(new WantEatAdapter.MyShow() {
+                        @Override
+                        public void mShow(boolean b) {
+                            if (b == true) {
+                                wantEatRecycle.setVisibility(View.GONE);
+                                isShow.setVisibility(View.VISIBLE);
+                            } else {
+                                wantEatRecycle.setVisibility(View.VISIBLE);
+                                isShow.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } else {
                     wantEatRecycle.setVisibility(View.GONE);
                     isShow.setVisibility(View.VISIBLE);
                 }
@@ -109,4 +131,5 @@ public class Eat extends Fragment {
             }
         });
     }
+
 }

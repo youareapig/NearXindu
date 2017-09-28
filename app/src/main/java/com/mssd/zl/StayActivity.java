@@ -73,12 +73,15 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     private Stay_Recycle stay_recycle;
     private int page = 1;
     private String mID = "";
-
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stay);
         unbinder = ButterKnife.bind(this);
+        sharedPreferences = getSharedPreferences("xindu",MODE_PRIVATE);
+        userID= sharedPreferences.getString("userid", "0");
         changeFont();
         changeTitle();
         titleBean();
@@ -105,7 +108,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                     public void run() {
                         page++;
                         getLoadmore();
-                        stay_recycle.notifyDataSetChanged();
                         stayPull.finishLoadMore();
                     }
                 }, 2000);
@@ -219,6 +221,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "2");
         params.addBodyParameter("cid", cid);
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -267,6 +270,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "2");
         params.addBodyParameter("cid", mID);
+        params.addBodyParameter("uid",userID);
         params.addBodyParameter("page", page + "");
         Log.e("tag", "分页码" + page);
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -277,6 +281,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                 StayNextBean bean = gson.fromJson(result, StayNextBean.class);
                 if (bean.getCode() == 2000) {
                     list_1.addAll(bean.getData());
+                    stay_recycle.notifyItemRangeChanged(0,bean.getData().size());
                 } else {
                     ToastUtils.showShort(StayActivity.this, "没有更多数据");
                 }

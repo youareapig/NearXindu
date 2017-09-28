@@ -1,7 +1,6 @@
 package com.mssd.mfragment;
 
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,23 +8,28 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mssd.adapter.Discover_Recycle1;
 import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
-import com.mssd.data.TBean;
+import com.mssd.data.DiscoverBean;
 import com.mssd.utils.MyScrollView;
-import com.mssd.utils.ObservableScrollView;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
-import com.zhy.autolayout.AutoRelativeLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Discover extends Fragment{
+public class Discover extends Fragment {
     @BindView(R.id.discover_tx1)
     TextView discoverTx1;
     @BindView(R.id.discover_tx2)
@@ -55,35 +59,41 @@ public class Discover extends Fragment{
     ImageView discoverTopimg;
     @BindView(R.id.discover_scroll)
     MyScrollView discoverScroll;
+    @BindView(R.id.discover_text)
+    TextView discoverText;
+    @BindView(R.id.discover_img1)
+    ImageView discoverImg1;
+    @BindView(R.id.discover_text1)
+    TextView discoverText1;
+    @BindView(R.id.discover_img2)
+    ImageView discoverImg2;
+    @BindView(R.id.discover_text2)
+    TextView discoverText2;
+    @BindView(R.id.discover_img3)
+    ImageView discoverImg3;
+    @BindView(R.id.discover_text3)
+    TextView discoverText3;
+    @BindView(R.id.discover_img4)
+    ImageView discoverImg4;
+    @BindView(R.id.discover_text4)
+    TextView discoverText4;
     private Unbinder unbinder;
-    private TBean foodBean1, foodBean2, foodBean3, foodBean4;
-    private List<TBean> list;
+    private List<DiscoverBean.DataBeanXXXX.T1Bean.DataBean> list1;
+    private List<DiscoverBean.DataBeanXXXX.T2Bean.DataBeanX> list2;
+    private List<DiscoverBean.DataBeanXXXX.T3Bean.DataBeanXX> list3;
+    private List<DiscoverBean.DataBeanXXXX.T4Bean.DataBeanXXX> list4;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.discover, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initbean();
         changeFont();
-        getRecycler1();
-        getRecycler2();
-        getRecycler3();
-        getRecycler4();
+        getNetBean();
         return view;
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new TBean(R.mipmap.test, "蛋炒饭");
-        foodBean2 = new TBean(R.mipmap.test, "黄焖鸡");
-        foodBean3 = new TBean(R.mipmap.test, "翘脚牛肉");
-        foodBean4 = new TBean(R.mipmap.test, "翘脚牛肉");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-        list.add(foodBean4);
-    }
 
     private void changeFont() {
         AssetManager assetManager = getActivity().getAssets();
@@ -91,30 +101,87 @@ public class Discover extends Fragment{
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         discoverTx1.setTypeface(typeface1);
         discoverTx2.setTypeface(typeface);
+        discoverText.setTypeface(typeface1);
+        discoverText1.setTypeface(typeface1);
+        discoverText2.setTypeface(typeface1);
+        discoverText3.setTypeface(typeface1);
+        discoverText4.setTypeface(typeface1);
     }
 
     private void getRecycler1() {
         discoverRecycle1.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle1.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
-        discoverRecycle1.setAdapter(new Discover_Recycle1(list, getActivity()));
+        discoverRecycle1.setAdapter(new Discover_Recycle1(list1, getActivity()));
     }
 
     private void getRecycler2() {
         discoverRecycle2.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle2.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
-        discoverRecycle2.setAdapter(new Discover_Recycle2(list, getActivity()));
+        discoverRecycle2.setAdapter(new Discover_Recycle2(list2, getActivity()));
     }
 
     private void getRecycler3() {
         discoverRecycle3.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle3.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
-        discoverRecycle3.setAdapter(new Discover_Recycle3(list, getActivity()));
+        discoverRecycle3.setAdapter(new Discover_Recycle3(list3, getActivity()));
     }
 
     private void getRecycler4() {
         discoverRecycle4.addItemDecoration(new SpacesItemDecoration(20));
         discoverRecycle4.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
-        discoverRecycle4.setAdapter(new Discover_Recycle4(list, getActivity()));
+        discoverRecycle4.setAdapter(new Discover_Recycle4(list4, getActivity()));
+    }
+
+    private void getNetBean() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/probe");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "发现数据" + result);
+                Gson gson = new Gson();
+                DiscoverBean bean = gson.fromJson(result, DiscoverBean.class);
+                if (bean.getCode() == 1000) {
+                    discoverText.setText(bean.getData().getTop().getTitle());
+                    ImageLoader.getInstance().displayImage(bean.getData().getTop().getUrl(), discoverTopimg);
+                    discoverText1.setText(bean.getData().getT1().getPic().getContent());
+                    ImageLoader.getInstance().displayImage(bean.getData().getT1().getPic().getUrl(), discoverImg1);
+                    discoverText2.setText(bean.getData().getT2().getPic().getContent());
+                    ImageLoader.getInstance().displayImage(bean.getData().getT2().getPic().getUrl(), discoverImg2);
+                    discoverText3.setText(bean.getData().getT3().getPic().getContent());
+                    ImageLoader.getInstance().displayImage(bean.getData().getT3().getPic().getUrl(), discoverImg3);
+                    discoverText4.setText(bean.getData().getT4().getPic().getContent());
+                    ImageLoader.getInstance().displayImage(bean.getData().getT4().getPic().getUrl(), discoverImg4);
+                    list1 = bean.getData().getT1().getData();
+                    list2 = bean.getData().getT2().getData();
+                    list3 = bean.getData().getT3().getData();
+                    list4 = bean.getData().getT4().getData();
+                    getRecycler1();
+                    getRecycler2();
+                    getRecycler3();
+                    getRecycler4();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 
     @Override

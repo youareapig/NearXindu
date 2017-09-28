@@ -15,7 +15,6 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Goods_Recycle;
 import com.mssd.data.GoodsBean;
-import com.mssd.data.TBean;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -77,7 +76,6 @@ public class GoodsActivity extends AutoLayoutActivity {
                     public void run() {
                         page++;
                         loadmorer();
-                        adapter.notifyDataSetChanged();
                         goodsPull.finishLoadMore();
                     }
                 }, 2000);
@@ -167,7 +165,7 @@ public class GoodsActivity extends AutoLayoutActivity {
                 GoodsBean bean = gson.fromJson(result, GoodsBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(GoodsActivity.this, "加载完成");
                 }

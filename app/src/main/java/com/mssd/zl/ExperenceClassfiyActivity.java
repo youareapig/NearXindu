@@ -1,6 +1,7 @@
 package com.mssd.zl;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import com.google.gson.Gson;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.TiyanAdapter;
-import com.mssd.data.TestBean;
 import com.mssd.data.TiyanBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
@@ -53,7 +53,8 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     private String cid;
     private int page = 1;
     private TiyanAdapter adapter;
-
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +86,6 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                     public void run() {
                         page++;
                         loadmorer();
-                        adapter.notifyDataSetChanged();
                         experenceclassfiyPull.finishLoadMore();
                     }
                 }, 2000);
@@ -95,9 +95,10 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void initbean() {
-        Intent intent = getIntent();
-        experenceclassfiyTitleName.setText(intent.getStringExtra("name"));
-        cid = intent.getStringExtra("cid");
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        experenceclassfiyTitleName.setText(sharedPreferences.getString("nName","0"));
+        cid = sharedPreferences.getString("nID","0");
+        userID = sharedPreferences.getString("userid","0");
     }
 
     private void changeFont() {
@@ -127,6 +128,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
         params.addBodyParameter("cid", cid);
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -173,6 +175,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
         params.addBodyParameter("cid", cid);
+        params.addBodyParameter("uid",userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -181,6 +184,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                 TiyanBean bean = gson.fromJson(result, TiyanBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 } else {
                     ToastUtils.showShort(ExperenceClassfiyActivity.this, "加载完成");
                 }

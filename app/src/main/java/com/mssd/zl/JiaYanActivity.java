@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.JiaYanBean;
-import com.mssd.data.TBean;
 import com.mssd.utils.SingleModleUrl;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;

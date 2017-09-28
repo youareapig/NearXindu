@@ -1,5 +1,6 @@
 package com.mssd.mfragment;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -22,18 +23,13 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Experience_Recycle;
 import com.mssd.adapter.Experience_Recycle_Top;
-import com.mssd.data.ExperienceBean;
 import com.mssd.data.ExperienceNextBean;
-import com.mssd.data.LocationBean;
-import com.mssd.data.TestBean;
 import com.mssd.data.TiyanClassfiyBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.MyScrollView;
-import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.R;
-import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -69,6 +65,8 @@ public class Experience extends Fragment {
     private int page = 1;
     private List<TiyanClassfiyBean> mlist;
     private TiyanClassfiyBean bean1,bean2,bean3,bean4,bean5;
+    private SharedPreferences sharedPreferences;
+    private String userID;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,8 +98,7 @@ public class Experience extends Fragment {
                     @Override
                     public void run() {
                         page++;
-                        getNetListBean();
-                        adapter.notifyDataSetChanged();
+                        loadmorer();
                         experencePull.finishLoadMore();
                     }
                 }, 2000);
@@ -112,6 +109,8 @@ public class Experience extends Fragment {
     }
 
     private void initbean() {
+        sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
+        userID= sharedPreferences.getString("userid", "0");
         mlist=new ArrayList<>();
         bean1=new TiyanClassfiyBean("户外活动", R.mipmap.test,"19");
         bean2=new TiyanClassfiyBean("艺术探究", R.mipmap.test,"20");
@@ -162,7 +161,7 @@ public class Experience extends Fragment {
     private void getNetListBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
-        params.addBodyParameter("page", page + "");
+        params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -177,6 +176,49 @@ public class Experience extends Fragment {
                     experencePull.setCanLoadMore(true);
                 }else {
                     experencePull.setCanLoadMore(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "体验错误数据");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
+                return false;
+            }
+        });
+    }
+
+    private void loadmorer() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
+        params.addBodyParameter("type", "4");
+        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("page", page + "");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "体验数据" + result);
+                tlist = new ArrayList<ExperienceNextBean.DataBean>();
+                Gson gson = new Gson();
+                ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
+                if (bean.getCode() == 2000) {
+                    tlist.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                }else {
+
                 }
             }
 

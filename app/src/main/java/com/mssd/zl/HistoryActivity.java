@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.mssd.adapter.History_Recycle1;
 import com.mssd.adapter.History_Recycle2;
 import com.mssd.adapter.History_Recycle3;
-import com.mssd.data.TBean;
 import com.mssd.data.HistoryIndexBean;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -84,8 +83,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     @BindView(R.id.history_Toptext2)
     TextView historyToptext2;
     private Unbinder unbinder;
-    private List<TBean> list;
-    private TBean foodBean1, foodBean2, foodBean3;
     private int heigh = 100;
     private List<HistoryIndexBean.DataBean.T2Bean> list1;
     private List<HistoryIndexBean.DataBean.T4Bean> list2;
@@ -98,7 +95,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         unbinder = ButterKnife.bind(this);
         changeFont();
         changeTitle();
-        initbean();
         reqestNet();
     }
 
@@ -116,15 +112,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         historyToptext2.setTypeface(typeface1);
     }
 
-    private void initbean() {
-        list = new ArrayList<>();
-        foodBean1 = new TBean(R.mipmap.test, "九大碗");
-        foodBean2 = new TBean(R.mipmap.test, "九大碗");
-        foodBean3 = new TBean(R.mipmap.test, "九大碗");
-        list.add(foodBean1);
-        list.add(foodBean2);
-        list.add(foodBean3);
-    }
 
     private void getRecycle1() {
         historyRecycle.addItemDecoration(new SpacesItemDecoration(20));
@@ -207,26 +194,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "历史首页访问错误");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-
-            @Override
-            public boolean onCache(String result) {
                 Log.e("tag", "历史首页" + result);
                 Gson gson = new Gson();
                 HistoryIndexBean bean = gson.fromJson(result, HistoryIndexBean.class);
@@ -247,6 +214,26 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                 }else {
                     Toast.makeText(HistoryActivity.this,"请求错误",Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "历史首页访问错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
                 return false;
             }
         });

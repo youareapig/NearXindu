@@ -1,5 +1,7 @@
 package com.mssd.zl;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +36,8 @@ import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -75,6 +80,14 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     RelativeLayout tripTitle;
     @BindView(R.id.trip_refresh)
     PullToRefreshLayout tripRefresh;
+    @BindView(R.id.trip_show_shoucang1)
+    ImageView tripShowShoucang1;
+    @BindView(R.id.trip_show_shoucang2)
+    ImageView tripShowShoucang2;
+    @BindView(R.id.trip_back)
+    RelativeLayout tripBack;
+    @BindView(R.id.trip_search)
+    ImageView tripSearch;
     private Unbinder unbinder;
     private List<LocationBean> mlist = new ArrayList<>();
     private LocationBean locationBean1, locationBean2, locationBean3;
@@ -83,12 +96,18 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private int heigh = 100;
     private Trip_Recycle3 adapter;
     private int page = 1;
-    private TripClassfiyBean bean1,bean2,bean3,bean4,bean5,bean6,bean7,bean8;
+    private TripClassfiyBean bean1, bean2, bean3, bean4, bean5, bean6, bean7, bean8;
+    private SharedPreferences sharedPreferences;
+    private String userID,tID;
+    private boolean isLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
         unbinder = ButterKnife.bind(this);
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
+        isLogin = sharedPreferences.getBoolean("islogin", false);
         changeFont();
         changeTitle();
         initbean();
@@ -120,8 +139,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     public void run() {
                         // 结束加载更多
                         page++;
-                        getNetListBean();
-                        adapter.notifyDataSetChanged();
+                        loadmorer();
                         tripRefresh.finishLoadMore();
                     }
                 }, 2000);
@@ -138,14 +156,14 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         mlist.add(locationBean1);
         mlist.add(locationBean2);
         mlist.add(locationBean3);
-        bean1=new TripClassfiyBean("茶空间","11");
-        bean2=new TripClassfiyBean("山野风光","12");
-        bean3=new TripClassfiyBean("城市小景","13");
-        bean4=new TripClassfiyBean("艺术人文","14");
-        bean5=new TripClassfiyBean("博物馆","15");
-        bean6=new TripClassfiyBean("建筑群","16");
-        bean7=new TripClassfiyBean("美学馆","17");
-        bean8=new TripClassfiyBean("书院","18");
+        bean1 = new TripClassfiyBean("茶空间", "11");
+        bean2 = new TripClassfiyBean("山野风光", "12");
+        bean3 = new TripClassfiyBean("城市小景", "13");
+        bean4 = new TripClassfiyBean("艺术人文", "14");
+        bean5 = new TripClassfiyBean("博物馆", "15");
+        bean6 = new TripClassfiyBean("建筑群", "16");
+        bean7 = new TripClassfiyBean("美学馆", "17");
+        bean8 = new TripClassfiyBean("书院", "18");
         clist.add(bean1);
         clist.add(bean2);
         clist.add(bean3);
@@ -221,7 +239,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private void getNetListBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
-        params.addBodyParameter("page", page + "");
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -233,6 +251,43 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     list.addAll(bean.getData());
                     adapter = new Trip_Recycle3(list, TripActivity.this);
                     tripRecycleList.setAdapter(adapter);
+                    if (list.get(0).getIscheck() == 0) {
+                        tripShowShoucang1.setImageResource(R.mipmap.shoucang);
+                    }else {
+                        tripShowShoucang1.setImageResource(R.mipmap.shoucang);
+                    }
+                    if (list.get(1).getIscheck() == 0) {
+                        tripShowShoucang2.setImageResource(R.mipmap.shoucang);
+                    }else {
+                        tripShowShoucang2.setImageResource(R.mipmap.shoucang);
+                    }
+                    tripShowShoucang1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (isLogin == true) {
+                                tID = list.get(0).getId()+"";
+                                addCollect(tripShowShoucang1);
+                            } else {
+                                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                                intent.putExtra("intentTag", 5);
+                                v.getContext().startActivity(intent);
+                            }
+                        }
+                    });
+                    tripShowShoucang2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (isLogin == true) {
+                                tID = list.get(1).getId()+"";
+                                addCollect(tripShowShoucang2);
+                            } else {
+                                Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                                intent.putExtra("intentTag", 5);
+                                v.getContext().startActivity(intent);
+                            }
+                        }
+                    });
+
                     ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
                     tripShowText1.setText(list.get(0).getStitle());
                     tripShowText2.setText(list.get(0).getStitle());
@@ -266,9 +321,131 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
 
             @Override
             public boolean onCache(String result) {
-
                 return false;
             }
         });
+    }
+
+    private void loadmorer() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
+        params.addBodyParameter("type", "3");
+        params.addBodyParameter("page", page + "");
+        params.addBodyParameter("uid", userID);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "秘境数据" + result);
+                list = new ArrayList<TripNeatBean.DataBean>();
+                Gson gson = new Gson();
+                TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "秘境数据请求错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
+    }
+    private void addCollect(final ImageView imageView) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("type", "3");
+        params.addBodyParameter("tid", tID);
+        Log.e("tag", "参数说明----->" + userID + "   " + tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3004")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        imageView.startAnimation(animation);
+                        imageView.setImageResource(R.mipmap.shoucang1);
+                    } else if (json.getString("code").equals("-3000")) {
+                        offCollect(imageView);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
+    private void offCollect(final ImageView imageView) {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
+        params.addBodyParameter("uid", userID);
+        params.addBodyParameter("tid", tID);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("tag", "取消收藏" + result);
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("code").equals("3006")) {
+                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        animation.setDuration(500);
+                        imageView.startAnimation(animation);
+                        imageView.setImageResource(R.mipmap.shoucang);
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("tag", "取消收藏error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 }

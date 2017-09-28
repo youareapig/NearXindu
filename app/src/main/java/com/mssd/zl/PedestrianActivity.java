@@ -76,7 +76,6 @@ public class PedestrianActivity extends AutoLayoutActivity {
                     public void run() {
                         page++;
                         loadmorer();
-                        adapter.notifyDataSetChanged();
                         pedestrianPull.finishLoadMore();
                     }
                 }, 2000);
@@ -166,6 +165,7 @@ public class PedestrianActivity extends AutoLayoutActivity {
                 PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(PedestrianActivity.this, "加载完成");
                 }

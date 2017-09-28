@@ -60,7 +60,7 @@ public class LoginActivity extends AutoLayoutActivity {
     private String string_userphone, string_code;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-
+    private int intentTag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +69,8 @@ public class LoginActivity extends AutoLayoutActivity {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         changeFont();
+        Intent intent=getIntent();
+        intentTag=intent.getIntExtra("intentTag",0);
         keepLoginBtnNotOver(loginMain,loginMain1);
         loginMain.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -170,10 +172,46 @@ public class LoginActivity extends AutoLayoutActivity {
                     editor.putString("userid", bean.getData().getId() + "");
                     editor.putBoolean("islogin", true);
                     editor.commit();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("indextag", 3);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    switch (intentTag){
+                        case 1:
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("indextag", 3);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            break;
+                        case 2:
+                            Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                            intent1.putExtra("indextag", 2);
+                            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent1);
+                            break;
+                        case 3:
+                            Intent intent2 = new Intent(LoginActivity.this, FoodActivity.class);
+                            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent2);
+                            break;
+                        case 4:
+                            Intent intent3 = new Intent(LoginActivity.this, ShiTangActivity.class);
+                            intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent3);
+                            break;
+                        case 5:
+                            Intent intent4 = new Intent(LoginActivity.this, TripActivity.class);
+                            intent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent4);
+                            break;
+                        case 6:
+                            Intent intent5 = new Intent(LoginActivity.this, TripClassfiyActivity.class);
+                            intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent5);
+                            break;
+                        case 7:
+                            Intent intent6 = new Intent(LoginActivity.this, ExperenceClassfiyActivity.class);
+                            intent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent6);
+                            break;
+                    }
+
                 } else {
                     Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                 }

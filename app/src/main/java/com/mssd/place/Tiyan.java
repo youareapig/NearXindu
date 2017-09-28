@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.WantTiyanAdapter;
 import com.mssd.adapter.WantTripAdapter;
 import com.mssd.data.WantEatBean;
+import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 
@@ -42,6 +43,7 @@ public class Tiyan extends Fragment {
     private List<WantEatBean.DataBean> list;
     private SharedPreferences sharedPreferences;
     private String userID;
+    private WantTiyanAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class Tiyan extends Fragment {
     private void getNetBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
         params.addBodyParameter("type", "4");
-        params.addBodyParameter("uid", "1");
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -70,8 +72,29 @@ public class Tiyan extends Fragment {
                 WantEatBean bean=gson.fromJson(result,WantEatBean.class);
                 if (bean.getCode()==3000){
                     list=bean.getData();
-                    wantEatRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                    wantEatRecycle.setAdapter(new WantTiyanAdapter(list, getActivity()));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    wantEatRecycle.addItemDecoration(new ListItemDecoration(80));
+                    wantEatRecycle.setLayoutManager(linearLayoutManager);
+                    adapter=new WantTiyanAdapter(list, getActivity());
+                    wantEatRecycle.setAdapter(adapter);
+                    adapter.callBack(new WantTiyanAdapter.MyShow() {
+                        @Override
+                        public void mShow(boolean b) {
+                            if (b == true) {
+                                wantEatRecycle.setVisibility(View.GONE);
+                                isShow.setVisibility(View.VISIBLE);
+                            } else {
+                                wantEatRecycle.setVisibility(View.VISIBLE);
+                                isShow.setVisibility(View.GONE);
+                            }
+                        }
+
+                    });
                     wantEatRecycle.setVisibility(View.VISIBLE);
                     isShow.setVisibility(View.GONE);
                 }else {

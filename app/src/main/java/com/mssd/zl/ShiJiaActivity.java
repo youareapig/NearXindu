@@ -15,7 +15,6 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.ShiJia_Recycle;
 import com.mssd.data.ShijiaBean;
-import com.mssd.data.TBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
@@ -78,7 +77,6 @@ public class ShiJiaActivity extends AutoLayoutActivity {
                     public void run() {
                         page++;
                         loadmorer();
-                        adapter.notifyDataSetChanged();
                         shijiaPull.finishLoadMore();
                     }
                 }, 2000);
@@ -169,6 +167,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
                 ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(ShiJiaActivity.this, "加载完成");
                 }

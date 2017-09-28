@@ -27,6 +27,21 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000"
+                    android:alpha="0.2"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+                <TextView
+                    android:id="@+id/discover_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px"
+                    />
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -90,6 +105,7 @@
                 android:layout_height="500px">
 
                 <ImageView
+                    android:id="@+id/discover_img1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -101,6 +117,19 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:background="@mipmap/sanjiao_icon" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000"
+                    android:alpha="0.2"/>
+                <TextView
+                    android:id="@+id/discover_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px"
+                    />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -118,6 +147,7 @@
                 android:layout_marginTop="160px">
 
                 <ImageView
+                    android:id="@+id/discover_img2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -129,6 +159,19 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:background="@mipmap/sanjiao_icon" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000"
+                    android:alpha="0.2"/>
+                <TextView
+                    android:id="@+id/discover_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px"
+                    />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -146,6 +189,7 @@
                 android:layout_marginTop="160px">
 
                 <ImageView
+                    android:id="@+id/discover_img3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -157,6 +201,19 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:background="@mipmap/sanjiao_icon" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000"
+                    android:alpha="0.2"/>
+                <TextView
+                    android:id="@+id/discover_text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px"
+                    />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -174,17 +231,31 @@
                 android:layout_marginTop="160px">
 
                 <ImageView
+                    android:id="@+id/discover_img4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 
                 <ImageView
-                    android:layout_width="50px"
-                    android:layout_height="50px"
+                    android:layout_width="55px"
+                    android:layout_height="48px"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:background="#fff" />
+                    android:background="@mipmap/sanjiao_icon" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#000"
+                    android:alpha="0.2"/>
+                <TextView
+                    android:id="@+id/discover_text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px"
+                    />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
