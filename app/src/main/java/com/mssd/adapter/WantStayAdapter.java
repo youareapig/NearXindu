@@ -51,9 +51,9 @@ public class WantStayAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         final WantEatBean.DataBean info = list.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.stayname.setText(info.getStitle());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
         viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
@@ -64,11 +64,11 @@ public class WantStayAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 tID = info.getTid()+"";
-                offCollect(position);
+                offCollect(position,viewHolder);
             }
         });
     }
-    private void offCollect(final int position) {
+    private void offCollect(final int position, final ViewHolder holder) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
         params.addBodyParameter("uid", userID);
         params.addBodyParameter("tid", tID);
@@ -78,8 +78,8 @@ public class WantStayAdapter extends RecyclerView.Adapter {
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3006")) {
-                        list.remove(position);
-                        notifyDataSetChanged();
+                        list.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
                         if (list.size()==0){
                             myShow.mShow(true);
                         }else {

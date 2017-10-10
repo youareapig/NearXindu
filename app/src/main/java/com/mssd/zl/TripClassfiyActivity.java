@@ -1,6 +1,5 @@
 package com.mssd.zl;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -10,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TripClassfiyActivity extends AutoLayoutActivity {
@@ -42,6 +43,8 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     TextView isShow;
     @BindView(R.id.tripclassfiy_pull)
     PullToRefreshLayout tripclassfiyPull;
+    @BindView(R.id.tripclassfiy_back)
+    RelativeLayout tripclassfiyBack;
     private Unbinder unbinder;
     private List<XingBean.DataBean> list = new ArrayList<>();
     private String cid, name;
@@ -49,6 +52,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     private int page = 1;
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,13 +121,15 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        tripclassfiyPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("cid", cid);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                tripclassfiyPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "山野风光" + result);
                 Gson gson = new Gson();
                 XingBean bean = gson.fromJson(result, XingBean.class);
@@ -168,7 +174,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("cid", cid);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -178,7 +184,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
                 XingBean bean = gson.fromJson(result, XingBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
                     ToastUtils.showShort(TripClassfiyActivity.this, "加载完成");
                 }
@@ -211,5 +217,10 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.tripclassfiy_back)
+    public void onViewClicked() {
+        finish();
     }
 }

@@ -27,7 +27,7 @@ public class WebActivity extends AutoLayoutActivity {
                 .setReceivedTitleCallback(mCallback) //设置 Web 页面的 title 回调
                 .createAgentWeb()//
                 .ready()
-                .go("http://www.jd.com");
+                .go("http://192.168.10.130/api.php/index/test");
 
 
     }

@@ -98,6 +98,7 @@ public class Jiu extends Fragment {
     }
 
     public void firstBean() {
+        shitangFragmentPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("cid", "1");
@@ -105,6 +106,7 @@ public class Jiu extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                shitangFragmentPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "食堂数据" + result);
                 Gson gson = new Gson();
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);

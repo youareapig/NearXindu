@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ShiJiaActivity extends AutoLayoutActivity {
@@ -40,6 +42,8 @@ public class ShiJiaActivity extends AutoLayoutActivity {
     PullToRefreshLayout shijiaPull;
     @BindView(R.id.isShow)
     TextView isShow;
+    @BindView(R.id.shijia_back)
+    RelativeLayout shijiaBack;
     private Unbinder unbinder;
     private Typeface typeface, typeface1;
     private List<ShijiaBean.DataBean> list = new ArrayList<>();
@@ -112,10 +116,12 @@ public class ShiJiaActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        shijiaPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/gastronome");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                shijiaPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "食家" + result);
                 Gson gson = new Gson();
                 ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
@@ -167,7 +173,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
                 ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(ShiJiaActivity.this, "加载完成");
                 }
@@ -194,5 +200,10 @@ public class ShiJiaActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.shijia_back)
+    public void onViewClicked() {
+        finish();
     }
 }

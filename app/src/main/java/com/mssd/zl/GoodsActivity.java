@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class GoodsActivity extends AutoLayoutActivity {
@@ -39,6 +41,8 @@ public class GoodsActivity extends AutoLayoutActivity {
     TextView isShow;
     @BindView(R.id.goods_pull)
     PullToRefreshLayout goodsPull;
+    @BindView(R.id.goods_back)
+    RelativeLayout goodsBack;
     private Unbinder unbinder;
     private List<GoodsBean.DataBean> list = new ArrayList<>();
     private Goods_Recycle adapter;
@@ -108,11 +112,13 @@ public class GoodsActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        goodsPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/traveler");
         params.addBodyParameter("lid", "2");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                goodsPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "好物" + result);
                 Gson gson = new Gson();
                 GoodsBean bean = gson.fromJson(result, GoodsBean.class);
@@ -165,7 +171,7 @@ public class GoodsActivity extends AutoLayoutActivity {
                 GoodsBean bean = gson.fromJson(result, GoodsBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(GoodsActivity.this, "加载完成");
                 }
@@ -192,5 +198,10 @@ public class GoodsActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.goods_back)
+    public void onViewClicked() {
+        finish();
     }
 }

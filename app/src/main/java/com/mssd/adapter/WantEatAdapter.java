@@ -85,8 +85,8 @@ public class WantEatAdapter extends RecyclerView.Adapter {
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3006")) {
-                        list.remove(position);
-                        notifyDataSetChanged();
+                        list.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
                         if (list.size() == 0) {
                             myShow.mShow(true);
                         } else {

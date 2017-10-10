@@ -29,6 +29,7 @@ import com.facebook.rebound.ui.Util;
 import com.google.gson.Gson;
 import com.mssd.data.UpdataHeadBean;
 import com.mssd.data.UserBean;
+import com.mssd.jpush.JpushActivity;
 import com.mssd.utils.CameraUtil;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.EditdataActivity;
@@ -82,6 +83,7 @@ public class Mine extends Fragment {
     AutoRelativeLayout mineSetting;
     private Unbinder unbinder;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private String userid;
     private Uri imgUrl;
 
@@ -91,6 +93,7 @@ public class Mine extends Fragment {
         View view = inflater.inflate(R.layout.mine, container, false);
         unbinder = ButterKnife.bind(this, view);
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userid = sharedPreferences.getString("userid", "0");
         changeFont();
         requestNet();
@@ -117,6 +120,8 @@ public class Mine extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mine_notice:
+                Intent intent3 = new Intent(getActivity(), JpushActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.mine_place:
                 Intent intent2 = new Intent(getActivity(), PlaceActivity.class);
@@ -299,9 +304,13 @@ public class Mine extends Fragment {
                 if (bean.getCode() == 3000) {
                     if (bean.getData().getHeadpic() != "") {
                         ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
+                        editor.putString("userHead",bean.getData().getHeadpic());
+                        editor.commit();
                     }
                     if (bean.getData().getUname() != "") {
                         mineName.setText(bean.getData().getUname());
+                        editor.putString("userName",bean.getData().getUname());
+                        editor.commit();
                     }
                 }
             }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/chat_item_date_wo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#888888"
+        android:textSize="38px"
+        android:layout_marginTop="100px"/>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60px">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chat_item_head"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/chat_item_text_left"
+            android:layout_marginRight="40px"
+            android:layout_marginTop="20px"
+            android:src="@mipmap/test" />
+
+        <TextView
+            android:id="@+id/chat_item_text_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="250px"
+            android:text="我"
+            android:textColor="#888888"
+            android:textSize="40px" />
+
+        <TextView
+            android:id="@+id/chat_item_content_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chat_item_text_right"
+            android:layout_marginLeft="60px"
+            android:layout_marginRight="250px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/notice"
+            android:padding="40px"
+            android:textColor="#515151"
+            android:textSize="42px" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <TextView
+        android:id="@+id/chat_item_date_ni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#888888"
+        android:textSize="38px"
+        android:layout_marginTop="100px"/>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chat_item_date"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="60px">
+
+
+        <TextView
+            android:id="@+id/chat_item_text_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="220px"
+            android:text="系统通知"
+            android:textColor="#888888"
+            android:textSize="40px" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_below="@+id/chat_item_text_left"
+            android:layout_marginTop="20px"
+            android:src="@mipmap/test" />
+
+        <TextView
+            android:id="@+id/chat_item_content_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chat_item_text_left"
+            android:layout_marginLeft="220px"
+            android:layout_marginRight="60px"
+            android:layout_marginTop="20px"
+            android:background="@drawable/notice"
+            android:padding="40px"
+            android:textColor="#515151"
+            android:textSize="42px" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

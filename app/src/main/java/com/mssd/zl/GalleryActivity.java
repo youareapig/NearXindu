@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.Gallery_Recycle;
 import com.mssd.data.GalleryBean;
+import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration3;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -19,11 +22,11 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class GalleryActivity extends AutoLayoutActivity {
@@ -35,6 +38,10 @@ public class GalleryActivity extends AutoLayoutActivity {
     TextView galleryText1;
     @BindView(R.id.gallery_text2)
     TextView galleryText2;
+    @BindView(R.id.galler_scroll)
+    MyScrollView gallerScroll;
+    @BindView(R.id.gallery_back)
+    RelativeLayout galleryBack;
     private Unbinder unbinder;
     private List<GalleryBean.DataBean> list;
 
@@ -75,10 +82,12 @@ public class GalleryActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        gallerScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/gallery");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                gallerScroll.setVisibility(View.VISIBLE);
                 Log.e("tag", "画廊数据" + result);
                 Gson gson = new Gson();
                 GalleryBean bean = gson.fromJson(result, GalleryBean.class);
@@ -109,5 +118,10 @@ public class GalleryActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.gallery_back)
+    public void onViewClicked() {
+        finish();
     }
 }

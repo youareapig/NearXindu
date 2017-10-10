@@ -45,9 +45,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener,ObservableScrollView.ScrollViewListener {
+public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener, ObservableScrollView.ScrollViewListener {
     @BindView(R.id.food_recycleTop)
     RecyclerView foodRecycleTop;
     @BindView(R.id.food_tx1)
@@ -68,6 +69,10 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     TextView foodTitleName;
     @BindView(R.id.food_title)
     RelativeLayout foodTitle;
+    @BindView(R.id.food_back)
+    RelativeLayout foodBack;
+    @BindView(R.id.food_search)
+    ImageView foodSearch;
     private Unbinder unbinder;
     private List<LocationBean> list;
     private LocationBean locationBean1, locationBean2, locationBean3;
@@ -77,10 +82,11 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     private ViewPagerThread thread;
     private List<FoodDateBean.DataBean.FeastBean> list_2;
     private List<FoodDateBean.DataBean.CanteenBean> list_1;
-    private int heigh=100;
-    private int root=1;
+    private int heigh = 300;
+    private int root = 1;
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +99,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         getNetBean();
 
     }
+
     private void changeFont() {
         AssetManager assetManager = getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
@@ -104,12 +111,12 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     }
 
     private void initbean() {
-        sharedPreferences = getSharedPreferences("xindu",MODE_PRIVATE);
-        userID= sharedPreferences.getString("userid", "0");
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
         list = new ArrayList<>();
-        locationBean1 = new LocationBean("家  .宴",R.mipmap.test );
-        locationBean2 = new LocationBean("食  .堂",R.mipmap.test );
-        locationBean3 = new LocationBean("食  .家",R.mipmap.test );
+        locationBean1 = new LocationBean("家  .宴", R.mipmap.test);
+        locationBean2 = new LocationBean("食  .堂", R.mipmap.test);
+        locationBean3 = new LocationBean("食  .家", R.mipmap.test);
         list.add(locationBean1);
         list.add(locationBean2);
         list.add(locationBean3);
@@ -131,14 +138,28 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
             foodTitle.setAlpha(alpha);
             foodTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
         }
+        if (y > heigh) {
+            foodTitle.setBackgroundColor(Color.WHITE);
+        }
 
+    }
+
+    @OnClick({R.id.food_back, R.id.food_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.food_back:
+                finish();
+                break;
+            case R.id.food_search:
+                break;
+        }
     }
 
     private class ViewPagerThread extends Thread {
         @Override
         public void run() {
             super.run();
-            while (root!=0) {
+            while (root != 0) {
                 try {
                     sleep(3000);
                 } catch (InterruptedException e) {
@@ -165,7 +186,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        root=0;
+        root = 0;
     }
 
     @Override
@@ -198,19 +219,22 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
             }
         }
     }
-    private void getNetBean(){
-        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Eatlive/eat");
-        params.addBodyParameter("uid",userID);
+
+    private void getNetBean() {
+        foodScroll.setVisibility(View.GONE);
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/eat");
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag","食主页"+result);
-                Gson gson=new Gson();
-                FoodDateBean bean=gson.fromJson(result,FoodDateBean.class);
-                if (bean.getCode()==2000){
-                    bannerList=bean.getData().getGastronome();
-                    list_1=bean.getData().getCanteen();
-                    list_2=bean.getData().getFeast();
+                foodScroll.setVisibility(View.VISIBLE);
+                Log.e("tag", "食主页" + result);
+                Gson gson = new Gson();
+                FoodDateBean bean = gson.fromJson(result, FoodDateBean.class);
+                if (bean.getCode() == 2000) {
+                    bannerList = bean.getData().getGastronome();
+                    list_1 = bean.getData().getCanteen();
+                    list_2 = bean.getData().getFeast();
                     //TODO banner
                     thread = new ViewPagerThread();
                     viewpagerTips = new ImageView[bannerList.size()];
@@ -234,7 +258,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                         ImageView imageView = new ImageView(FoodActivity.this);
                         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         viewpagerImage[i] = imageView;
-                        ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(),imageView);
+                        ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(), imageView);
                     }
                     foodViewpager.setOnPageChangeListener(FoodActivity.this);
                     foodViewpager.setAdapter(new BannerAdapter(viewpagerImage));
@@ -251,7 +275,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                                     bannerNo = foodViewpager.getCurrentItem() + 1;
                                 }
                                 foodViewpager.setCurrentItem(bannerNo, true);
-                            }catch (Exception e){
+                            } catch (Exception e) {
 
                             }
 
@@ -262,9 +286,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 //TODO 左右滑动列表
                 foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
                 foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
-                foodRecycle2.setAdapter(new Food_Recycle2(list_2,FoodActivity.this));
+                foodRecycle2.setAdapter(new Food_Recycle2(list_2, FoodActivity.this));
                 //TODO 底部列表
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(FoodActivity.this,LinearLayoutManager.VERTICAL, false){
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FoodActivity.this, LinearLayoutManager.VERTICAL, false) {
                     @Override
                     public boolean canScrollVertically() {
                         return false;
@@ -272,12 +296,12 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 };
                 foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                 foodRecycle3.setLayoutManager(linearLayoutManager);
-                foodRecycle3.setAdapter(new FoodAdapter(list_1,FoodActivity.this));
+                foodRecycle3.setAdapter(new FoodAdapter(list_1, FoodActivity.this));
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag","食主页错误");
+                Log.e("tag", "食主页错误");
             }
 
             @Override

@@ -73,11 +73,11 @@
 
             <ImageView
                 android:id="@+id/jiayan_go"
-                android:layout_width="50px"
-                android:layout_height="60px"
+                android:layout_width="77px"
+                android:layout_height="77px"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="60px"
-                android:background="#5858" />
+                android:src="@mipmap/down" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="2200px"

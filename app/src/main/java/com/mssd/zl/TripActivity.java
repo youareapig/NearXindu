@@ -47,6 +47,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TripActivity extends AutoLayoutActivity implements ObservableScrollView.ScrollViewListener {
@@ -93,13 +94,14 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private LocationBean locationBean1, locationBean2, locationBean3;
     private List<TripClassfiyBean> clist = new ArrayList<>();
     private List<TripNeatBean.DataBean> list;
-    private int heigh = 100;
+    private int heigh = 300;
     private Trip_Recycle3 adapter;
     private int page = 1;
     private TripClassfiyBean bean1, bean2, bean3, bean4, bean5, bean6, bean7, bean8;
     private SharedPreferences sharedPreferences;
-    private String userID,tID;
+    private String userID, tID;
     private boolean isLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -233,16 +235,21 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
             tripTitle.setAlpha(alpha);
             tripTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
         }
+        if (y > heigh) {
+            tripTitle.setBackgroundColor(Color.WHITE);
+        }
     }
 
 
     private void getNetListBean() {
+        tripRefresh.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                tripRefresh.setVisibility(View.VISIBLE);
                 Log.e("tag", "秘境数据" + result);
                 list = new ArrayList<TripNeatBean.DataBean>();
                 Gson gson = new Gson();
@@ -253,19 +260,19 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     tripRecycleList.setAdapter(adapter);
                     if (list.get(0).getIscheck() == 0) {
                         tripShowShoucang1.setImageResource(R.mipmap.shoucang);
-                    }else {
+                    } else {
                         tripShowShoucang1.setImageResource(R.mipmap.shoucang);
                     }
                     if (list.get(1).getIscheck() == 0) {
                         tripShowShoucang2.setImageResource(R.mipmap.shoucang);
-                    }else {
+                    } else {
                         tripShowShoucang2.setImageResource(R.mipmap.shoucang);
                     }
                     tripShowShoucang1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (isLogin == true) {
-                                tID = list.get(0).getId()+"";
+                                tID = list.get(0).getId() + "";
                                 addCollect(tripShowShoucang1);
                             } else {
                                 Intent intent = new Intent(v.getContext(), LoginActivity.class);
@@ -278,7 +285,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                         @Override
                         public void onClick(View v) {
                             if (isLogin == true) {
-                                tID = list.get(1).getId()+"";
+                                tID = list.get(1).getId() + "";
                                 addCollect(tripShowShoucang2);
                             } else {
                                 Intent intent = new Intent(v.getContext(), LoginActivity.class);
@@ -365,6 +372,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
             }
         });
     }
+
     private void addCollect(final ImageView imageView) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");
         params.addBodyParameter("uid", userID);
@@ -378,7 +386,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3004")) {
-                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        AlphaAnimation animation = new AlphaAnimation(0, 1);
                         animation.setDuration(500);
                         imageView.startAnimation(animation);
                         imageView.setImageResource(R.mipmap.shoucang1);
@@ -419,7 +427,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3006")) {
-                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        AlphaAnimation animation = new AlphaAnimation(0, 1);
                         animation.setDuration(500);
                         imageView.startAnimation(animation);
                         imageView.setImageResource(R.mipmap.shoucang);
@@ -447,5 +455,10 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
             }
         });
 
+    }
+
+    @OnClick(R.id.trip_back)
+    public void onViewClicked() {
+        finish();
     }
 }

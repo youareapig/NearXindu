@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -75,7 +76,7 @@ public class Trip extends Fragment {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
                         @Override
                         public boolean canScrollVertically() {
-                            return false;
+                            return true;
                         }
                     };
                     wantEatRecycle.addItemDecoration(new ListItemDecoration(20));
@@ -95,6 +96,7 @@ public class Trip extends Fragment {
 
                     });
                     wantEatRecycle.setAdapter(adapter);
+                    wantEatRecycle.setItemAnimator(new DefaultItemAnimator());
                     wantEatRecycle.setVisibility(View.VISIBLE);
                     isShow.setVisibility(View.GONE);
                 }else {

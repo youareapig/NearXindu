@@ -5,33 +5,25 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.google.gson.Gson;
 import com.mssd.adapter.ShiTangTabAdapter;
-import com.mssd.adapter.TestAdapter;
-import com.mssd.data.ShitangBean;
 import com.mssd.shitangfragment.All;
 import com.mssd.shitangfragment.Cha;
 import com.mssd.shitangfragment.Fan;
 import com.mssd.shitangfragment.Jiu;
 import com.mssd.shitangfragment.Mian;
 import com.mssd.shitangfragment.Su;
-import com.mssd.utils.SingleModleUrl;
-import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
-
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ShiTangActivity extends AutoLayoutActivity {
@@ -41,6 +33,8 @@ public class ShiTangActivity extends AutoLayoutActivity {
     XTabLayout shitangTab;
     @BindView(R.id.shitang_viewpager)
     ViewPager shitangViewpager;
+    @BindView(R.id.shitang_back)
+    RelativeLayout shitangBack;
     private Unbinder unbinder;
     private List<Fragment> list1;
     private List<String> titleList;
@@ -57,7 +51,7 @@ public class ShiTangActivity extends AutoLayoutActivity {
 
     private void initview() {
         list1 = new ArrayList<>();
-        titleList=new ArrayList<>();
+        titleList = new ArrayList<>();
         list1.add(new All());
         list1.add(new Jiu());
         list1.add(new Fan());
@@ -89,4 +83,8 @@ public class ShiTangActivity extends AutoLayoutActivity {
     }
 
 
+    @OnClick(R.id.shitang_back)
+    public void onViewClicked() {
+        finish();
+    }
 }

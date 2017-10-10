@@ -22,13 +22,11 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Stay_Gallery;
 import com.mssd.adapter.Stay_Recycle;
-import com.mssd.data.StayBean;
 import com.mssd.data.StayNextBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.xutils.common.Callback;
@@ -40,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class StayActivity extends AutoLayoutActivity implements ObservableScrollView.ScrollViewListener {
@@ -65,23 +64,26 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     PullToRefreshLayout stayPull;
     @BindView(R.id.isShow)
     TextView isShow;
+    @BindView(R.id.stay_back)
+    RelativeLayout stayBack;
     private Unbinder unbinder;
     private List<String> list;
     private Stay_Gallery gallery_adapter;
     private List<StayNextBean.DataBean> list_1 = new ArrayList<>();
-    private int heigh = 100;
+    private int heigh = 300;
     private Stay_Recycle stay_recycle;
     private int page = 1;
     private String mID = "";
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stay);
         unbinder = ButterKnife.bind(this);
-        sharedPreferences = getSharedPreferences("xindu",MODE_PRIVATE);
-        userID= sharedPreferences.getString("userid", "0");
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
         changeFont();
         changeTitle();
         titleBean();
@@ -214,6 +216,9 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
             stayTitle.setAlpha(alpha);
             stayTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
         }
+        if (y > heigh) {
+            stayTitle.setBackgroundColor(Color.WHITE);
+        }
     }
 
 
@@ -221,7 +226,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "2");
         params.addBodyParameter("cid", cid);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -270,7 +275,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "2");
         params.addBodyParameter("cid", mID);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
         Log.e("tag", "分页码" + page);
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -281,7 +286,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                 StayNextBean bean = gson.fromJson(result, StayNextBean.class);
                 if (bean.getCode() == 2000) {
                     list_1.addAll(bean.getData());
-                    stay_recycle.notifyItemRangeChanged(0,bean.getData().size());
+                    stay_recycle.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
                     ToastUtils.showShort(StayActivity.this, "没有更多数据");
                 }
@@ -308,5 +313,10 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.stay_back)
+    public void onViewClicked() {
+        finish();
     }
 }

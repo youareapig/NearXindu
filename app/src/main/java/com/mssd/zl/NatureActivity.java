@@ -8,15 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.BannerOnClick_Adapter;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.utils.SingleModleUrl;
@@ -27,11 +26,11 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class NatureActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener {
@@ -41,6 +40,8 @@ public class NatureActivity extends AutoLayoutActivity implements ViewPager.OnPa
     LinearLayout natureViewpagerGroup;
     @BindView(R.id.nature_title)
     TextView natureTitle;
+    @BindView(R.id.nature_back)
+    RelativeLayout natureBack;
     private Unbinder unbinder;
     private List<TalkHistoryBean.DataBean> list;
     private ImageView[] viewpagerTips, views;
@@ -191,5 +192,10 @@ public class NatureActivity extends AutoLayoutActivity implements ViewPager.OnPa
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.nature_back)
+    public void onViewClicked() {
+        finish();
     }
 }

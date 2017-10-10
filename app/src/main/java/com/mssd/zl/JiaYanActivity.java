@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,7 +28,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,10 +48,13 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
     ImageView jiayanGo;
     @BindView(R.id.jiayan_scroll)
     ScrollView jiayanScroll;
+    @BindView(R.id.jiayan_back)
+    RelativeLayout jiayanBack;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, views;
     private Typeface typeface, typeface1;
     private List<JiaYanBean.DataBean> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +94,16 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
             jiayanName.setText(list.get(0).getFname());
             jiayanName.setTypeface(typeface1);
             if (i == 0) {
-                viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
-                AutoLinearLayout.LayoutParams layoutParams1 = new AutoLinearLayout.LayoutParams(38, 38);
+                viewpagerTips[i].setBackgroundResource(R.mipmap.jiayan_big);
+                AutoLinearLayout.LayoutParams layoutParams1 = new AutoLinearLayout.LayoutParams(53, 86);
+                layoutParams1.rightMargin = 40;
+                layoutParams1.leftMargin = 40;
                 imageView.setLayoutParams(layoutParams1);
             } else {
-                viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
-                LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(28, 28);
+                viewpagerTips[i].setBackgroundResource(R.mipmap.jiayan_small);
+                LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(35, 56);
+                layoutParams2.rightMargin = 40;
+                layoutParams2.leftMargin = 40;
                 imageView.setLayoutParams(layoutParams2);
 
             }
@@ -109,7 +116,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             views[i] = imageView;
-            ImageLoader.getInstance().displayImage(list.get(i).getUrl(),imageView);
+            ImageLoader.getInstance().displayImage(list.get(i).getUrl(), imageView);
 
         }
         jiayanViewpager.setOnPageChangeListener(this);
@@ -141,29 +148,41 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         for (int i = 0; i < viewpagerTips.length; i++) {
 
             if (i == selectItems) {
-                AutoLinearLayout.LayoutParams layoutParams3 = new AutoLinearLayout.LayoutParams(38, 38);
+                AutoLinearLayout.LayoutParams layoutParams3 = new AutoLinearLayout.LayoutParams(53, 86);
+                layoutParams3.rightMargin = 40;
+                layoutParams3.leftMargin = 40;
                 viewpagerTips[i].setLayoutParams(layoutParams3);
-                viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
+                viewpagerTips[i].setBackgroundResource(R.mipmap.jiayan_big);
                 jiayanName.setText(list.get(i).getFname());
                 jiayanName.setTypeface(typeface1);
             } else {
-                AutoLinearLayout.LayoutParams layoutParams4 = new AutoLinearLayout.LayoutParams(28, 28);
+                AutoLinearLayout.LayoutParams layoutParams4 = new AutoLinearLayout.LayoutParams(35, 56);
+                layoutParams4.rightMargin = 40;
+                layoutParams4.leftMargin = 40;
                 viewpagerTips[i].setLayoutParams(layoutParams4);
-                viewpagerTips[i].setBackgroundResource(R.mipmap.ic_launcher);
+                viewpagerTips[i].setBackgroundResource(R.mipmap.jiayan_small);
             }
         }
     }
 
-    @OnClick(R.id.jiayan_go)
-    public void onViewClicked() {
-        jiayanScroll.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        int[] coo = getScreenSize(this);
-        jiayanScroll.smoothScrollTo(0, coo[1]);
+    @OnClick({R.id.jiayan_go, R.id.jiayan_back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.jiayan_go:
+                jiayanScroll.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        return false;
+                    }
+                });
+                int[] coo = getScreenSize(this);
+                jiayanScroll.smoothScrollTo(0, coo[1]);
+                break;
+            case R.id.jiayan_back:
+                finish();
+                break;
+        }
+
     }
 
     //TODO 获取当前屏幕高度和宽度
@@ -173,23 +192,26 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return new int[]{outMetrics.widthPixels, outMetrics.heightPixels};
     }
-    private void getNetBean(){
-        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Eatlive/feast");
+
+    private void getNetBean() {
+        jiayanScroll.setVisibility(View.GONE);
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/feast");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag","家宴"+result);
-                Gson gson=new Gson();
-                JiaYanBean bean=gson.fromJson(result,JiaYanBean.class);
-                if (bean.getCode()==2000){
-                    list=bean.getData();
+                jiayanScroll.setVisibility(View.VISIBLE);
+                Log.e("tag", "家宴" + result);
+                Gson gson = new Gson();
+                JiaYanBean bean = gson.fromJson(result, JiaYanBean.class);
+                if (bean.getCode() == 2000) {
+                    list = bean.getData();
                     getViewpager();
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag","家宴错误");
+                Log.e("tag", "家宴错误");
             }
 
             @Override

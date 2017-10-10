@@ -241,6 +241,7 @@
                 android:background="@color/bottomBG" />
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/exploration_eat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100px">
@@ -259,7 +260,7 @@
                     android:layout_height="32px"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="40px"
-                    android:src="@mipmap/right_big_icon"/>
+                    android:src="@mipmap/right_big_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -272,6 +273,7 @@
                 android:layout_marginTop="60px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/exploration_stay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150px">
@@ -290,7 +292,7 @@
                     android:layout_height="32px"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="40px"
-                    android:src="@mipmap/right_big_icon"/>
+                    android:src="@mipmap/right_big_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -303,6 +305,7 @@
                 android:layout_marginTop="60px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/exploration_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150px">
@@ -321,7 +324,7 @@
                     android:layout_height="32px"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="40px"
-                    android:src="@mipmap/right_big_icon"/>
+                    android:src="@mipmap/right_big_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView

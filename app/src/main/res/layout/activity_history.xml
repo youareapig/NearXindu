@@ -95,15 +95,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
 
-                        <ImageView
+                        <TextView
                             android:id="@+id/historyRecycleEndImg1"
                             android:layout_width="520px"
                             android:layout_height="500px"
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle"
-                            android:background="#3636"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_launcher" />
+                            android:background="@color/bottomBG"
+                            android:text="查看全部"
+                            android:gravity="center"/>
                     </RelativeLayout>
                 </HorizontalScrollView>
             </RelativeLayout>
@@ -146,7 +146,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="500px"
-                android:layout_marginTop="100px">
+                android:layout_marginTop="100px"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/historyRecycleImg2"
@@ -189,15 +190,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
 
-                        <ImageView
+                        <TextView
                             android:id="@+id/historyRecycleEndImg2"
                             android:layout_width="520px"
                             android:layout_height="500px"
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle1"
-                            android:background="#3636"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_launcher" />
+                            android:background="@color/bottomBG"
+                            android:text="查看全部"
+                            android:gravity="center" />
                     </RelativeLayout>
                 </HorizontalScrollView>
             </RelativeLayout>
@@ -284,15 +285,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
 
-                        <ImageView
+                        <TextView
                             android:id="@+id/historyRecycleEndImg3"
                             android:layout_width="520px"
                             android:layout_height="600px"
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle2"
-                            android:background="#3636"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_launcher" />
+                            android:background="@color/bottomBG"
+                            android:text="查看全部"
+                            android:gravity="center"/>
                     </RelativeLayout>
                 </HorizontalScrollView>
             </RelativeLayout>

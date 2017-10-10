@@ -159,12 +159,14 @@ public class Experience extends Fragment {
 
 
     private void getNetListBean() {
+        experenceScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
         params.addBodyParameter("uid",userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                experenceScroll.setVisibility(View.VISIBLE);
                 Log.e("tag", "体验数据" + result);
                 tlist = new ArrayList<ExperienceNextBean.DataBean>();
                 Gson gson = new Gson();

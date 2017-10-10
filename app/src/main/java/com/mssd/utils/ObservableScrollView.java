@@ -17,7 +17,6 @@ public class ObservableScrollView extends ScrollView {
     private float y;
     private Rect normal = new Rect();
     private ScrollViewListener scrollViewListener = null;
-
     public interface ScrollViewListener {
 
         void onScrollChanged(ObservableScrollView scrollView, int x, int y,
@@ -30,25 +29,8 @@ public class ObservableScrollView extends ScrollView {
     }
 
     public ObservableScrollView(Context context, AttributeSet attrs,
-                                int defStyle) {
+                               int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        if (getChildCount() > 0) {
-            inner = getChildAt(0);
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        if (inner == null) {
-            return super.onTouchEvent(ev);
-        } else {
-            commOnTouchEvent(ev);
-        }
-        return super.onTouchEvent(ev);
     }
 
     public ObservableScrollView(Context context, AttributeSet attrs) {
@@ -66,7 +48,21 @@ public class ObservableScrollView extends ScrollView {
             scrollViewListener.onScrollChanged(this, x, y, oldx, oldy);
         }
     }
-
+    @Override
+    protected void onFinishInflate() {
+        if (getChildCount() > 0) {
+            inner = getChildAt(0);
+        }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (inner == null) {
+            return super.onTouchEvent(ev);
+        } else {
+            commOnTouchEvent(ev);
+        }
+        return super.onTouchEvent(ev);
+    }
     public void commOnTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
         switch (action) {
@@ -109,7 +105,6 @@ public class ObservableScrollView extends ScrollView {
                 break;
         }
     }
-
     public void animation() {
         // 开启移动动画
         TranslateAnimation ta = new TranslateAnimation(0, 0, inner.getTop(),
@@ -120,8 +115,6 @@ public class ObservableScrollView extends ScrollView {
         inner.layout(normal.left, normal.top, normal.right, normal.bottom);
         normal.setEmpty();
     }
-
-    // 是否需要开启动画
     public boolean isNeedAnimation() {
         return !normal.isEmpty();
     }
@@ -135,4 +128,5 @@ public class ObservableScrollView extends ScrollView {
         }
         return false;
     }
+
 }

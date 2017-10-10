@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.CardSwitchListener {
@@ -38,6 +40,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     TextView hofText2;
     @BindView(R.id.hofTitle)
     TextView hofTitle;
+    @BindView(R.id.hof_back)
+    RelativeLayout hofBack;
     private Unbinder unbinder;
     private List<TalkHistoryBean.DataBean> list;
     private Typeface typeface, typeface1;
@@ -124,6 +128,11 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
         Toast.makeText(this, "-----" + index + "------" + type, Toast.LENGTH_LONG).show();
         hofText1.setText(list.get((index + 1) % list.size()).getHname());
         hofText2.setText(list.get((index + 1) % list.size()).getHtag());
+    }
+
+    @OnClick(R.id.hof_back)
+    public void onViewClicked() {
+        finish();
     }
 
     class ViewHolder {

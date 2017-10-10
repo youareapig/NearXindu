@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class PedestrianActivity extends AutoLayoutActivity {
@@ -40,6 +42,8 @@ public class PedestrianActivity extends AutoLayoutActivity {
     TextView isShow;
     @BindView(R.id.pedestrian_pull)
     PullToRefreshLayout pedestrianPull;
+    @BindView(R.id.pedestrian_back)
+    RelativeLayout pedestrianBack;
     private Unbinder unbinder;
     private List<PedestrianBean.DataBean> list = new ArrayList<>();
     private int page = 1;
@@ -108,11 +112,13 @@ public class PedestrianActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        pedestrianPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/traveler");
         params.addBodyParameter("lid", "3");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                pedestrianPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "行者" + result);
                 Gson gson = new Gson();
                 PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
@@ -165,7 +171,7 @@ public class PedestrianActivity extends AutoLayoutActivity {
                 PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
                     ToastUtils.showShort(PedestrianActivity.this, "加载完成");
                 }
@@ -192,5 +198,10 @@ public class PedestrianActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.pedestrian_back)
+    public void onViewClicked() {
+        finish();
     }
 }

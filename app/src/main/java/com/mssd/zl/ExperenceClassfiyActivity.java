@@ -1,6 +1,5 @@
 package com.mssd.zl;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -33,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ExperenceClassfiyActivity extends AutoLayoutActivity {
@@ -55,6 +55,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     private TiyanAdapter adapter;
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +97,9 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
 
     private void initbean() {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
-        experenceclassfiyTitleName.setText(sharedPreferences.getString("nName","0"));
-        cid = sharedPreferences.getString("nID","0");
-        userID = sharedPreferences.getString("userid","0");
+        experenceclassfiyTitleName.setText(sharedPreferences.getString("nName", "0"));
+        cid = sharedPreferences.getString("nID", "0");
+        userID = sharedPreferences.getString("userid", "0");
     }
 
     private void changeFont() {
@@ -125,13 +126,15 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        experenceclassfiyPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
         params.addBodyParameter("cid", cid);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                experenceclassfiyPull.setVisibility(View.VISIBLE);
                 Log.e("tag", "户外" + result);
                 Gson gson = new Gson();
                 TiyanBean bean = gson.fromJson(result, TiyanBean.class);
@@ -175,7 +178,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
         params.addBodyParameter("cid", cid);
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -184,7 +187,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                 TiyanBean bean = gson.fromJson(result, TiyanBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
                     ToastUtils.showShort(ExperenceClassfiyActivity.this, "加载完成");
                 }
@@ -210,5 +213,10 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.experenceclassfiy_back)
+    public void onViewClicked() {
+        finish();
     }
 }

@@ -133,10 +133,12 @@ public class Discover extends Fragment {
     }
 
     private void getNetBean() {
+        discoverScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/probe");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                discoverScroll.setVisibility(View.VISIBLE);
                 Log.e("tag", "发现数据" + result);
                 Gson gson = new Gson();
                 DiscoverBean bean = gson.fromJson(result, DiscoverBean.class);

@@ -8,8 +8,7 @@
     tools:context="com.mssd.zl.AgreementActivity">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px">
+        style="@style/TitleStyle">
 
     </RelativeLayout>
 

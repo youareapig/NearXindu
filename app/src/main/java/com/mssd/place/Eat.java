@@ -57,6 +57,7 @@ public class Eat extends Fragment {
     }
 
     private void initbean() {
+
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
     }
@@ -84,7 +85,7 @@ public class Eat extends Fragment {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
                         @Override
                         public boolean canScrollVertically() {
-                            return false;
+                            return true;
                         }
                     };
                     wantEatRecycle.setLayoutManager(linearLayoutManager);
@@ -98,9 +99,6 @@ public class Eat extends Fragment {
                             if (b == true) {
                                 wantEatRecycle.setVisibility(View.GONE);
                                 isShow.setVisibility(View.VISIBLE);
-                            } else {
-                                wantEatRecycle.setVisibility(View.VISIBLE);
-                                isShow.setVisibility(View.GONE);
                             }
                         }
                     });

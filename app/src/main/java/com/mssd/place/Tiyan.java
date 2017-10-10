@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -75,13 +76,14 @@ public class Tiyan extends Fragment {
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
                         @Override
                         public boolean canScrollVertically() {
-                            return false;
+                            return true;
                         }
                     };
                     wantEatRecycle.addItemDecoration(new ListItemDecoration(80));
                     wantEatRecycle.setLayoutManager(linearLayoutManager);
                     adapter=new WantTiyanAdapter(list, getActivity());
                     wantEatRecycle.setAdapter(adapter);
+                    wantEatRecycle.setItemAnimator(new DefaultItemAnimator());
                     adapter.callBack(new WantTiyanAdapter.MyShow() {
                         @Override
                         public void mShow(boolean b) {

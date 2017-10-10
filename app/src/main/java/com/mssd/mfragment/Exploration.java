@@ -2,7 +2,6 @@ package com.mssd.mfragment;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +26,6 @@ import com.mssd.adapter.Exploration_Recycle_House;
 import com.mssd.adapter.Exploration_Recycle_Place;
 import com.mssd.data.TansuoBean;
 import com.mssd.utils.MyScrollView;
-import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.zl.FoodActivity;
@@ -55,7 +52,7 @@ import butterknife.Unbinder;
  * Created by DELL on 2017/8/30.
  */
 
-public class Exploration extends Fragment implements ViewPager.OnPageChangeListener{
+public class Exploration extends Fragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.exploration_viewpager)
     ViewPager explorationViewpager;
     @BindView(R.id.exploration_viewpager_group)
@@ -94,6 +91,12 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     TextView explorationClassfiy4Name;
     @BindView(R.id.exploration_classfiy4)
     AutoLinearLayout explorationClassfiy4;
+    @BindView(R.id.exploration_eat)
+    AutoRelativeLayout explorationEat;
+    @BindView(R.id.exploration_stay)
+    AutoRelativeLayout explorationStay;
+    @BindView(R.id.exploration_place)
+    AutoRelativeLayout explorationPlace;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, viewpagerImage;
     private Handler handler;
@@ -210,10 +213,9 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     }
 
 
-
-    @OnClick({R.id.exploration_classfiy1, R.id.exploration_classfiy2, R.id.exploration_classfiy3, R.id.exploration_classfiy4})
+    @OnClick({R.id.exploration_classfiy1, R.id.exploration_classfiy2, R.id.exploration_classfiy3, R.id.exploration_classfiy4,R.id.exploration_eat,R.id.exploration_place,R.id.exploration_stay})
     public void onViewClicked(View view) {
-        Intent intent1, intent2, intent3, intent4;
+        Intent intent1, intent2, intent3, intent4,intent5,intent6,intent7;
         switch (view.getId()) {
             case R.id.exploration_classfiy1:
                 intent1 = new Intent(getActivity(), HistoryActivity.class);
@@ -230,6 +232,18 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
             case R.id.exploration_classfiy4:
                 intent4 = new Intent(getActivity(), TripActivity.class);
                 startActivity(intent4);
+                break;
+            case R.id.exploration_eat:
+                intent5=new Intent(getActivity(),FoodActivity.class);
+                startActivity(intent5);
+                break;
+            case R.id.exploration_place:
+                intent6=new Intent(getActivity(),TripActivity.class);
+                startActivity(intent6);
+                break;
+            case R.id.exploration_stay:
+                intent7=new Intent(getActivity(),StayActivity.class);
+                startActivity(intent7);
                 break;
         }
     }
@@ -268,10 +282,12 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     }
 
     private void getNetBean() {
+        explorationScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/index");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                explorationScroll.setVisibility(View.VISIBLE);
                 Log.e("tag", "探索" + result);
                 Gson gson = new Gson();
                 TansuoBean bean = gson.fromJson(result, TansuoBean.class);
@@ -299,7 +315,6 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
 
             @Override
             public void onFinished() {
-
             }
 
             @Override

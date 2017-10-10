@@ -1,5 +1,6 @@
 package com.mssd.zl;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -7,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -52,6 +54,8 @@ public class SettingActivity extends AutoLayoutActivity {
     TextView settingCacheSize;
     @BindView(R.id.setting_cache)
     RelativeLayout settingCache;
+    @BindView(R.id.setting_back)
+    RelativeLayout settingBack;
     private Unbinder unbinder;
     private Typeface typeface1, typeface;
     private SharedPreferences sharedPreferences;
@@ -109,7 +113,7 @@ public class SettingActivity extends AutoLayoutActivity {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout, R.id.setting_cache})
+    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout, R.id.setting_cache,R.id.setting_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_aboutus:
@@ -117,21 +121,52 @@ public class SettingActivity extends AutoLayoutActivity {
                 startActivity(intent);
                 break;
             case R.id.setting_ideal:
+                Intent intent2=new Intent(SettingActivity.this,ChatWithMeActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.setting_video:
                 break;
             case R.id.setting_update:
                 break;
             case R.id.setting_loginout:
-                editor.putString("userid", "0");
-                editor.putBoolean("islogin", false);
-                editor.commit();
-                Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
-                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent1);
+                TextView tv_off,tv_sure,tv_text;
+                final AlertDialog dialog = new AlertDialog.Builder(this).create();
+                LayoutInflater inflater = getLayoutInflater();
+                View v = inflater.inflate(R.layout.sureloginout, null);
+                dialog.setView(v);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
+                tv_off= (TextView) v.findViewById(R.id.off);
+                tv_sure= (TextView) v.findViewById(R.id.sure);
+                tv_text= (TextView) v.findViewById(R.id.sure_text);
+                tv_off.setTypeface(typeface);
+                tv_sure.setTypeface(typeface);
+                tv_text.setTypeface(typeface);
+                tv_off.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                tv_sure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editor.putString("userid", "0");
+                        editor.putBoolean("islogin", false);
+                        editor.commit();
+                        Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent1);
+                        dialog.cancel();
+                    }
+                });
+
                 break;
             case R.id.setting_cache:
                 new Thread(new clearCache()).start();
+                break;
+            case R.id.setting_back:
+                finish();
                 break;
         }
     }

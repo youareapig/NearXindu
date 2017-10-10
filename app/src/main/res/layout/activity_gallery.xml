@@ -30,6 +30,7 @@
     </RelativeLayout>
 
     <com.mssd.utils.MyScrollView
+        android:id="@+id/galler_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,6 @@ import com.mssd.data.UserInfoBean;
 import com.mssd.utils.AddressPickTask;
 import com.mssd.utils.SingleModleUrl;
 import com.zhy.autolayout.AutoLayoutActivity;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,17 +63,20 @@ public class EditdataActivity extends AutoLayoutActivity {
     EditText bianjiUsersign;
     @BindView(R.id.bianji_save)
     TextView bianjiSave;
+    @BindView(R.id.bianji_back)
+    RelativeLayout bianjiBack;
     private Unbinder unbinder;
     private Typeface typeface1, typeface;
-    private String str_username, str_usersex, str_userbirthday, str_useraddress, str_usersign,userID;
+    private String str_username, str_usersex, str_userbirthday, str_useraddress, str_usersign, userID;
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editdata);
         unbinder = ButterKnife.bind(this);
-        sharedPreferences =getSharedPreferences("xindu",MODE_PRIVATE);
-        userID=sharedPreferences.getString("userid","0");
+        sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userid", "0");
         changeFont();
         getInfo();
     }
@@ -103,7 +106,7 @@ public class EditdataActivity extends AutoLayoutActivity {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.bianji_usersex, R.id.bianji_userbirthday, R.id.bianji_usersite, R.id.bianji_save})
+    @OnClick({R.id.bianji_usersex, R.id.bianji_userbirthday, R.id.bianji_usersite, R.id.bianji_save,R.id.bianji_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bianji_usersex:
@@ -206,6 +209,9 @@ public class EditdataActivity extends AutoLayoutActivity {
                     submit();
                 }
                 break;
+            case R.id.bianji_back:
+                finish();
+                break;
         }
     }
 
@@ -280,17 +286,17 @@ public class EditdataActivity extends AutoLayoutActivity {
                         bianjiUsersex.setText("女");
                     } else if (bean.getData().getGender() == 0) {
                         bianjiUsersex.setText("男");
-                    }else {
+                    } else {
                         bianjiUsersex.setText("请选择");
                     }
                     if (bean.getData().getBirthday() != "") {
                         bianjiUserbirthday.setText(bean.getData().getBirthday());
-                    }else {
+                    } else {
                         bianjiUserbirthday.setText("请选择");
                     }
                     if (bean.getData().getDomicile() != "") {
                         bianjiUsersite.setText(bean.getData().getDomicile());
-                    }else {
+                    } else {
                         bianjiUsersite.setText("请选择");
                     }
                     if (bean.getData().getSign() != null) {

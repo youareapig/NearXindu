@@ -1,5 +1,6 @@
 package com.mssd.zl;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener {
@@ -36,17 +39,21 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
     TextView talkViewpageName;
     @BindView(R.id.talk_title)
     TextView talkTitle;
+    @BindView(R.id.talk_back)
+    RelativeLayout talkBack;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, views;
     private Typeface typeface1, typeface;
     private List<TalkHistoryBean.DataBean> list;
-
+    private int item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_talk_history);
         unbinder = ButterKnife.bind(this);
         changeFont();
+        Intent intent=getIntent();
+        item=intent.getIntExtra("item",0);
         init();
     }
 
@@ -88,7 +95,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
 
         talkViewpager.setOnPageChangeListener(this);
         talkViewpager.setAdapter(new BannerAdapter(views));
-        //talkViewpager.setCurrentItem(1);//默认显示第几个
+        talkViewpager.setCurrentItem(item);//默认显示第几个
     }
 
     @Override
@@ -163,5 +170,10 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
                 return false;
             }
         });
+    }
+
+    @OnClick(R.id.talk_back)
+    public void onViewClicked() {
+        finish();
     }
 }

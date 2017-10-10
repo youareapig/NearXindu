@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class PlaceActivity extends AutoLayoutActivity {
@@ -29,9 +31,12 @@ public class PlaceActivity extends AutoLayoutActivity {
     XTabLayout placeTab;
     @BindView(R.id.place_viewpager)
     ViewPager placeViewpager;
+    @BindView(R.id.place_back)
+    RelativeLayout placeBack;
     private Unbinder unbinder;
     private List<String> list;
     private List<Fragment> list1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +45,14 @@ public class PlaceActivity extends AutoLayoutActivity {
         initbean();
         changeFont();
     }
+
     private void changeFont() {
         AssetManager assetManager = getAssets();
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         placeTitle.setTypeface(typeface1);
 
     }
+
     private void initbean() {
         list = new ArrayList<>();
         list1 = new ArrayList<>();
@@ -63,9 +70,15 @@ public class PlaceActivity extends AutoLayoutActivity {
         placeViewpager.setCurrentItem(0);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.place_back)
+    public void onViewClicked() {
+        finish();
     }
 }
