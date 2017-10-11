@@ -1,5 +1,6 @@
 package com.mssd.zl;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import com.google.gson.Gson;
 import com.mssd.cardslid.CardAdapter;
 import com.mssd.cardslid.CardSlidePanel;
 import com.mssd.data.TalkHistoryBean;
+import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -94,6 +97,9 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
                 viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent=new Intent(HOFActivity.this,WebActivity.class);
+                        intent.putExtra("url",SingleModleUrl.singleModleUrl().getTestUrl()+"Show/famous/id/"+list.get(index%list.size()).getId());
+                        startActivity(intent);
                         Log.e("tag", "点击了" + list.get(index % list.size()).getHname());
                     }
                 });
@@ -147,7 +153,6 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
         public void bindData(TalkHistoryBean.DataBean itemData) {
             ImageLoader.getInstance().displayImage(itemData.getUrl(), imageView);
 
-
         }
     }
 
@@ -157,20 +162,19 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "名人堂" + result);
                 Gson gson = new Gson();
                 TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
                 list = bean.getData();
                 if (bean.getCode() == 1000) {
                     initbean();
                 } else {
-                    Toast.makeText(HOFActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(HOFActivity.this, R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "名人堂访问错误");
+                ToastUtils.showShort(HOFActivity.this, R.string.erroe);
             }
 
             @Override

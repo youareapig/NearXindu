@@ -111,12 +111,7 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -130,6 +125,12 @@
                     android:textColor="#fff"
                     android:textSize="72px"
                     />
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="48px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -153,12 +154,7 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -172,6 +168,12 @@
                     android:textColor="#fff"
                     android:textSize="72px"
                     />
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="48px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -195,12 +197,7 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -214,6 +211,12 @@
                     android:textColor="#fff"
                     android:textSize="72px"
                     />
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="48px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -237,12 +240,7 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
 
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -256,6 +254,12 @@
                     android:textColor="#fff"
                     android:textSize="72px"
                     />
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="48px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/sanjiao_icon" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <android.support.v7.widget.RecyclerView

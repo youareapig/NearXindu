@@ -119,7 +119,6 @@ public class GoodsActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 goodsPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "好物" + result);
                 Gson gson = new Gson();
                 GoodsBean bean = gson.fromJson(result, GoodsBean.class);
                 if (bean.getCode() == 2000) {
@@ -138,7 +137,7 @@ public class GoodsActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "eeor");
+                ToastUtils.showShort(GoodsActivity.this, R.string.erroe);
             }
 
             @Override
@@ -166,20 +165,19 @@ public class GoodsActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "好物" + result);
                 Gson gson = new Gson();
                 GoodsBean bean = gson.fromJson(result, GoodsBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(GoodsActivity.this, "加载完成");
+                    ToastUtils.showShort(GoodsActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "eeor");
+                ToastUtils.showShort(GoodsActivity.this, R.string.erroe);
             }
 
             @Override

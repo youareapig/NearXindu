@@ -8,22 +8,21 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.History_Recycle1;
-import com.mssd.adapter.History_Recycle2;
 import com.mssd.adapter.History_Recycle3;
 import com.mssd.data.HistoryIndexBean;
+import com.mssd.html.WebActivity;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -83,6 +82,8 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     TextView historyToptext2;
     @BindView(R.id.history_back)
     RelativeLayout historyBack;
+    @BindView(R.id.history_talk)
+    RelativeLayout historyTalk;
     private Unbinder unbinder;
     private int heigh = 300;
     private List<HistoryIndexBean.DataBean.T2Bean> list1;
@@ -167,7 +168,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         }
     }
 
-    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3,R.id.history_back})
+    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3, R.id.history_back,R.id.history_talk})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.historyRecycleImg1:
@@ -197,6 +198,11 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
             case R.id.history_back:
                 finish();
                 break;
+            case R.id.history_talk:
+                Intent intent4=new Intent(HistoryActivity.this,WebActivity.class);
+                intent4.putExtra("url",SingleModleUrl.singleModleUrl().getTestUrl()+"show/playvideo");
+                startActivity(intent4);
+                break;
         }
     }
 
@@ -207,7 +213,6 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
             @Override
             public void onSuccess(String result) {
                 historyScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "历史首页" + result);
                 Gson gson = new Gson();
                 HistoryIndexBean bean = gson.fromJson(result, HistoryIndexBean.class);
                 if (bean.getCode() == 1000) {
@@ -225,13 +230,13 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                     getRecycle3();
 
                 } else {
-                    Toast.makeText(HistoryActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(HistoryActivity.this, R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "历史首页访问错误");
+                ToastUtils.showShort(HistoryActivity.this, R.string.erroe);
             }
 
             @Override

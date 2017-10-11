@@ -24,6 +24,7 @@ import com.mssd.data.DiscoverBean;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -139,7 +140,6 @@ public class Discover extends Fragment {
             @Override
             public void onSuccess(String result) {
                 discoverScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "发现数据" + result);
                 Gson gson = new Gson();
                 DiscoverBean bean = gson.fromJson(result, DiscoverBean.class);
                 if (bean.getCode() == 1000) {
@@ -161,12 +161,14 @@ public class Discover extends Fragment {
                     getRecycler2();
                     getRecycler3();
                     getRecycler4();
+                }else {
+                    ToastUtils.showShort(getActivity(),R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

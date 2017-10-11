@@ -135,7 +135,6 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 experenceclassfiyPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "户外" + result);
                 Gson gson = new Gson();
                 TiyanBean bean = gson.fromJson(result, TiyanBean.class);
                 if (bean.getCode() == 2000) {
@@ -154,7 +153,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.erroe);
             }
 
             @Override
@@ -189,13 +188,13 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
-                    ToastUtils.showShort(ExperenceClassfiyActivity.this, "加载完成");
+                    ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.erroe);
             }
 
             @Override

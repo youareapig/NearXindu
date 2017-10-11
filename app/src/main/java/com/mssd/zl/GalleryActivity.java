@@ -16,6 +16,7 @@ import com.mssd.data.GalleryBean;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration3;
+import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.xutils.common.Callback;
@@ -88,18 +89,19 @@ public class GalleryActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 gallerScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "画廊数据" + result);
                 Gson gson = new Gson();
                 GalleryBean bean = gson.fromJson(result, GalleryBean.class);
                 if (bean.getCode() == 2000) {
                     list = bean.getData();
                     getBean();
+                }else {
+                    ToastUtils.showShort(GalleryActivity.this,R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "eeor");
+                ToastUtils.showShort(GalleryActivity.this,R.string.erroe);
             }
 
             @Override

@@ -122,7 +122,6 @@ public class ShiJiaActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 shijiaPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "食家" + result);
                 Gson gson = new Gson();
                 ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
                 if (bean.getCode() == 2000) {
@@ -141,7 +140,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(ShiJiaActivity.this, R.string.erroe);
             }
 
             @Override
@@ -168,20 +167,19 @@ public class ShiJiaActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "食家" + result);
                 Gson gson = new Gson();
                 ShijiaBean bean = gson.fromJson(result, ShijiaBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(ShiJiaActivity.this, "加载完成");
+                    ToastUtils.showShort(ShiJiaActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(ShiJiaActivity.this, R.string.erroe);
             }
 
             @Override

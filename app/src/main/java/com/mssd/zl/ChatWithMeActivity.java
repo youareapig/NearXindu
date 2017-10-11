@@ -110,7 +110,6 @@ public class ChatWithMeActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("mm", "聊天记录" + result);
                 Gson gson = new Gson();
                 ChatBean bean = gson.fromJson(result, ChatBean.class);
                 if (bean.getCode() == 3000) {
@@ -122,7 +121,7 @@ public class ChatWithMeActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.d("mm", "聊天记录错误");
+                ToastUtils.showShort(ChatWithMeActivity.this,R.string.erroe);
             }
 
             @Override

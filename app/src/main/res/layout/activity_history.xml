@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/history_talk"
                 android:layout_width="match_parent"
                 android:layout_height="500px">
 

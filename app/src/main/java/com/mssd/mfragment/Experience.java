@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 
 import org.xutils.common.Callback;
@@ -167,7 +169,6 @@ public class Experience extends Fragment {
             @Override
             public void onSuccess(String result) {
                 experenceScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "体验数据" + result);
                 tlist = new ArrayList<ExperienceNextBean.DataBean>();
                 Gson gson = new Gson();
                 ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
@@ -178,12 +179,13 @@ public class Experience extends Fragment {
                     experencePull.setCanLoadMore(true);
                 }else {
                     experencePull.setCanLoadMore(false);
+                    ToastUtils.showShort(getActivity(),R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "体验错误数据");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override
@@ -212,7 +214,6 @@ public class Experience extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "体验数据" + result);
                 tlist = new ArrayList<ExperienceNextBean.DataBean>();
                 Gson gson = new Gson();
                 ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
@@ -220,13 +221,13 @@ public class Experience extends Fragment {
                     tlist.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0,bean.getData().size());
                 }else {
-
+                    ToastUtils.showShort(getActivity(),R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "体验错误数据");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

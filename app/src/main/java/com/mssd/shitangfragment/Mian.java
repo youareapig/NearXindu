@@ -58,7 +58,13 @@ public class Mian extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID= sharedPreferences.getString("userid", "0");
         firstBean();
-        shitangFragmentRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
 
         shitangFragmentPull.setRefreshListener(new BaseRefreshListener() {
             @Override
@@ -109,7 +115,6 @@ public class Mian extends Fragment {
             @Override
             public void onSuccess(String result) {
                 shitangFragmentPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "食堂数据" + result);
                 Gson gson = new Gson();
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
                 if (bean.getCode() == 2000) {
@@ -128,7 +133,7 @@ public class Mian extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "食堂数据失败");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override
@@ -158,18 +163,19 @@ public class Mian extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "食堂数据" + result);
                 Gson gson = new Gson();
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0,bean.getData().size());
+                }else {
+                    ToastUtils.showShort(getActivity(),R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "食堂数据失败");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -138,7 +139,6 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "聊文化" + result);
                 Gson gson = new Gson();
                 TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
                 list = bean.getData();
@@ -146,13 +146,13 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
                     getViewpager();
 
                 } else {
-                    Toast.makeText(TalkHistoryActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(TalkHistoryActivity.this, R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "聊文化访问错误");
+                ToastUtils.showShort(TalkHistoryActivity.this, R.string.erroe);
             }
 
             @Override

@@ -38,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start"
-        android:text="吃翔翔...."
         android:textColor="#515151"
         android:textSize="52px"
         android:padding="70px"/>

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.mssd.data.UserInfoBean;
 import com.mssd.utils.AddressPickTask;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -229,22 +230,20 @@ public class EditdataActivity extends AutoLayoutActivity {
         params.addBodyParameter("birthday", str_userbirthday);
         params.addBodyParameter("domicile", str_useraddress);
         params.addBodyParameter("sign", str_usersign);
-        Log.e("tag", "参数说明" + sexTag + "--" + str_username + "--" + str_userbirthday + "--" + str_useraddress + "--" + str_usersign);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3002")) {
-                        Toast.makeText(EditdataActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(EditdataActivity.this, MainActivity.class);
                         intent.putExtra("indextag", 3);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else if (json.getString("code").equals("-3002")) {
-                        Toast.makeText(EditdataActivity.this, "你未做任何修改", Toast.LENGTH_SHORT).show();
+                        ToastUtils.showShort(EditdataActivity.this,"你未做任何修改!");
                     } else {
-                        Toast.makeText(EditdataActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
+                        ToastUtils.showShort(EditdataActivity.this,"修改失败!");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -253,7 +252,7 @@ public class EditdataActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "修改失败");
+                ToastUtils.showShort(EditdataActivity.this,R.string.erroe);
             }
 
             @Override
@@ -275,7 +274,6 @@ public class EditdataActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "获取用户信息" + result);
                 Gson gson = new Gson();
                 UserInfoBean bean = gson.fromJson(result, UserInfoBean.class);
                 if (bean.getCode() == 3000) {
@@ -303,13 +301,13 @@ public class EditdataActivity extends AutoLayoutActivity {
                         bianjiUsersign.setText(bean.getData().getSign());
                     }
                 } else {
-                    Toast.makeText(EditdataActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(EditdataActivity.this,R.string.erroe);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "获取用户信息失败");
+                ToastUtils.showShort(EditdataActivity.this,R.string.erroe);
             }
 
             @Override

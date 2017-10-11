@@ -130,7 +130,6 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 tripclassfiyPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "山野风光" + result);
                 Gson gson = new Gson();
                 XingBean bean = gson.fromJson(result, XingBean.class);
                 if (bean.getCode() == 2000) {
@@ -149,7 +148,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(TripClassfiyActivity.this, R.string.erroe);
             }
 
             @Override
@@ -179,20 +178,19 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "山野风光" + result);
                 Gson gson = new Gson();
                 XingBean bean = gson.fromJson(result, XingBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
-                    ToastUtils.showShort(TripClassfiyActivity.this, "加载完成");
+                    ToastUtils.showShort(TripClassfiyActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(TripClassfiyActivity.this, R.string.erroe);
             }
 
             @Override

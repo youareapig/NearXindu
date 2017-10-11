@@ -172,9 +172,9 @@
             android:name=".AgreementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WebActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ChatWithMeActivity"></activity>
+            android:name="com.mssd.html.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ChatWithMeActivity" />
     </application>
 
 </manifest>

@@ -98,7 +98,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40px"
-                    android:src="@mipmap/right_small_icon"/>
+                    android:src="@mipmap/right_small_icon" />
 
                 <TextView
                     style="@style/fengexian"
@@ -135,7 +135,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="40px"
-                    android:src="@mipmap/right_small_icon"/>
+                    android:src="@mipmap/right_small_icon" />
 
                 <TextView
                     style="@style/fengexian"

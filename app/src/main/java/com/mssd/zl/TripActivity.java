@@ -250,7 +250,6 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
             @Override
             public void onSuccess(String result) {
                 tripRefresh.setVisibility(View.VISIBLE);
-                Log.e("tag", "秘境数据" + result);
                 list = new ArrayList<TripNeatBean.DataBean>();
                 Gson gson = new Gson();
                 TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
@@ -304,16 +303,15 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     tripRefresh.setCanLoadMore(true);
                 } else if (bean.getCode() == -2000) {
                     tripRefresh.setCanLoadMore(false);
-                    ToastUtils.showShort(TripActivity.this, "没有更多数据");
+                    ToastUtils.showShort(TripActivity.this, R.string.nobean);
                 } else {
                     tripRefresh.setCanLoadMore(false);
-                    ToastUtils.showShort(TripActivity.this, "数据异常");
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "秘境数据请求错误");
+                ToastUtils.showShort(TripActivity.this, R.string.erroe);
             }
 
             @Override
@@ -341,19 +339,20 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "秘境数据" + result);
                 list = new ArrayList<TripNeatBean.DataBean>();
                 Gson gson = new Gson();
                 TripNeatBean bean = gson.fromJson(result, TripNeatBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
+                }else {
+                    ToastUtils.showShort(TripActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "秘境数据请求错误");
+                ToastUtils.showShort(TripActivity.this, R.string.erroe);
             }
 
             @Override

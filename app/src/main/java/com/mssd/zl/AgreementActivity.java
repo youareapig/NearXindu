@@ -7,6 +7,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -35,7 +36,6 @@ public class AgreementActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag","协议"+result);
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     if (jsonObject.getString("code").equals("3000")){
@@ -55,7 +55,7 @@ public class AgreementActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(AgreementActivity.this,R.string.erroe);
             }
 
             @Override

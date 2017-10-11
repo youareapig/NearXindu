@@ -3,10 +3,20 @@ package com.mssd.zl;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +39,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
         setContentView(R.layout.activity_about_us);
         unbinder = ButterKnife.bind(this);
         changeFont();
+        getBean();
     }
 
     private void changeFont() {
@@ -37,6 +48,43 @@ public class AboutUsActivity extends AutoLayoutActivity {
         typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         aboutusContent.setTypeface(typeface);
         aboutusTitle.setTypeface(typeface1);
+    }
+
+    private void getBean() {
+        aboutusContent.setVisibility(View.GONE);
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/about");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    aboutusContent.setVisibility(View.VISIBLE);
+                    JSONObject jsonObject=new JSONObject(result);
+                    aboutusContent.setText(jsonObject.getString("data"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.showShort(AboutUsActivity.this,R.string.erroe);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 
     @Override

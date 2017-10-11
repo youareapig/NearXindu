@@ -32,6 +32,7 @@ import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.SpacesItemDecoration2;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -228,7 +229,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
             @Override
             public void onSuccess(String result) {
                 foodScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "食主页" + result);
                 Gson gson = new Gson();
                 FoodDateBean bean = gson.fromJson(result, FoodDateBean.class);
                 if (bean.getCode() == 2000) {
@@ -282,26 +282,29 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                         }
                     };
                     thread.start();
+                    //TODO 左右滑动列表
+                    foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
+                    foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
+                    foodRecycle2.setAdapter(new Food_Recycle2(list_2, FoodActivity.this));
+                    //TODO 底部列表
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FoodActivity.this, LinearLayoutManager.VERTICAL, false) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    foodRecycle3.addItemDecoration(new ListItemDecoration(80));
+                    foodRecycle3.setLayoutManager(linearLayoutManager);
+                    foodRecycle3.setAdapter(new FoodAdapter(list_1, FoodActivity.this));
+                }else {
+                    ToastUtils.showShort(FoodActivity.this,R.string.nobean);
                 }
-                //TODO 左右滑动列表
-                foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
-                foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
-                foodRecycle2.setAdapter(new Food_Recycle2(list_2, FoodActivity.this));
-                //TODO 底部列表
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FoodActivity.this, LinearLayoutManager.VERTICAL, false) {
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                };
-                foodRecycle3.addItemDecoration(new ListItemDecoration(80));
-                foodRecycle3.setLayoutManager(linearLayoutManager);
-                foodRecycle3.setAdapter(new FoodAdapter(list_1, FoodActivity.this));
+
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "食主页错误");
+                ToastUtils.showShort(FoodActivity.this,R.string.erroe);
             }
 
             @Override

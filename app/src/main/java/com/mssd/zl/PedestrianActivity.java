@@ -119,7 +119,6 @@ public class PedestrianActivity extends AutoLayoutActivity {
             @Override
             public void onSuccess(String result) {
                 pedestrianPull.setVisibility(View.VISIBLE);
-                Log.e("tag", "行者" + result);
                 Gson gson = new Gson();
                 PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
                 if (bean.getCode() == 2000) {
@@ -138,7 +137,7 @@ public class PedestrianActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(PedestrianActivity.this, R.string.erroe);
             }
 
             @Override
@@ -166,20 +165,19 @@ public class PedestrianActivity extends AutoLayoutActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "行者" + result);
                 Gson gson = new Gson();
                 PedestrianBean bean = gson.fromJson(result, PedestrianBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else if (bean.getCode() == -2000) {
-                    ToastUtils.showShort(PedestrianActivity.this, "加载完成");
+                    ToastUtils.showShort(PedestrianActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(PedestrianActivity.this, R.string.erroe);
             }
 
             @Override

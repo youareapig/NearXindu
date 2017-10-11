@@ -142,7 +142,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 gallery_adapter.setSelectItem(position % list.size());
                 gallery_adapter.notifyDataSetChanged();
-                Log.e("tag", "民宿id" + position % list.size());
                 if (list_1 != null) {
                     list_1.clear();
                 }
@@ -250,7 +249,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "请求错误");
+                ToastUtils.showShort(StayActivity.this, R.string.erroe);
             }
 
             @Override
@@ -277,24 +276,22 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         params.addBodyParameter("cid", mID);
         params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
-        Log.e("tag", "分页码" + page);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "分页数据" + result);
                 Gson gson = new Gson();
                 StayNextBean bean = gson.fromJson(result, StayNextBean.class);
                 if (bean.getCode() == 2000) {
                     list_1.addAll(bean.getData());
                     stay_recycle.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
-                    ToastUtils.showShort(StayActivity.this, "没有更多数据");
+                    ToastUtils.showShort(StayActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "请求错误");
+                ToastUtils.showShort(StayActivity.this, R.string.erroe);
             }
 
             @Override

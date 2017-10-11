@@ -25,7 +25,10 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="暂无更多数据"
-                android:visibility="gone" />
+                android:textColor="#888888"
+                android:textSize="38px"
+                android:visibility="gone"
+                />
         </com.zhy.autolayout.AutoRelativeLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>

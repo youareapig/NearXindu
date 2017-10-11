@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.BannerOnClick_Adapter;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -161,20 +162,19 @@ public class NatureActivity extends AutoLayoutActivity implements ViewPager.OnPa
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "自然资源" + result);
                 Gson gson = new Gson();
                 TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
                 list = bean.getData();
                 if (bean.getCode() == 1000) {
                     getViewpager();
                 } else {
-                    Toast.makeText(NatureActivity.this, "请求错误", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(NatureActivity.this, R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "自然资源访问出错");
+                ToastUtils.showShort(NatureActivity.this, R.string.erroe);
             }
 
             @Override

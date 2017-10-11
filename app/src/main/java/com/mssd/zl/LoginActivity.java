@@ -24,6 +24,7 @@ import com.mssd.data.LoginBean;
 import com.mssd.utils.ClassPathResource;
 import com.mssd.utils.CountDownTimerUtils;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.mssd.utils.Utils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -213,13 +214,13 @@ public class LoginActivity extends AutoLayoutActivity {
                     }
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(LoginActivity.this, "登录失败");
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "访问出错");
+                ToastUtils.showShort(LoginActivity.this,R.string.erroe);
             }
 
             @Override

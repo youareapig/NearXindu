@@ -32,6 +32,7 @@ import com.mssd.data.UserBean;
 import com.mssd.jpush.JpushActivity;
 import com.mssd.utils.CameraUtil;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.EditdataActivity;
 import com.mssd.zl.PlaceActivity;
 import com.mssd.zl.R;
@@ -264,14 +265,14 @@ public class Mine extends Fragment {
                 if (bean.getCode() == 3003) {
                     ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
                 } else {
-                    Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showShort(getActivity(),"上传失败!");
                 }
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "上传失败");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override
@@ -294,11 +295,9 @@ public class Mine extends Fragment {
     private void requestNet() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/myInfo");
         params.addBodyParameter("uid", userid);
-        Log.e("tag", "userID" + userid);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "获取用户信息" + result);
                 Gson gson = new Gson();
                 UserBean bean = gson.fromJson(result, UserBean.class);
                 if (bean.getCode() == 3000) {
@@ -312,12 +311,14 @@ public class Mine extends Fragment {
                         editor.putString("userName",bean.getData().getUname());
                         editor.commit();
                     }
+                }else {
+                    ToastUtils.showShort(getActivity(),R.string.erroe);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "用户信息错误");
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

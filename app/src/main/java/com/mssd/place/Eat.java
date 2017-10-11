@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.WantEatAdapter;
 import com.mssd.data.WantEatBean;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 
 import org.xutils.common.Callback;
@@ -73,11 +74,9 @@ public class Eat extends Fragment {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("uid", userID);
-        Log.e("tag", "userID---->" + userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "想去吃" + result);
                 Gson gson = new Gson();
                 WantEatBean bean = gson.fromJson(result, WantEatBean.class);
                 if (bean.getCode() == 3000) {
@@ -110,7 +109,7 @@ public class Eat extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

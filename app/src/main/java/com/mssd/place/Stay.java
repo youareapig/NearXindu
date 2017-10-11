@@ -19,6 +19,7 @@ import com.mssd.adapter.WantStayAdapter;
 import com.mssd.data.WantEatBean;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 
 import org.xutils.common.Callback;
@@ -71,7 +72,6 @@ public class Stay extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "想去住" + result);
                 Gson gson=new Gson();
                 WantEatBean bean=gson.fromJson(result,WantEatBean.class);
                 if (bean.getCode()==3000){
@@ -109,7 +109,7 @@ public class Stay extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override

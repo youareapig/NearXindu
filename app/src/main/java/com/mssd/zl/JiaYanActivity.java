@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.JiaYanBean;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -200,18 +201,19 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
             @Override
             public void onSuccess(String result) {
                 jiayanScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "家宴" + result);
                 Gson gson = new Gson();
                 JiaYanBean bean = gson.fromJson(result, JiaYanBean.class);
                 if (bean.getCode() == 2000) {
                     list = bean.getData();
                     getViewpager();
+                }else {
+                    ToastUtils.showShort(JiaYanActivity.this, R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("tag", "家宴错误");
+                ToastUtils.showShort(JiaYanActivity.this, R.string.erroe);
             }
 
             @Override

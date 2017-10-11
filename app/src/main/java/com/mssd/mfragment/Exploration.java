@@ -25,9 +25,11 @@ import com.mssd.adapter.Exploration_Recycle_Food;
 import com.mssd.adapter.Exploration_Recycle_House;
 import com.mssd.adapter.Exploration_Recycle_Place;
 import com.mssd.data.TansuoBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.FoodActivity;
 import com.mssd.zl.HistoryActivity;
 import com.mssd.zl.R;
@@ -282,13 +284,15 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog=new CustomProgressDialog(getActivity(),R.drawable.frame,R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         explorationScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/index");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 explorationScroll.setVisibility(View.VISIBLE);
-                Log.e("tag", "探索" + result);
                 Gson gson = new Gson();
                 TansuoBean bean = gson.fromJson(result, TansuoBean.class);
                 if (bean.getCode() == 1000) {
@@ -300,12 +304,14 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
                     getFood();
                     getHouse();
                     getPlace();
+                }else {
+                    ToastUtils.showShort(getActivity(),R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                ToastUtils.showShort(getActivity(),R.string.erroe);
             }
 
             @Override
@@ -315,6 +321,7 @@ public class Exploration extends Fragment implements ViewPager.OnPageChangeListe
 
             @Override
             public void onFinished() {
+                customProgressDialog.cancel();
             }
 
             @Override
