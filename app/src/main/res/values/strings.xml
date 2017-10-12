@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NearXindu</string>
     <string name="erroe">居然没网，快惬成都联个网!</string>
-    <string name="end">没有更多数据了!</string>
+    <string name="end">哦豁，四川这么大你都看完了!</string>
     <string name="nobean">暂无数据!</string>
 </resources>

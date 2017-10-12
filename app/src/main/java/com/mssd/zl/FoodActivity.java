@@ -27,6 +27,7 @@ import com.mssd.adapter.Food_Recycle1;
 import com.mssd.adapter.Food_Recycle2;
 import com.mssd.data.FoodDateBean;
 import com.mssd.data.LocationBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -222,6 +223,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         foodScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/eat");
         params.addBodyParameter("uid", userID);
@@ -296,15 +300,15 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                     foodRecycle3.setLayoutManager(linearLayoutManager);
                     foodRecycle3.setAdapter(new FoodAdapter(list_1, FoodActivity.this));
-                }else {
-                    ToastUtils.showShort(FoodActivity.this,R.string.nobean);
+                } else {
+                    ToastUtils.showShort(FoodActivity.this, R.string.nobean);
                 }
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(FoodActivity.this,R.string.erroe);
+                ToastUtils.showShort(FoodActivity.this, R.string.erroe);
             }
 
             @Override
@@ -314,7 +318,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

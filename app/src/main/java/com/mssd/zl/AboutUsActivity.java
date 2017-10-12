@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -51,6 +52,9 @@ public class AboutUsActivity extends AutoLayoutActivity {
     }
 
     private void getBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         aboutusContent.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/about");
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -58,7 +62,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
             public void onSuccess(String result) {
                 try {
                     aboutusContent.setVisibility(View.VISIBLE);
-                    JSONObject jsonObject=new JSONObject(result);
+                    JSONObject jsonObject = new JSONObject(result);
                     aboutusContent.setText(jsonObject.getString("data"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -67,7 +71,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(AboutUsActivity.this,R.string.erroe);
+                ToastUtils.showShort(AboutUsActivity.this, R.string.erroe);
             }
 
             @Override
@@ -77,7 +81,8 @@ public class AboutUsActivity extends AutoLayoutActivity {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
+                ;
             }
 
             @Override

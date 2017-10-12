@@ -27,6 +27,7 @@ import com.mssd.adapter.Trip_Recycle3;
 import com.mssd.data.LocationBean;
 import com.mssd.data.TripClassfiyBean;
 import com.mssd.data.TripNeatBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -242,6 +243,9 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
 
 
     private void getNetListBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         tripRefresh.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
@@ -321,7 +325,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override
@@ -345,7 +349,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
-                }else {
+                } else {
                     ToastUtils.showShort(TripActivity.this, R.string.end);
                 }
             }

@@ -5,16 +5,16 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.TalkHistoryBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,19 +42,22 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
     TextView talkTitle;
     @BindView(R.id.talk_back)
     RelativeLayout talkBack;
+    @BindView(R.id.talkhistort_main)
+    RelativeLayout talkhistortMain;
     private Unbinder unbinder;
     private ImageView[] viewpagerTips, views;
     private Typeface typeface1, typeface;
     private List<TalkHistoryBean.DataBean> list;
     private int item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_talk_history);
         unbinder = ButterKnife.bind(this);
         changeFont();
-        Intent intent=getIntent();
-        item=intent.getIntExtra("item",0);
+        Intent intent = getIntent();
+        item = intent.getIntExtra("item", 0);
         init();
     }
 
@@ -134,11 +137,16 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
     }
 
     private void init() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
+        talkhistortMain.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "History/culture");
         params.addBodyParameter("cid", "2");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                talkhistortMain.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
                 TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
                 list = bean.getData();
@@ -162,7 +170,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
 
             @Override
             public void onFinished() {
-
+customProgressDialog.cancel();
             }
 
             @Override

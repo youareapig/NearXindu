@@ -19,6 +19,7 @@ import com.mssd.adapter.History_Recycle1;
 import com.mssd.adapter.History_Recycle3;
 import com.mssd.data.HistoryIndexBean;
 import com.mssd.html.WebActivity;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
@@ -168,7 +169,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         }
     }
 
-    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3, R.id.history_back,R.id.history_talk})
+    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3, R.id.history_back, R.id.history_talk})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.historyRecycleImg1:
@@ -199,14 +200,17 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                 finish();
                 break;
             case R.id.history_talk:
-                Intent intent4=new Intent(HistoryActivity.this,WebActivity.class);
-                intent4.putExtra("url",SingleModleUrl.singleModleUrl().getTestUrl()+"show/playvideo");
+                Intent intent4 = new Intent(HistoryActivity.this, WebActivity.class);
+                intent4.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "show/playvideo");
                 startActivity(intent4);
                 break;
         }
     }
 
     private void reqestNet() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         historyScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "History/index");
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -246,7 +250,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

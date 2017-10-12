@@ -17,6 +17,7 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.XingAdapter;
 import com.mssd.data.XingBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
@@ -121,6 +122,9 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         tripclassfiyPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
@@ -158,7 +162,7 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

@@ -16,6 +16,7 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Goods_Recycle;
 import com.mssd.data.GoodsBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -112,6 +113,9 @@ public class GoodsActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         goodsPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/traveler");
         params.addBodyParameter("lid", "2");
@@ -147,7 +151,7 @@ public class GoodsActivity extends AutoLayoutActivity {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

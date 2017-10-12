@@ -26,6 +26,7 @@ import com.mssd.adapter.Experience_Recycle;
 import com.mssd.adapter.Experience_Recycle_Top;
 import com.mssd.data.ExperienceNextBean;
 import com.mssd.data.TiyanClassfiyBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
@@ -66,9 +67,10 @@ public class Experience extends Fragment {
     private Experience_Recycle adapter;
     private int page = 1;
     private List<TiyanClassfiyBean> mlist;
-    private TiyanClassfiyBean bean1,bean2,bean3,bean4,bean5;
+    private TiyanClassfiyBean bean1, bean2, bean3, bean4, bean5;
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,10 +86,10 @@ public class Experience extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (tlist!=null){
+                        if (tlist != null) {
                             tlist.clear();
                         }
-                        page=1;
+                        page = 1;
                         getNetListBean();
                         experencePull.finishRefresh();
                     }
@@ -112,13 +114,13 @@ public class Experience extends Fragment {
 
     private void initbean() {
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
-        userID= sharedPreferences.getString("userid", "0");
-        mlist=new ArrayList<>();
-        bean1=new TiyanClassfiyBean("户外活动", R.mipmap.test,"19");
-        bean2=new TiyanClassfiyBean("艺术探究", R.mipmap.test,"20");
-        bean3=new TiyanClassfiyBean("匠心手作", R.mipmap.test,"21");
-        bean4=new TiyanClassfiyBean("茶会雅事", R.mipmap.test,"22");
-        bean5=new TiyanClassfiyBean("生活美学", R.mipmap.test,"23");
+        userID = sharedPreferences.getString("userid", "0");
+        mlist = new ArrayList<>();
+        bean1 = new TiyanClassfiyBean("户外活动", R.mipmap.test, "19");
+        bean2 = new TiyanClassfiyBean("艺术探究", R.mipmap.test, "20");
+        bean3 = new TiyanClassfiyBean("匠心手作", R.mipmap.test, "21");
+        bean4 = new TiyanClassfiyBean("茶会雅事", R.mipmap.test, "22");
+        bean5 = new TiyanClassfiyBean("生活美学", R.mipmap.test, "23");
         mlist.add(bean1);
         mlist.add(bean2);
         mlist.add(bean3);
@@ -158,13 +160,14 @@ public class Experience extends Fragment {
     }
 
 
-
-
     private void getNetListBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(getActivity(), R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         experenceScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -177,15 +180,15 @@ public class Experience extends Fragment {
                     adapter = new Experience_Recycle(tlist, getActivity());
                     experenceRecycle.setAdapter(adapter);
                     experencePull.setCanLoadMore(true);
-                }else {
+                } else {
                     experencePull.setCanLoadMore(false);
-                    ToastUtils.showShort(getActivity(),R.string.nobean);
+                    ToastUtils.showShort(getActivity(), R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override
@@ -195,7 +198,7 @@ public class Experience extends Fragment {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override
@@ -209,7 +212,7 @@ public class Experience extends Fragment {
     private void loadmorer() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -219,15 +222,15 @@ public class Experience extends Fragment {
                 ExperienceNextBean bean = gson.fromJson(result, ExperienceNextBean.class);
                 if (bean.getCode() == 2000) {
                     tlist.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
-                }else {
-                    ToastUtils.showShort(getActivity(),R.string.end);
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
+                } else {
+                    ToastUtils.showShort(getActivity(), R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override

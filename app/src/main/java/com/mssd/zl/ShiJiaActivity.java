@@ -16,6 +16,7 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.ShiJia_Recycle;
 import com.mssd.data.ShijiaBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
@@ -116,6 +117,9 @@ public class ShiJiaActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         shijiaPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/gastronome");
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -150,7 +154,7 @@ public class ShiJiaActivity extends AutoLayoutActivity {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

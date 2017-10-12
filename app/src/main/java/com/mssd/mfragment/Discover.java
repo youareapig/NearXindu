@@ -21,6 +21,7 @@ import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
 import com.mssd.data.DiscoverBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
@@ -134,6 +135,9 @@ public class Discover extends Fragment {
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(getActivity(), R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         discoverScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/probe");
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -161,14 +165,14 @@ public class Discover extends Fragment {
                     getRecycler2();
                     getRecycler3();
                     getRecycler4();
-                }else {
-                    ToastUtils.showShort(getActivity(),R.string.nobean);
+                } else {
+                    ToastUtils.showShort(getActivity(), R.string.nobean);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override
@@ -178,7 +182,7 @@ public class Discover extends Fragment {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

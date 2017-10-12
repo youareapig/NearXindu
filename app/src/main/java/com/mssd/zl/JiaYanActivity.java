@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.data.JiaYanBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -195,6 +196,9 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
     }
 
     private void getNetBean() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         jiayanScroll.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/feast");
         x.http().post(params, new Callback.CacheCallback<String>() {
@@ -206,7 +210,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
                 if (bean.getCode() == 2000) {
                     list = bean.getData();
                     getViewpager();
-                }else {
+                } else {
                     ToastUtils.showShort(JiaYanActivity.this, R.string.nobean);
                 }
             }
@@ -223,7 +227,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override

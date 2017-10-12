@@ -17,6 +17,7 @@ import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.TiyanAdapter;
 import com.mssd.data.TiyanBean;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
@@ -55,7 +56,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     private TiyanAdapter adapter;
     private SharedPreferences sharedPreferences;
     private String userID;
-
+    private CustomProgressDialog customProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,9 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     }
 
     private void getNetBean() {
+        customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
         experenceclassfiyPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "4");
@@ -153,7 +157,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.erroe);
+                ToastUtils.showShort(ExperenceClassfiyActivity.this, R.string.erroe);
             }
 
             @Override
@@ -163,7 +167,7 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override
@@ -188,13 +192,13 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
                     list.addAll(bean.getData());
                     adapter.notifyItemRangeChanged(0, bean.getData().size());
                 } else {
-                    ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.end);
+                    ToastUtils.showShort(ExperenceClassfiyActivity.this, R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(ExperenceClassfiyActivity.this,R.string.erroe);
+                ToastUtils.showShort(ExperenceClassfiyActivity.this, R.string.erroe);
             }
 
             @Override

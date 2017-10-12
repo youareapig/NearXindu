@@ -16,10 +16,12 @@ import com.mssd.cardslid.CardAdapter;
 import com.mssd.cardslid.CardSlidePanel;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.html.WebActivity;
+import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
+import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.Callback;
@@ -45,6 +47,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     TextView hofTitle;
     @BindView(R.id.hof_back)
     RelativeLayout hofBack;
+    @BindView(R.id.hof_main)
+    AutoRelativeLayout hofMain;
     private Unbinder unbinder;
     private List<TalkHistoryBean.DataBean> list;
     private Typeface typeface, typeface1;
@@ -97,8 +101,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
                 viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(HOFActivity.this,WebActivity.class);
-                        intent.putExtra("url",SingleModleUrl.singleModleUrl().getTestUrl()+"Show/famous/id/"+list.get(index%list.size()).getId());
+                        Intent intent = new Intent(HOFActivity.this, WebActivity.class);
+                        intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "Show/famous/id/" + list.get(index % list.size()).getId());
                         startActivity(intent);
                         Log.e("tag", "点击了" + list.get(index % list.size()).getHname());
                     }
@@ -157,11 +161,16 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     }
 
     private void init() {
+        final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
+        customProgressDialog.setCanceledOnTouchOutside(false);
+        customProgressDialog.show();
+        hofMain.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "History/culture");
         params.addBodyParameter("cid", "6");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                hofMain.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
                 TalkHistoryBean bean = gson.fromJson(result, TalkHistoryBean.class);
                 list = bean.getData();
@@ -184,7 +193,7 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
 
             @Override
             public void onFinished() {
-
+                customProgressDialog.cancel();
             }
 
             @Override
