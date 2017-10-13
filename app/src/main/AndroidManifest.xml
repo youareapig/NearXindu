@@ -174,7 +174,11 @@
         <activity
             android:name="com.mssd.html.WebActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChatWithMeActivity" />
+        <activity android:name=".ChatWithMeActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.mssd.html.WebsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

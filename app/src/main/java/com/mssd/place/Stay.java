@@ -64,6 +64,11 @@ public class Stay extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getNetBean();
+    }
 
     private void getNetBean() {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/want");

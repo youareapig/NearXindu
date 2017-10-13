@@ -88,6 +88,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     private int root = 1;
     private SharedPreferences sharedPreferences;
     private String userID;
+    private FoodAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,7 +300,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     };
                     foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                     foodRecycle3.setLayoutManager(linearLayoutManager);
-                    foodRecycle3.setAdapter(new FoodAdapter(list_1, FoodActivity.this));
+                    adapter=new FoodAdapter(list_1, FoodActivity.this);
+                    foodRecycle3.setAdapter(adapter);
                 } else {
                     ToastUtils.showShort(FoodActivity.this, R.string.nobean);
                 }
@@ -327,5 +329,61 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 return false;
             }
         });
+    }
+
+    private void reStar() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/eat");
+        params.addBodyParameter("uid", userID);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                FoodDateBean bean = gson.fromJson(result, FoodDateBean.class);
+                if (bean.getCode() == 2000) {
+                    bannerList = bean.getData().getGastronome();
+                    list_1 = bean.getData().getCanteen();
+                    //TODO 底部列表
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FoodActivity.this, LinearLayoutManager.VERTICAL, false) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    foodRecycle3.setLayoutManager(linearLayoutManager);
+                    adapter=new FoodAdapter(list_1, FoodActivity.this);
+                    foodRecycle3.setAdapter(adapter);
+                } else {
+                    ToastUtils.showShort(FoodActivity.this, R.string.nobean);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.showShort(FoodActivity.this, R.string.erroe);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
+                return false;
+            }
+        });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userID = sharedPreferences.getString("userid", "0");
+        reStar();
     }
 }

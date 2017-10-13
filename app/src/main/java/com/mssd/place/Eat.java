@@ -63,6 +63,11 @@ public class Eat extends Fragment {
         userID = sharedPreferences.getString("userid", "0");
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getNetBean();
+    }
 
     @Override
     public void onDestroyView() {

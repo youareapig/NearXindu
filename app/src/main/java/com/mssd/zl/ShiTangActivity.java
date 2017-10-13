@@ -5,10 +5,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.androidkun.xtablayout.XTabLayout;
 import com.mssd.adapter.ShiTangTabAdapter;
 import com.mssd.shitangfragment.All;
 import com.mssd.shitangfragment.Cha;
@@ -16,6 +16,7 @@ import com.mssd.shitangfragment.Fan;
 import com.mssd.shitangfragment.Jiu;
 import com.mssd.shitangfragment.Mian;
 import com.mssd.shitangfragment.Su;
+import com.mssd.xtab.XTabLayout;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class ShiTangActivity extends AutoLayoutActivity {
     private Unbinder unbinder;
     private List<Fragment> list1;
     private List<String> titleList;
+    private ShiTangTabAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ShiTangActivity extends AutoLayoutActivity {
         changeFont();
         initview();
     }
+
 
     private void initview() {
         list1 = new ArrayList<>();
@@ -64,9 +67,12 @@ public class ShiTangActivity extends AutoLayoutActivity {
         titleList.add("面馆");
         titleList.add("茶馆");
         titleList.add("素食");
-        shitangViewpager.setAdapter(new ShiTangTabAdapter(getSupportFragmentManager(), titleList, list1));
+        adapter=new ShiTangTabAdapter(getSupportFragmentManager(), titleList, list1);
+        shitangViewpager.setAdapter(adapter);
         shitangViewpager.setOffscreenPageLimit(6);
         shitangTab.setupWithViewPager(shitangViewpager);
+        shitangTab.getTabAt(0).select();
+        shitangTab.getTabAt(1).select();
         shitangViewpager.setCurrentItem(0);
     }
 
@@ -75,6 +81,7 @@ public class ShiTangActivity extends AutoLayoutActivity {
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         shitangTitle.setTypeface(typeface1);
     }
+
 
     @Override
     protected void onDestroy() {

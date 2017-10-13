@@ -80,7 +80,7 @@ public class All extends Fragment {
                         firstBean();
                         shitangFragmentPull.finishRefresh();
                     }
-                }, 2000);
+                }, 1000);
             }
 
             @Override
@@ -93,10 +93,17 @@ public class All extends Fragment {
 
                         shitangFragmentPull.finishLoadMore();
                     }
-                }, 2000);
+                }, 1000);
             }
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        userID= sharedPreferences.getString("userid", "0");
+        shitangFragmentPull.autoRefresh();
     }
 
     @Override
@@ -104,7 +111,6 @@ public class All extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 
     public void firstBean() {
         shitangFragmentPull.setVisibility(View.GONE);

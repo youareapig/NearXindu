@@ -14,8 +14,11 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mssd.data.FoodDateBean;
+import com.mssd.data.HtmlBean;
 import com.mssd.data.TripNeatBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
@@ -40,10 +43,12 @@ public class FoodAdapter extends RecyclerView.Adapter {
     private SharedPreferences sharedPreferences;
     private String userID, tID;
     private boolean isLogin;
+    private SharedPreferences.Editor editor;
     public FoodAdapter(List<FoodDateBean.DataBean.CanteenBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
     }
@@ -84,7 +89,17 @@ public class FoodAdapter extends RecyclerView.Adapter {
 
             }
         });
-
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getId() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "1");
+                editor.commit();
+                v.getContext().startActivity(intent);
+            }
+        });
     }
     private void addCollect(final ViewHolder hodler) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mssd.data.LoginBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.ClassPathResource;
 import com.mssd.utils.CountDownTimerUtils;
 import com.mssd.utils.SingleModleUrl;
@@ -210,6 +211,11 @@ public class LoginActivity extends AutoLayoutActivity {
                             Intent intent6 = new Intent(LoginActivity.this, ExperenceClassfiyActivity.class);
                             intent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent6);
+                            break;
+                        case 8:
+                            Intent intent7 = new Intent(LoginActivity.this, WebsActivity.class);
+                            intent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent7);
                             break;
                     }
 

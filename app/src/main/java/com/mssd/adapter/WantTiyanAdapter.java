@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.mssd.data.HtmlBean;
 import com.mssd.data.TiyanBean;
 import com.mssd.data.WantEatBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,11 +40,13 @@ public class WantTiyanAdapter extends RecyclerView.Adapter {
     private Activity activity;
     private String userID, tID;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private MyShow myShow;
     public WantTiyanAdapter(List<WantEatBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
     }
 
@@ -69,7 +75,14 @@ public class WantTiyanAdapter extends RecyclerView.Adapter {
                 offCollect(position,viewHolder);
             }
         });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getTid() + "";
+            }
+        });
     }
+
     private void offCollect(final int position, final ViewHolder holder) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/offllect");
         params.addBodyParameter("uid", userID);

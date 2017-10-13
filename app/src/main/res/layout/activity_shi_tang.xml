@@ -44,7 +44,7 @@
     </RelativeLayout>
 
 
-        <com.androidkun.xtablayout.XTabLayout
+        <com.mssd.xtab.XTabLayout
             android:id="@+id/shitang_tab"
             android:layout_width="match_parent"
             android:layout_height="130px"

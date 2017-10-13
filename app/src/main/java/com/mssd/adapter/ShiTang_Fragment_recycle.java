@@ -14,7 +14,10 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.mssd.data.HtmlBean;
 import com.mssd.data.ShitangNextBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
@@ -37,6 +40,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
     private List<ShitangNextBean.DataBean> list;
     private Activity activity;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private String userID, tID;
     private boolean isLogin;
 //    private double dangqianweidu, dangqianjingdu, latitude, longititude;
@@ -48,6 +52,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
 //        sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
@@ -73,8 +78,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.shitangtext1.setText(info.getStitle());
         viewHolder.shitangtext2.setText(info.getSname());
-        Log.e("tag","数据测试-------------"+info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.shitangimg);
+        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.shitangimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shitangtext1.setTypeface(typeface);
@@ -95,6 +99,18 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
                     intent.putExtra("intentTag", 4);
                     v.getContext().startActivity(intent);
                 }
+
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getId() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "1");
+                editor.commit();
+                v.getContext().startActivity(intent);
 
             }
         });
@@ -143,6 +159,8 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
 
 
     }
+
+
     private void addCollect(final ViewHolder hodler) {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Member/addllect");
         params.addBodyParameter("uid", userID);
@@ -156,7 +174,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3004")) {
-                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        AlphaAnimation animation = new AlphaAnimation(0, 1);
                         animation.setDuration(500);
                         hodler.shoucang.startAnimation(animation);
                         hodler.shoucang.setImageResource(R.mipmap.shoucang1);
@@ -197,7 +215,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3006")) {
-                        AlphaAnimation animation= new AlphaAnimation(0,1);
+                        AlphaAnimation animation = new AlphaAnimation(0, 1);
                         animation.setDuration(500);
                         hodler.shoucang.startAnimation(animation);
                         hodler.shoucang.setImageResource(R.mipmap.shoucang);
@@ -226,9 +244,10 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         });
 
     }
+
     @Override
     public int getItemCount() {
-        if (list!=null){
+        if (list != null) {
             return list.size();
         }
         return 0;
@@ -236,7 +255,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView shitangtext1, shitangtext2, shitangtext3;
-        private ImageView shitangimg,shoucang;
+        private ImageView shitangimg, shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -245,7 +264,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
             shitangtext2 = (TextView) itemView.findViewById(R.id.shitang_fragment_recycle_text2);
             shitangtext3 = (TextView) itemView.findViewById(R.id.shitang_fragment_recycle_text3);
             shitangimg = (ImageView) itemView.findViewById(R.id.shitang_fragment_recycle_img);
-            shoucang= (ImageView) itemView.findViewById(R.id.shitang_fragment_recycle_shoucang);
+            shoucang = (ImageView) itemView.findViewById(R.id.shitang_fragment_recycle_shoucang);
         }
     }
 

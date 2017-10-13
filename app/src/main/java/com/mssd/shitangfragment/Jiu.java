@@ -98,6 +98,13 @@ public class Jiu extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        userID= sharedPreferences.getString("userid", "0");
+        shitangFragmentPull.autoRefresh();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

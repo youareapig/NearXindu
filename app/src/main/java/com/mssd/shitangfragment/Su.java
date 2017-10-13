@@ -96,7 +96,12 @@ public class Su extends Fragment {
         });
         return view;
     }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        userID= sharedPreferences.getString("userid", "0");
+        shitangFragmentPull.autoRefresh();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

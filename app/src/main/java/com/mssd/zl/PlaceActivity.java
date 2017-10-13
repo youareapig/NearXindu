@@ -8,12 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.androidkun.xtablayout.XTabLayout;
 import com.mssd.adapter.TestAdapter;
 import com.mssd.place.Eat;
 import com.mssd.place.Stay;
 import com.mssd.place.Tiyan;
 import com.mssd.place.Trip;
+import com.mssd.xtab.XTabLayout;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -67,6 +67,9 @@ public class PlaceActivity extends AutoLayoutActivity {
         placeViewpager.setAdapter(new TestAdapter(getSupportFragmentManager(), list, list1));
         placeViewpager.setOffscreenPageLimit(4);
         placeTab.setupWithViewPager(placeViewpager);
+        //TODO 避免默认第一个tab加粗
+        placeTab.getTabAt(0).select();
+        placeTab.getTabAt(1).select();
         placeViewpager.setCurrentItem(0);
 
     }

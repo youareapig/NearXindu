@@ -76,7 +76,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     private String mID = "";
     private SharedPreferences sharedPreferences;
     private String userID;
-
+    private int num=100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +87,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         changeFont();
         changeTitle();
         titleBean();
+        stayGallery.setSpacing(160);
 
 
         stayPull.setRefreshListener(new BaseRefreshListener() {
@@ -135,11 +136,12 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         list.add("露营");
         gallery_adapter = new Stay_Gallery(list, StayActivity.this);
         stayGallery.setAdapter(gallery_adapter);
-        stayGallery.setSpacing(160);
-        stayGallery.setSelection(5 * 200);
+        stayGallery.setSelection(num);
+        Log.e("tag","选择数"+num);
         stayGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                num=(position % list.size())+100;
                 gallery_adapter.setSelectItem(position % list.size());
                 gallery_adapter.notifyDataSetChanged();
                 if (list_1 != null) {
@@ -188,6 +190,12 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         stayText1.setTypeface(typeface1);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userID = sharedPreferences.getString("userid", "0");
+        titleBean();
+    }
 
     @Override
     protected void onDestroy() {
@@ -229,7 +237,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "具体数据" + result);
                 Gson gson = new Gson();
                 StayNextBean bean = gson.fromJson(result, StayNextBean.class);
                 if (bean.getCode() == 2000) {

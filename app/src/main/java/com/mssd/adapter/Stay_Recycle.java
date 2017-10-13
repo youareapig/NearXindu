@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.StayNextBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
@@ -37,12 +38,14 @@ public class Stay_Recycle extends RecyclerView.Adapter {
     private List<StayNextBean.DataBean> list;
     private Activity activity;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private String userID, tID;
     private boolean isLogin;
     public Stay_Recycle(List<StayNextBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
     }
@@ -79,6 +82,17 @@ public class Stay_Recycle extends RecyclerView.Adapter {
                     v.getContext().startActivity(intent);
                 }
 
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getId() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "2");
+                editor.commit();
+                v.getContext().startActivity(intent);
             }
         });
     }

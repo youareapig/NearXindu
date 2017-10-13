@@ -62,8 +62,10 @@ dependencies {
     compile 'com.github.Lauzy:LBehavior:1.0.1'
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'com.just.agentweb:agentweb:2.0.1'
-    compile 'com.jwenfeng.pulltorefresh:library:1.2.5'
+    compile 'com.jwenfeng.pulltorefresh:library:1.2.6'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     apt 'com.zhy:mpermission-compiler:1.0.0'
+    compile 'com.github.lany192:ProgressWebView:1.0.0'
+
 }
