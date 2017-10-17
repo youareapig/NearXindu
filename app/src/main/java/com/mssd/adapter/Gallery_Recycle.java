@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mssd.data.GalleryBean;
+import com.mssd.html.WebActivity;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -35,9 +38,17 @@ public class Gallery_Recycle extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        GalleryBean.DataBean bean=list.get(position);
+        final GalleryBean.DataBean bean=list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         ImageLoader.getInstance().displayImage(bean.getUrl(),viewHolder.galleryrecycleimg);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl()+"Show/line/id/"+bean.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

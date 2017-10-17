@@ -53,6 +53,7 @@ public class Tiyan extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
+        wantEatRecycle.addItemDecoration(new ListItemDecoration(80));
         return view;
     }
 
@@ -84,7 +85,7 @@ public class Tiyan extends Fragment {
                             return true;
                         }
                     };
-                    wantEatRecycle.addItemDecoration(new ListItemDecoration(80));
+
                     wantEatRecycle.setLayoutManager(linearLayoutManager);
                     adapter=new WantTiyanAdapter(list, getActivity());
                     wantEatRecycle.setAdapter(adapter);

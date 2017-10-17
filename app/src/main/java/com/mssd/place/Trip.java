@@ -53,6 +53,7 @@ public class Trip extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
+        wantEatRecycle.addItemDecoration(new ListItemDecoration(20));
         return view;
     }
 
@@ -84,7 +85,7 @@ public class Trip extends Fragment {
                             return true;
                         }
                     };
-                    wantEatRecycle.addItemDecoration(new ListItemDecoration(20));
+
                     wantEatRecycle.setLayoutManager(linearLayoutManager);
                     adapter=new WantTripAdapter(list, getActivity());
                     adapter.callBack(new WantTripAdapter.MyShow() {

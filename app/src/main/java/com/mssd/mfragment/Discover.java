@@ -1,5 +1,6 @@
 package com.mssd.mfragment;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +21,28 @@ import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
 import com.mssd.adapter.Discover_Recycle4;
 import com.mssd.data.DiscoverBean;
+import com.mssd.html.WebActivity;
 import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.ToastUtils;
+import com.mssd.zl.GalleryActivity;
+import com.mssd.zl.GoodsActivity;
+import com.mssd.zl.PedestrianActivity;
 import com.mssd.zl.R;
+import com.mssd.zl.TalkHistoryActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -196,6 +201,33 @@ public class Discover extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R.id.discover_Topimg, R.id.discover_img1, R.id.discover_img2, R.id.discover_img3, R.id.discover_img4})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.discover_Topimg:
+                Intent intent4 = new Intent(getActivity(), WebActivity.class);
+                intent4.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "show/playvideo");
+                startActivity(intent4);
+                break;
+            case R.id.discover_img1:
+                Intent intent = new Intent(getActivity(), TalkHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.discover_img2:
+                Intent intent1 = new Intent(getActivity(), PedestrianActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.discover_img3:
+                Intent intent2 = new Intent(getActivity(), GoodsActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.discover_img4:
+                Intent intent3 = new Intent(getActivity(), GalleryActivity.class);
+                startActivity(intent3);
+                break;
+        }
     }
 
 

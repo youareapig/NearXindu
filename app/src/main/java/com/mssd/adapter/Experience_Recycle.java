@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.ExperienceNextBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
 import com.mssd.zl.LoginActivity;
@@ -38,6 +39,7 @@ public class Experience_Recycle extends RecyclerView.Adapter {
     private List<ExperienceNextBean.DataBean> list;
     private Activity activity;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private String userID, tID;
     private boolean isLogin;
 
@@ -45,6 +47,7 @@ public class Experience_Recycle extends RecyclerView.Adapter {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
     }
@@ -83,6 +86,17 @@ public class Experience_Recycle extends RecyclerView.Adapter {
                     v.getContext().startActivity(intent);
                 }
 
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getId() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "4");
+                editor.commit();
+                v.getContext().startActivity(intent);
             }
         });
     }

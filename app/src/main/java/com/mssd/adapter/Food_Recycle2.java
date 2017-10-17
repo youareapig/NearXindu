@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.FoodDateBean;
+import com.mssd.html.WebActivity;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -38,13 +41,21 @@ public class Food_Recycle2 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FoodDateBean.DataBean.FeastBean info = list.get(position);
+        final FoodDateBean.DataBean.FeastBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.food2name.setText(info.getFname());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.food2img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         viewHolder.food2name.setTypeface(typeface);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl()+"Show/feast/id/"+info.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -101,7 +101,11 @@ public class Jiu extends Fragment {
     public void onStart() {
         super.onStart();
         userID= sharedPreferences.getString("userid", "0");
-        shitangFragmentPull.autoRefresh();
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        firstBean();
     }
 
     @Override

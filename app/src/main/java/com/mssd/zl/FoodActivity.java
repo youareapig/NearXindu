@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.FoodAdapter;
+import com.mssd.adapter.FoodBannerAdapter;
 import com.mssd.adapter.Food_Recycle1;
 import com.mssd.adapter.Food_Recycle2;
 import com.mssd.data.FoodDateBean;
@@ -75,6 +76,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     RelativeLayout foodBack;
     @BindView(R.id.food_search)
     ImageView foodSearch;
+    @BindView(R.id.food_viewpage_title)
+    TextView foodViewpageTitle;
     private Unbinder unbinder;
     private List<LocationBean> list;
     private LocationBean locationBean1, locationBean2, locationBean3;
@@ -89,7 +92,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     private SharedPreferences sharedPreferences;
     private String userID;
     private FoodAdapter adapter;
-
+    private Typeface typeface,typeface1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +108,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
 
     private void changeFont() {
         AssetManager assetManager = getAssets();
-        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
-        Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
+        typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         foodTx1.setTypeface(typeface1);
         foodTx2.setTypeface(typeface);
         foodTitleName.setTypeface(typeface1);
@@ -217,6 +220,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                 TranslateAnimation translateAnimation = new TranslateAnimation(0, 10, 0, 10);
                 translateAnimation.setDuration(500);
                 viewpagerTips[i].startAnimation(translateAnimation);
+                foodViewpageTitle.setText(bannerList.get(i).getGname());
+                foodViewpageTitle.setTypeface(typeface);
             } else {
                 viewpagerTips[i].setBackgroundResource(R.drawable.foodvpunchecked);
             }
@@ -235,7 +240,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
             public void onSuccess(String result) {
                 foodScroll.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
-                FoodDateBean bean = gson.fromJson(result, FoodDateBean.class);
+                final FoodDateBean bean = gson.fromJson(result, FoodDateBean.class);
                 if (bean.getCode() == 2000) {
                     bannerList = bean.getData().getGastronome();
                     list_1 = bean.getData().getCanteen();
@@ -250,6 +255,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                         layoutParams.rightMargin = 10;
                         imageView.setLayoutParams(layoutParams);
                         viewpagerTips[i] = imageView;
+                        foodViewpageTitle.setText(bannerList.get(0).getGname());
+                        foodViewpageTitle.setTypeface(typeface);
                         if (i == 0) {
                             viewpagerTips[i].setBackgroundResource(R.drawable.foodvpchecked);
                         } else {
@@ -265,8 +272,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                         viewpagerImage[i] = imageView;
                         ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(), imageView);
                     }
+
                     foodViewpager.setOnPageChangeListener(FoodActivity.this);
-                    foodViewpager.setAdapter(new BannerAdapter(viewpagerImage));
+                    foodViewpager.setAdapter(new FoodBannerAdapter(viewpagerImage,bannerList));
                     handler = new Handler() {
                         int bannerNo = 0;
 
@@ -300,7 +308,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     };
                     foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                     foodRecycle3.setLayoutManager(linearLayoutManager);
-                    adapter=new FoodAdapter(list_1, FoodActivity.this);
+                    adapter = new FoodAdapter(list_1, FoodActivity.this);
                     foodRecycle3.setAdapter(adapter);
                 } else {
                     ToastUtils.showShort(FoodActivity.this, R.string.nobean);
@@ -350,7 +358,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                         }
                     };
                     foodRecycle3.setLayoutManager(linearLayoutManager);
-                    adapter=new FoodAdapter(list_1, FoodActivity.this);
+                    adapter = new FoodAdapter(list_1, FoodActivity.this);
                     foodRecycle3.setAdapter(adapter);
                 } else {
                     ToastUtils.showShort(FoodActivity.this, R.string.nobean);

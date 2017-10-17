@@ -96,6 +96,17 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         addline();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userID = sharedPreferences.getString("userid", "0");
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        getNetBean();
+    }
+
     private void initbean() {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         experenceclassfiyTitleName.setText(sharedPreferences.getString("nName", "0"));

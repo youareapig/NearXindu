@@ -27,6 +27,8 @@ import com.mssd.adapter.Trip_Recycle3;
 import com.mssd.data.LocationBean;
 import com.mssd.data.TripClassfiyBean;
 import com.mssd.data.TripNeatBean;
+import com.mssd.html.WebActivity;
+import com.mssd.html.WebsActivity;
 import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.ListItemDecoration;
 import com.mssd.utils.ObservableScrollView;
@@ -100,6 +102,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     private int page = 1;
     private TripClassfiyBean bean1, bean2, bean3, bean4, bean5, bean6, bean7, bean8;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private String userID, tID;
     private boolean isLogin;
 
@@ -109,6 +112,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         setContentView(R.layout.activity_trip);
         unbinder = ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
         changeFont();
@@ -241,6 +245,16 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userID = sharedPreferences.getString("userid", "0");
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        getNetListBean();
+    }
 
     private void getNetListBean() {
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
@@ -250,6 +264,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("uid", userID);
+        Log.e("tag","userid"+userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -261,16 +276,28 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     list.addAll(bean.getData());
                     adapter = new Trip_Recycle3(list, TripActivity.this);
                     tripRecycleList.setAdapter(adapter);
+                    Log.e("tag","第一个"+list.get(0).getIscheck()+"第二个"+list.get(1).getIscheck());
                     if (list.get(0).getIscheck() == 0) {
                         tripShowShoucang1.setImageResource(R.mipmap.shoucang);
                     } else {
-                        tripShowShoucang1.setImageResource(R.mipmap.shoucang);
+                        tripShowShoucang1.setImageResource(R.mipmap.shoucang1);
                     }
                     if (list.get(1).getIscheck() == 0) {
                         tripShowShoucang2.setImageResource(R.mipmap.shoucang);
                     } else {
-                        tripShowShoucang2.setImageResource(R.mipmap.shoucang);
+                        tripShowShoucang2.setImageResource(R.mipmap.shoucang1);
                     }
+                    tripShowImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tID = list.get(0).getId() + "";
+                            Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                            editor.putString("mmCid", tID);
+                            editor.putString("mmType", "4");
+                            editor.commit();
+                            v.getContext().startActivity(intent);
+                        }
+                    });
                     tripShowShoucang1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -282,6 +309,17 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                                 intent.putExtra("intentTag", 5);
                                 v.getContext().startActivity(intent);
                             }
+                        }
+                    });
+                    tripShow1Img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tID = list.get(1).getId() + "";
+                            Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                            editor.putString("mmCid", tID);
+                            editor.putString("mmType", "4");
+                            editor.commit();
+                            v.getContext().startActivity(intent);
                         }
                     });
                     tripShowShoucang2.setOnClickListener(new View.OnClickListener() {

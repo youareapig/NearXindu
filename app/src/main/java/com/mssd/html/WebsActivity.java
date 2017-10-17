@@ -3,31 +3,23 @@ package com.mssd.html;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.just.library.AgentWeb;
-import com.just.library.ChromeClientCallbackManager;
-import com.just.library.PermissionInterceptor;
 import com.lany.library.ProgressWebView;
 import com.mssd.data.HtmlBean;
-import com.mssd.shitangfragment.All;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
-import com.mssd.zl.ShiTangActivity;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
@@ -55,7 +47,6 @@ public class WebsActivity extends AutoLayoutActivity {
     ImageView shoucang;
     @BindView(R.id.webview)
     ProgressWebView webview;
-    private AgentWeb agentWeb;
     private Unbinder unbinder;
     private String userID, cID, type;
     private int ischeck;
@@ -121,9 +112,11 @@ public class WebsActivity extends AutoLayoutActivity {
         isLogin = sharedPreferences.getBoolean("islogin", false);
         cID = sharedPreferences.getString("mmCid", "0");
         type = sharedPreferences.getString("mmType", "0");
-        Log.e("tag", "type----" + type);
         if (type.equals("1") || type.equals("2")) {
             urlType = "Show/roomboard";
+        }
+        if (type.equals("4")||type.equals("3")) {
+            urlType = "Show/expere";
         }
         webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);

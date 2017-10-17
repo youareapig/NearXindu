@@ -6,10 +6,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,7 +18,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.just.library.AgentWeb;
 import com.mssd.adapter.BannerAdapter;
+import com.mssd.adapter.JiaYanBannerAdapter;
 import com.mssd.data.JiaYanBean;
 import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
@@ -46,8 +49,6 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
     TextView jiayanName;
     @BindView(R.id.jiayan_viewpager_group)
     LinearLayout jiayanViewpagerGroup;
-    @BindView(R.id.jiayan_go)
-    ImageView jiayanGo;
     @BindView(R.id.jiayan_scroll)
     ScrollView jiayanScroll;
     @BindView(R.id.jiayan_back)
@@ -66,6 +67,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         changeFont();
         getNetBean();
     }
+
 
     private void changeFont() {
         AssetManager assetManager = getAssets();
@@ -116,13 +118,11 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         for (int i = 0; i < list.size(); i++) {
             ImageView imageView = new ImageView(this);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
             views[i] = imageView;
             ImageLoader.getInstance().displayImage(list.get(i).getUrl(), imageView);
-
         }
         jiayanViewpager.setOnPageChangeListener(this);
-        jiayanViewpager.setAdapter(new BannerAdapter(views));
+        jiayanViewpager.setAdapter(new JiaYanBannerAdapter(views,list));
     }
 
     @Override
@@ -167,19 +167,9 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         }
     }
 
-    @OnClick({R.id.jiayan_go, R.id.jiayan_back})
+    @OnClick({R.id.jiayan_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.jiayan_go:
-                jiayanScroll.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        return false;
-                    }
-                });
-                int[] coo = getScreenSize(this);
-                jiayanScroll.smoothScrollTo(0, coo[1]);
-                break;
             case R.id.jiayan_back:
                 finish();
                 break;

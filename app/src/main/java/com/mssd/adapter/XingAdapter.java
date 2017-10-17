@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.mssd.data.TripNeatBean;
 import com.mssd.data.XingBean;
+import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
@@ -40,10 +41,12 @@ public class XingAdapter extends RecyclerView.Adapter {
     private boolean isLogin;
     private String userID, tID;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     public XingAdapter(List<XingBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
         sharedPreferences = activity.getSharedPreferences("xindu", activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
     }
@@ -82,6 +85,17 @@ public class XingAdapter extends RecyclerView.Adapter {
                     v.getContext().startActivity(intent);
                 }
 
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tID = info.getId() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "3");
+                editor.commit();
+                v.getContext().startActivity(intent);
             }
         });
     }

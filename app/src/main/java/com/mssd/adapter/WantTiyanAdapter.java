@@ -79,6 +79,11 @@ public class WantTiyanAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 tID = info.getTid() + "";
+                Intent intent = new Intent(v.getContext(), WebsActivity.class);
+                editor.putString("mmCid", tID);
+                editor.putString("mmType", "4");
+                editor.commit();
+                v.getContext().startActivity(intent);
             }
         });
     }

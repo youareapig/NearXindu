@@ -54,6 +54,7 @@ public class Stay extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         initbean();
         getNetBean();
+        shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(120));
         return view;
 
     }
@@ -88,7 +89,6 @@ public class Stay extends Fragment {
                         }
                     };
                     adapter=new WantStayAdapter(list, getActivity());
-                    shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(120));
                     shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
                     shitangFragmentRecycle.setAdapter(adapter);
                     shitangFragmentRecycle.setItemAnimator(new DefaultItemAnimator());

@@ -159,6 +159,16 @@ public class Experience extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        userID = sharedPreferences.getString("userid", "0");
+        if (tlist != null) {
+            tlist.clear();
+        }
+        page = 1;
+        getNetListBean();
+    }
 
     private void getNetListBean() {
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(getActivity(), R.drawable.frame, R.style.dialog);

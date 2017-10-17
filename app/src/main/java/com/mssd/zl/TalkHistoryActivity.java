@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
+import com.mssd.adapter.TalkBannerAdapter;
 import com.mssd.data.TalkHistoryBean;
 import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.SingleModleUrl;
@@ -98,7 +99,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
         }
 
         talkViewpager.setOnPageChangeListener(this);
-        talkViewpager.setAdapter(new BannerAdapter(views));
+        talkViewpager.setAdapter(new TalkBannerAdapter(views,list));
         talkViewpager.setCurrentItem(item);//默认显示第几个
     }
 

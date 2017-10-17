@@ -1,6 +1,8 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mssd.data.DiscoverBean;
+import com.mssd.html.WebActivity;
+import com.mssd.html.WebsActivity;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -32,19 +37,27 @@ public class Discover_Recycle1 extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.discover_item_1, parent,false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.discover_item_1, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DiscoverBean.DataBeanXXXX.T1Bean.DataBean info = list.get(position);
+        final DiscoverBean.DataBeanXXXX.T1Bean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.discover1name.setText(info.getHintro());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.discover1img);
+        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.discover1img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.discover1name.setTypeface(typeface);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "Show/culture/id/" + info.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

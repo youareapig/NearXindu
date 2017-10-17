@@ -1,28 +1,33 @@
 package com.mssd.adapter;
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.mssd.data.FoodDateBean;
+import com.mssd.data.TalkHistoryBean;
+import com.mssd.html.WebActivity;
+import com.mssd.utils.SingleModleUrl;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/10/21 0021.
  */
-public class BannerAdapter extends PagerAdapter {
+public class TalkBannerAdapter extends PagerAdapter {
     private ImageView[] imageViews;
-    public BannerAdapter(ImageView[] imageViews) {
-        this.imageViews=imageViews;
+    private List<TalkHistoryBean.DataBean> list;
+
+    public TalkBannerAdapter(ImageView[] imageViews, List<TalkHistoryBean.DataBean> list) {
+        this.imageViews = imageViews;
+        this.list = list;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-            return imageViews.length;
+        return imageViews.length;
     }
 
     @Override
@@ -38,9 +43,17 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+        imageViews[position].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "Show/culture/id/" + list.get(position).getId());
+                v.getContext().startActivity(intent);
+            }
+        });
         try {
             container.addView(imageViews[position % imageViews.length], 0);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return imageViews[position % imageViews.length];

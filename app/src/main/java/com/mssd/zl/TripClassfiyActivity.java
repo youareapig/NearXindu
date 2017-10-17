@@ -121,6 +121,17 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
         tripclassfiyrecycle.setLayoutManager(linearLayoutManager);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userID = sharedPreferences.getString("userid", "0");
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        getNetBean();
+    }
+
     private void getNetBean() {
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
         customProgressDialog.setCanceledOnTouchOutside(false);
