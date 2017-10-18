@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +47,9 @@ public class Exploration_Recycle_Food extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.foodname.setText(info.getFname());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.foodimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.foodimg.startAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.foodname.setTypeface(typeface);

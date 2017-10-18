@@ -176,12 +176,13 @@
                         android:src="@mipmap/right_small_icon" />
 
                     <TextView
+                        android:id="@+id/update_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="40px"
                         android:layout_toLeftOf="@+id/setting_update_go"
-                        android:text="1.0.1"
+                        android:text="1.0.0"
                         android:textColor="#888888"
                         android:textSize="48px" />
 

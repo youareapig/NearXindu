@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,6 +63,9 @@ public class WantStayAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.stayname.setText(info.getStitle());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.stayimg.setAnimation(animation);
         viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,9 @@ public class History_Recycle3 extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.history1name.setText(info.getHname());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.history1img);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.history1img.setAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.history1name.setTypeface(typeface);

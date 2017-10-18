@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 import com.mssd.data.GalleryBean;
@@ -41,6 +42,9 @@ public class Gallery_Recycle extends RecyclerView.Adapter {
         final GalleryBean.DataBean bean=list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         ImageLoader.getInstance().displayImage(bean.getUrl(),viewHolder.galleryrecycleimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.galleryrecycleimg.setAnimation(animation);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

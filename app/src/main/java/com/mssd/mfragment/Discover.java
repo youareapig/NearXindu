@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -152,16 +153,23 @@ public class Discover extends Fragment {
                 Gson gson = new Gson();
                 DiscoverBean bean = gson.fromJson(result, DiscoverBean.class);
                 if (bean.getCode() == 1000) {
+                    AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+                    animation.setDuration(500);
                     discoverText.setText(bean.getData().getTop().getTitle());
                     ImageLoader.getInstance().displayImage(bean.getData().getTop().getUrl(), discoverTopimg);
+                    discoverTopimg.startAnimation(animation);
                     discoverText1.setText(bean.getData().getT1().getPic().getContent());
                     ImageLoader.getInstance().displayImage(bean.getData().getT1().getPic().getUrl(), discoverImg1);
+                    discoverImg1.startAnimation(animation);
                     discoverText2.setText(bean.getData().getT2().getPic().getContent());
                     ImageLoader.getInstance().displayImage(bean.getData().getT2().getPic().getUrl(), discoverImg2);
+                    discoverImg2.startAnimation(animation);
                     discoverText3.setText(bean.getData().getT3().getPic().getContent());
                     ImageLoader.getInstance().displayImage(bean.getData().getT3().getPic().getUrl(), discoverImg3);
+                    discoverImg3.startAnimation(animation);
                     discoverText4.setText(bean.getData().getT4().getPic().getContent());
                     ImageLoader.getInstance().displayImage(bean.getData().getT4().getPic().getUrl(), discoverImg4);
+                    discoverImg4.startAnimation(animation);
                     list1 = bean.getData().getT1().getData();
                     list2 = bean.getData().getT2().getData();
                     list3 = bean.getData().getT3().getData();

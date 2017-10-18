@@ -104,7 +104,9 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c5e922416e61d9c3c5db06c1f7e9f9c6" />
-
+        <meta-data
+            android:name="UPDATE_APP_KEY"
+            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
         <activity
             android:name=".HistoryActivity"
             android:screenOrientation="portrait" />

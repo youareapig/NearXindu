@@ -3,6 +3,7 @@ package com.mssd.zl;
 import android.app.Application;
 import android.content.Context;
 
+import com.lzy.okgo.OkGo;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -12,6 +13,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.zhy.autolayout.config.AutoLayoutConifg;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.xutils.x;
 
@@ -31,6 +33,12 @@ public class InitApp extends Application {
         AutoLayoutConifg.getInstance().useDeviceSize();
         initImageLoader(getApplicationContext());
         x.Ext.init(this);
+
+        OkHttpUtils.getInstance()
+                .init(this)
+                .debug(true, "okHttp")
+                .timeout(20 * 1000);
+        OkGo.getInstance().init(this);
     }
     public void initImageLoader(Context context) {
         config = new ImageLoaderConfiguration.Builder(context)
@@ -51,8 +59,8 @@ public class InitApp extends Application {
                 .defaultDisplayImageOptions(new DisplayImageOptions.Builder()
                         .cacheInMemory(true)//开启内存缓存
                         .cacheOnDisk(true)//开启磁盘缓存
-                       // .showImageOnLoading(R.mipmap.ic_launcher)//加载过程中显示的图片
-                       // .showImageOnFail(R.mipmap.ic_launcher)//加载失败显示的图片
+                        .showImageOnLoading(R.mipmap.hui)//加载过程中显示的图片
+                        .showImageOnFail(R.mipmap.hui)//加载失败显示的图片
                         .build()) // default
                 .writeDebugLogs()
                 .build();

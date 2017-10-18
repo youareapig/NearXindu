@@ -276,7 +276,6 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     list.addAll(bean.getData());
                     adapter = new Trip_Recycle3(list, TripActivity.this);
                     tripRecycleList.setAdapter(adapter);
-                    Log.e("tag","第一个"+list.get(0).getIscheck()+"第二个"+list.get(1).getIscheck());
                     if (list.get(0).getIscheck() == 0) {
                         tripShowShoucang1.setImageResource(R.mipmap.shoucang);
                     } else {
@@ -337,9 +336,13 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     });
 
                     ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
+                    AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+                    animation.setDuration(500);
+                    tripShowImg.setAnimation(animation);
                     tripShowText1.setText(list.get(0).getStitle());
                     tripShowText2.setText(list.get(0).getStitle());
                     ImageLoader.getInstance().displayImage(list.get(1).getUrl(), tripShow1Img);
+                    tripShow1Img.setAnimation(animation);
                     tripShow1Text1.setText(list.get(1).getStitle());
                     tripShow1Text2.setText(list.get(1).getSname());
                     tripRefresh.setCanLoadMore(true);

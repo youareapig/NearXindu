@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,9 @@ public class Discover_Recycle4 extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.discover4name.setText(info.getPname());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.discover4img);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.discover4img.setAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.discover4name.setTypeface(typeface);

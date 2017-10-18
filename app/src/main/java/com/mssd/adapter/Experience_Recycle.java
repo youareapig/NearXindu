@@ -65,6 +65,9 @@ public class Experience_Recycle extends RecyclerView.Adapter {
         viewHolder.experienceRecycletitle1.setText(info.getStitle());
         viewHolder.experienceRecycletitle2.setText(info.getSname());
         ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.experienceRecycleimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.experienceRecycleimg.setAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.experienceRecycletitle1.setTypeface(typeface);

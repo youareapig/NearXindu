@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,9 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         viewHolder.shitangtext1.setText(info.getStitle());
         viewHolder.shitangtext2.setText(info.getSname());
         ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.shitangimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.shitangimg.startAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shitangtext1.setTypeface(typeface);

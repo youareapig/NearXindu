@@ -8,6 +8,9 @@ public class SingleModleUrl {
     private String imgUrl = "http://192.168.10.130/";
     private String testUrl = "http://192.168.10.130/api.php/";
 
+//    private String imgUrl = "http://www.qiecd.com/";
+//    private String testUrl = "http://www.qiecd.com/api.php/";
+
 
     public String getImgUrl() {
         return imgUrl;

@@ -30,9 +30,18 @@ import com.mssd.mfragment.Discover;
 import com.mssd.mfragment.Experience;
 import com.mssd.mfragment.Exploration;
 import com.mssd.mfragment.Mine;
+import com.mssd.update.UpdateAppHttpUtil;
+import com.mssd.utils.SingleModleUrl;
+import com.vector.update_app.UpdateAppManager;
 import com.zhy.autolayout.AutoLayoutActivity;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +97,7 @@ public class MainActivity extends AutoLayoutActivity {
         unbinder = ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        updateversion();
         Intent intent = getIntent();
         currentIndex = intent.getIntExtra("indextag", 0);
         if (currentIndex == 3) {
@@ -334,5 +344,46 @@ public class MainActivity extends AutoLayoutActivity {
         }
         return super.onKeyUp(keyCode, event);
 
+    }
+    private void updateversion() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo");
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("update").equals("Yes")) {
+                        new UpdateAppManager
+                                .Builder()
+                                //当前Activity
+                                .setActivity(MainActivity.this)
+                                //更新地址
+                                .setUpdateUrl(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo")
+                                //实现httpManager接口的对象
+                                .setHttpManager(new UpdateAppHttpUtil())
+                                .build()
+                                .update();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

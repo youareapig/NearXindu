@@ -8,15 +8,28 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mssd.update.UpdateAppHttpUtil;
 import com.mssd.utils.CacheDataManager;
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
+import com.vector.update_app.UpdateAppManager;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,10 +69,13 @@ public class SettingActivity extends AutoLayoutActivity {
     RelativeLayout settingCache;
     @BindView(R.id.setting_back)
     RelativeLayout settingBack;
+    @BindView(R.id.update_name)
+    TextView updateName;
     private Unbinder unbinder;
     private Typeface typeface1, typeface;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private String isUpdate;
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -84,6 +100,7 @@ public class SettingActivity extends AutoLayoutActivity {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         changeFont();
+        updateversion();
     }
 
     private void changeFont() {
@@ -113,7 +130,7 @@ public class SettingActivity extends AutoLayoutActivity {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout, R.id.setting_cache,R.id.setting_back})
+    @OnClick({R.id.setting_aboutus, R.id.setting_ideal, R.id.setting_video, R.id.setting_update, R.id.setting_loginout, R.id.setting_cache, R.id.setting_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_aboutus:
@@ -121,24 +138,48 @@ public class SettingActivity extends AutoLayoutActivity {
                 startActivity(intent);
                 break;
             case R.id.setting_ideal:
-                Intent intent2=new Intent(SettingActivity.this,ChatWithMeActivity.class);
+                Intent intent2 = new Intent(SettingActivity.this, ChatWithMeActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.setting_video:
                 break;
             case R.id.setting_update:
+                if (isUpdate.equals("Yes")) {
+                    new UpdateAppManager
+                            .Builder()
+                            //当前Activity
+                            .setActivity(SettingActivity.this)
+                            //更新地址
+                            .setUpdateUrl(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo")
+                            //实现httpManager接口的对象
+                            .setHttpManager(new UpdateAppHttpUtil())
+                            .build()
+                            .update();
+                } else {
+                    final AlertDialog dialog = new AlertDialog.Builder(SettingActivity.this).create();
+                    LayoutInflater inflater = getLayoutInflater();
+                    View v = inflater.inflate(R.layout.bestversion, null);
+                    dialog.setView(v);
+                    dialog.show();
+                    Window window = dialog.getWindow();
+                    WindowManager.LayoutParams layoutParams = window.getAttributes();
+                    layoutParams.alpha = 0.6f;
+                    layoutParams.width = 650;
+                    window.setAttributes(layoutParams);
+                    dialog.setCanceledOnTouchOutside(true);
+                }
                 break;
             case R.id.setting_loginout:
-                TextView tv_off,tv_sure,tv_text;
+                TextView tv_off, tv_sure, tv_text;
                 final AlertDialog dialog = new AlertDialog.Builder(this).create();
                 LayoutInflater inflater = getLayoutInflater();
                 View v = inflater.inflate(R.layout.sureloginout, null);
                 dialog.setView(v);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.show();
-                tv_off= (TextView) v.findViewById(R.id.off);
-                tv_sure= (TextView) v.findViewById(R.id.sure);
-                tv_text= (TextView) v.findViewById(R.id.sure_text);
+                tv_off = (TextView) v.findViewById(R.id.off);
+                tv_sure = (TextView) v.findViewById(R.id.sure);
+                tv_text = (TextView) v.findViewById(R.id.sure_text);
                 tv_off.setTypeface(typeface);
                 tv_sure.setTypeface(typeface);
                 tv_text.setTypeface(typeface);
@@ -184,6 +225,44 @@ public class SettingActivity extends AutoLayoutActivity {
                 return;
             }
         }
+    }
+
+    private void updateversion() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo");
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject json = new JSONObject(result);
+                    if (json.getString("update").equals("Yes")) {
+                        settingUpdateText1.setVisibility(View.VISIBLE);
+                        isUpdate = "Yes";
+                    } else {
+                        settingUpdateText1.setVisibility(View.GONE);
+                        isUpdate = "No";
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 

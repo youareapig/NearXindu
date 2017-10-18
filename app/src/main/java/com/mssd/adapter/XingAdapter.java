@@ -64,6 +64,9 @@ public class XingAdapter extends RecyclerView.Adapter {
         viewHolder.trip1name.setText(info.getStitle());
         viewHolder.trip2name.setText(info.getSname());
         ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.tripimg);
+        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
+        animation.setDuration(500);
+        viewHolder.tripimg.setAnimation(animation);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.trip1name.setTypeface(typeface);
