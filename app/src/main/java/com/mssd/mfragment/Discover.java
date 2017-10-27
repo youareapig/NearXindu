@@ -16,6 +16,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.adapter.Discover_Recycle1;
 import com.mssd.adapter.Discover_Recycle2;
@@ -27,6 +28,7 @@ import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
+import com.mssd.utils.SpacesItemDecoration2;
 import com.mssd.utils.ToastUtils;
 import com.mssd.zl.GalleryActivity;
 import com.mssd.zl.GoodsActivity;
@@ -117,25 +119,25 @@ public class Discover extends Fragment {
     }
 
     private void getRecycler1() {
-        discoverRecycle1.addItemDecoration(new SpacesItemDecoration(20));
+        discoverRecycle1.addItemDecoration(new SpacesItemDecoration2(40));
         discoverRecycle1.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle1.setAdapter(new Discover_Recycle1(list1, getActivity()));
     }
 
     private void getRecycler2() {
-        discoverRecycle2.addItemDecoration(new SpacesItemDecoration(20));
+        discoverRecycle2.addItemDecoration(new SpacesItemDecoration2(40));
         discoverRecycle2.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle2.setAdapter(new Discover_Recycle2(list2, getActivity()));
     }
 
     private void getRecycler3() {
-        discoverRecycle3.addItemDecoration(new SpacesItemDecoration(20));
+        discoverRecycle3.addItemDecoration(new SpacesItemDecoration2(40));
         discoverRecycle3.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle3.setAdapter(new Discover_Recycle3(list3, getActivity()));
     }
 
     private void getRecycler4() {
-        discoverRecycle4.addItemDecoration(new SpacesItemDecoration(20));
+        discoverRecycle4.addItemDecoration(new SpacesItemDecoration2(40));
         discoverRecycle4.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         discoverRecycle4.setAdapter(new Discover_Recycle4(list4, getActivity()));
     }
@@ -153,23 +155,16 @@ public class Discover extends Fragment {
                 Gson gson = new Gson();
                 DiscoverBean bean = gson.fromJson(result, DiscoverBean.class);
                 if (bean.getCode() == 1000) {
-                    AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-                    animation.setDuration(500);
                     discoverText.setText(bean.getData().getTop().getTitle());
-                    ImageLoader.getInstance().displayImage(bean.getData().getTop().getUrl(), discoverTopimg);
-                    discoverTopimg.startAnimation(animation);
+                    Glide.with(getActivity()).load(bean.getData().getTop().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverTopimg);
                     discoverText1.setText(bean.getData().getT1().getPic().getContent());
-                    ImageLoader.getInstance().displayImage(bean.getData().getT1().getPic().getUrl(), discoverImg1);
-                    discoverImg1.startAnimation(animation);
+                    Glide.with(getActivity()).load(bean.getData().getT1().getPic().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverImg1);
                     discoverText2.setText(bean.getData().getT2().getPic().getContent());
-                    ImageLoader.getInstance().displayImage(bean.getData().getT2().getPic().getUrl(), discoverImg2);
-                    discoverImg2.startAnimation(animation);
+                    Glide.with(getActivity()).load(bean.getData().getT2().getPic().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverImg2);
                     discoverText3.setText(bean.getData().getT3().getPic().getContent());
-                    ImageLoader.getInstance().displayImage(bean.getData().getT3().getPic().getUrl(), discoverImg3);
-                    discoverImg3.startAnimation(animation);
+                    Glide.with(getActivity()).load(bean.getData().getT3().getPic().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverImg3);
                     discoverText4.setText(bean.getData().getT4().getPic().getContent());
-                    ImageLoader.getInstance().displayImage(bean.getData().getT4().getPic().getUrl(), discoverImg4);
-                    discoverImg4.startAnimation(animation);
+
                     list1 = bean.getData().getT1().getData();
                     list2 = bean.getData().getT2().getData();
                     list3 = bean.getData().getT3().getData();

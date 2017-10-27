@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.ShijiaBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -45,10 +46,7 @@ public class ShiJia_Recycle extends RecyclerView.Adapter {
         final ShijiaBean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.shijianame.setText(info.getGname());
-        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.shijiaimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.shijiaimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.shijiaimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shijianame.setTypeface(typeface);

@@ -69,18 +69,18 @@ public class JpushActivity extends AutoLayoutActivity {
         AssetManager assetManager = getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         noticeTitle.setTypeface(typeface);
-        Intent intent = getIntent();
-        if (intent != null) {
-            try {
-                Bundle bundle = getIntent().getExtras();
-                requestContent = bundle.getString(JPushInterface.EXTRA_ALERT);
-                jpushBean = new JpushBean(requestContent, getDate());
-                list.add(jpushBean);
-                db.save(list);
-            } catch (Exception e) {
-                Log.e("tag", "无消息可插入");
-            }
-        }
+//        Intent intent = getIntent();
+//        if (intent != null) {
+//            try {
+//                Bundle bundle = getIntent().getExtras();
+//                requestContent = bundle.getString(JPushInterface.EXTRA_ALERT);
+//                jpushBean = new JpushBean(requestContent, getDate());
+//                list.add(jpushBean);
+//                db.save(list);
+//            } catch (Exception e) {
+//                Log.e("tag", "无消息可插入");
+//            }
+//        }
 
         try {
             list = db.selector(JpushBean.class).orderBy("id", true).findAll();

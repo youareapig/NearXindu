@@ -40,7 +40,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="40px"
-            android:src="@mipmap/search_hei" />
+            android:src="@mipmap/search_hei"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
@@ -334,15 +335,10 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                             }
                         }
                     });
-
-                    ImageLoader.getInstance().displayImage(list.get(0).getUrl(), tripShowImg);
-                    AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-                    animation.setDuration(500);
-                    tripShowImg.setAnimation(animation);
+                    Glide.with(TripActivity.this).load(list.get(0).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(tripShowImg);
                     tripShowText1.setText(list.get(0).getStitle());
                     tripShowText2.setText(list.get(0).getStitle());
-                    ImageLoader.getInstance().displayImage(list.get(1).getUrl(), tripShow1Img);
-                    tripShow1Img.setAnimation(animation);
+                    Glide.with(TripActivity.this).load(list.get(1).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(tripShow1Img);
                     tripShow1Text1.setText(list.get(1).getStitle());
                     tripShow1Text2.setText(list.get(1).getSname());
                     tripRefresh.setCanLoadMore(true);

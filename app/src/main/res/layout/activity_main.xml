@@ -35,7 +35,7 @@
                 android:layout_width="68px"
                 android:layout_height="69px"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="21px"
                 android:src="@mipmap/tansuo1_icon" />
 
             <TextView
@@ -44,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20px"
+                android:layout_marginBottom="17px"
                 android:text="探索"
                 android:textColor="@color/mainChecked"
-                android:textSize="42px" />
+                android:textSize="36px" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -61,7 +61,7 @@
                 android:layout_width="75px"
                 android:layout_height="68px"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="21px"
                 android:src="@mipmap/faxian_icon" />
 
             <TextView
@@ -70,10 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20px"
+                android:layout_marginBottom="17px"
                 android:text="发现"
                 android:textColor="@color/mainUnChecked"
-                android:textSize="42px" />
+                android:textSize="36px" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -87,7 +87,7 @@
                 android:layout_width="76px"
                 android:layout_height="69px"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="21px"
                 android:src="@mipmap/tiyan_icon"/>
 
             <TextView
@@ -96,10 +96,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20px"
+                android:layout_marginBottom="17px"
                 android:text="体验"
                 android:textColor="@color/mainUnChecked"
-                android:textSize="42px" />
+                android:textSize="36px" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -113,7 +113,7 @@
                 android:layout_width="63px"
                 android:layout_height="64px"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="21px"
                 android:src="@mipmap/wode_icon" />
 
             <TextView
@@ -122,10 +122,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20px"
+                android:layout_marginBottom="17px"
                 android:text="我的"
                 android:textColor="@color/mainUnChecked"
-                android:textSize="42px" />
+                android:textSize="36px" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

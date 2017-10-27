@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.DiscoverBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -45,10 +46,7 @@ public class Discover_Recycle3 extends RecyclerView.Adapter {
         final DiscoverBean.DataBeanXXXX.T3Bean.DataBeanXX info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.discover3name.setText(info.getPname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.discover3img);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.discover3img.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.discover3img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.discover3name.setTypeface(typeface);

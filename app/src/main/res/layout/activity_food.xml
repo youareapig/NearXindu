@@ -17,16 +17,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20px"
-                android:layout_marginTop="20px"
-                android:background="@color/bottomBG" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/food_recycleTop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
                 android:paddingRight="-40px" />
 
             <RelativeLayout
@@ -187,6 +184,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="40px"
-            android:src="@mipmap/search_hei" />
+            android:src="@mipmap/search_hei"
+            android:visibility="gone"/>
     </RelativeLayout>
 </FrameLayout>

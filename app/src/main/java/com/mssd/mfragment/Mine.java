@@ -109,6 +109,7 @@ public class Mine extends Fragment {
         mineTextNotice.setTypeface(typeface);
         mineTextPlace.setTypeface(typeface);
         mineTextSetting.setTypeface(typeface);
+
     }
 
     @Override

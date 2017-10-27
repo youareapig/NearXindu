@@ -13,6 +13,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.TansuoBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -46,10 +47,7 @@ public class Exploration_Recycle_Food extends RecyclerView.Adapter {
         final TansuoBean.DataBean.MealBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.foodname.setText(info.getFname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.foodimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.foodimg.startAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.foodimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.foodname.setTypeface(typeface);

@@ -1,6 +1,7 @@
 package com.mssd.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.mssd.data.DiscoverBean;
 import com.mssd.data.JpushBean;
+import com.mssd.html.WebActivity;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -39,7 +41,7 @@ public class NoticeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        JpushBean info = list.get(position);
+        final JpushBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.notice_date.setText(info.getDates());
         viewHolder.notice_content.setText(info.getContent());
@@ -47,6 +49,19 @@ public class NoticeAdapter extends RecyclerView.Adapter {
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.notice_date.setTypeface(typeface);
         viewHolder.notice_content.setTypeface(typeface);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (info.getIsLink().equals("1")){
+                    Intent intent=new Intent(v.getContext(), WebActivity.class);
+                    intent.putExtra("url",info.getUrl());
+                    v.getContext().startActivity(intent);
+                }else {
+
+                }
+            }
+        });
+
     }
 
     @Override

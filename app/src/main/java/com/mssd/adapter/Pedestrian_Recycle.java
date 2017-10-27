@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.PedestrianBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -45,10 +46,7 @@ public class Pedestrian_Recycle extends RecyclerView.Adapter {
         final PedestrianBean.DataBean bean = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.pedestriantext.setText(bean.getPname());
-        ImageLoader.getInstance().displayImage(bean.getUrl(), viewHolder.pedestrianimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.pedestrianimg.setAnimation(animation);
+        Glide.with(activity).load(bean.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.pedestrianimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.pedestriantext.setTypeface(typeface);

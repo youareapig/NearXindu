@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.HistoryIndexBean;
 import com.mssd.zl.R;
 import com.mssd.zl.TalkHistoryActivity;
@@ -44,10 +45,7 @@ public class History_Recycle1 extends RecyclerView.Adapter {
         HistoryIndexBean.DataBean.T2Bean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.history1name.setText(info.getHname());
-        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.history1img);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.history1img.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.history1img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.history1name.setTypeface(typeface);

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.TalkBannerAdapter;
@@ -94,8 +95,7 @@ public class TalkHistoryActivity extends AutoLayoutActivity implements ViewPager
             ImageView imageView = new ImageView(this);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             views[i] = imageView;
-            ImageLoader.getInstance().displayImage(list.get(i).getUrl(), imageView);
-
+            Glide.with(this).load(list.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
         }
 
         talkViewpager.setOnPageChangeListener(this);

@@ -15,6 +15,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.data.HtmlBean;
 import com.mssd.data.ShitangNextBean;
@@ -79,10 +80,7 @@ public class ShiTang_Fragment_recycle extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.shitangtext1.setText(info.getStitle());
         viewHolder.shitangtext2.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.shitangimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.shitangimg.startAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.shitangimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.shitangtext1.setTypeface(typeface);

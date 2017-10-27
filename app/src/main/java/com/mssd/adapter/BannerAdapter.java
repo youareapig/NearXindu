@@ -22,6 +22,9 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
+        if (imageViews==null){
+            return 0;
+        }
             return imageViews.length;
     }
 

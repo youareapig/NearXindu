@@ -76,6 +76,7 @@ public class SettingActivity extends AutoLayoutActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String isUpdate;
+    private int locationVersion = 0;
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -100,10 +101,13 @@ public class SettingActivity extends AutoLayoutActivity {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         changeFont();
-        updateversion();
+        getUpdate();
     }
 
     private void changeFont() {
+        InitApp application = (InitApp) getApplication();
+        locationVersion = application.location;
+        Log.e("tag","当前版本号"+locationVersion);
         AssetManager assetManager = getAssets();
         typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
@@ -115,6 +119,8 @@ public class SettingActivity extends AutoLayoutActivity {
         settingUpdateText1.setTypeface(typeface);
         settingLoginout.setTypeface(typeface);
         settingCacheText.setTypeface(typeface);
+        updateName.setTypeface(typeface);
+        settingCacheSize.setTypeface(typeface);
         try {
             settingCacheSize.setText(CacheDataManager.getTotalCacheSize(this));
         } catch (Exception e) {
@@ -227,22 +233,23 @@ public class SettingActivity extends AutoLayoutActivity {
         }
     }
 
-    private void updateversion() {
-        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo");
+
+    private void getUpdate(){
+        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Index/initial");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.e("tag",result);
                 try {
-                    JSONObject json = new JSONObject(result);
-                    if (json.getString("update").equals("Yes")) {
-                        settingUpdateText1.setVisibility(View.VISIBLE);
+                    JSONObject json=new JSONObject(result);
+                    int nowVersion=Integer.valueOf(json.getString("version"));
+                    if (locationVersion<nowVersion){
                         isUpdate = "Yes";
-                    } else {
+                        settingUpdateText1.setVisibility(View.VISIBLE);
+                    }else {
                         settingUpdateText1.setVisibility(View.GONE);
                         isUpdate = "No";
-
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

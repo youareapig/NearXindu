@@ -20,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="#888888"
-            android:textSize="38px"
-            android:text="暂无更多数据"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="46px"
+            android:text="暂无数据"
             android:visibility="gone" />
     </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoLinearLayout>

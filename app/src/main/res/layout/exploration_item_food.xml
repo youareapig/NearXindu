@@ -12,7 +12,6 @@
         android:id="@+id/exploration_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="青椒炒肉"
         android:layout_below="@+id/exploration_item_img"
         android:layout_marginTop="40px"
         android:textSize="48px"

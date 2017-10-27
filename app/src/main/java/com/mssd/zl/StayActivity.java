@@ -137,13 +137,11 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
         gallery_adapter = new Stay_Gallery(list, StayActivity.this);
         stayGallery.setAdapter(gallery_adapter);
         stayGallery.setSelection(num);
-        Log.e("tag","选择数"+num);
         stayGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 num=(position % list.size())+100;
                 gallery_adapter.setSelectItem(position % list.size());
-                gallery_adapter.notifyDataSetChanged();
                 if (list_1 != null) {
                     list_1.clear();
                 }

@@ -22,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="700px"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:src="@mipmap/head_bg" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -34,8 +34,7 @@
                     android:id="@+id/mine_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="140px">
+                    android:layout_centerInParent="true">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="210px"
                         android:layout_height="210px"
@@ -54,22 +53,22 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/mine_head"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="80px"
+                        android:layout_marginTop="120px"
                         android:textColor="#fff"
-                        android:textSize="52px" />
+                        android:textSize="48px" />
                 </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/mine_editprofil"
-                    android:layout_width="210px"
-                    android:layout_height="60px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="40px"
                     android:layout_marginRight="40px"
                     android:text="编辑资料"
                     android:textColor="#fff"
-                    android:textSize="48px" />
+                    android:textSize="42px" />
 
             </com.zhy.autolayout.AutoRelativeLayout>
 

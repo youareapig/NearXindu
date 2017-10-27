@@ -14,13 +14,35 @@ public class JpushBean {
     private String content;
     @Column(name = "dates")
     private String dates;
+    @Column(name = "isLink")
+    private String isLink;
+    @Column(name = "url")
+    private String url;
 
-    public JpushBean(String content, String dates) {
+    public JpushBean(String content, String dates,String isLink,String url) {
         this.content = content;
         this.dates = dates;
+        this.isLink=isLink;
+        this.url=url;
     }
 
     public JpushBean() {
+    }
+
+    public String getIsLink() {
+        return isLink;
+    }
+
+    public void setIsLink(String isLink) {
+        this.isLink = isLink;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getContent() {

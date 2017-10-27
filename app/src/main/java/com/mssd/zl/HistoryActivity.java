@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.adapter.History_Recycle1;
 import com.mssd.adapter.History_Recycle3;
@@ -224,14 +225,9 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                     historyToptext.setText(bean.getData().getT1().getTitle());
                     historyToptext1.setText(bean.getData().getT3().getTitle());
                     historyToptext2.setText(bean.getData().getT5().getTitle());
-                    ImageLoader.getInstance().displayImage(bean.getData().getT1().getUrl(), historyTopimg);
-                    ImageLoader.getInstance().displayImage(bean.getData().getT3().getUrl(), historyTopimg1);
-                    ImageLoader.getInstance().displayImage(bean.getData().getT5().getUrl(), historyTopimg2);
-                    AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-                    animation.setDuration(500);
-                    historyTopimg.setAnimation(animation);
-                    historyTopimg1.setAnimation(animation);
-                    historyTopimg2.setAnimation(animation);
+                    Glide.with(HistoryActivity.this).load(bean.getData().getT1().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(historyTopimg);
+                    Glide.with(HistoryActivity.this).load(bean.getData().getT3().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(historyTopimg1);
+                    Glide.with(HistoryActivity.this).load(bean.getData().getT5().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(historyTopimg2);
                     list1 = bean.getData().getT2();
                     list2 = bean.getData().getT4();
                     list3 = bean.getData().getT6();

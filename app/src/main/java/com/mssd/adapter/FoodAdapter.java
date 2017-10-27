@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.data.FoodDateBean;
 import com.mssd.data.HtmlBean;
@@ -65,10 +66,7 @@ public class FoodAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.trip1name.setText(info.getStitle());
         viewHolder.trip2name.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.tripimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.tripimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.tripimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.trip1name.setTypeface(typeface);

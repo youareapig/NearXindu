@@ -163,6 +163,7 @@
                         android:background="@drawable/update"
                         android:gravity="center"
                         android:text="new"
+                        android:visibility="gone"
                         android:textColor="#fff"
                         android:textSize="38px" />
 
@@ -184,7 +185,7 @@
                         android:layout_toLeftOf="@+id/setting_update_go"
                         android:text="1.0.0"
                         android:textColor="#888888"
-                        android:textSize="48px" />
+                        android:textSize="46px" />
 
                     <TextView
                         style="@style/fengexian"
@@ -212,6 +213,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:textSize="46px"
+                        android:textColor="#888888"
                         android:layout_marginRight="40px"
                         />
 
@@ -231,6 +234,8 @@
                 android:layout_marginTop="120px"
                 android:background="@drawable/button"
                 android:gravity="center"
+                android:textColor="@color/mainChecked"
+                android:textSize="58px"
                 android:text="退出登录" />
 
         </LinearLayout>

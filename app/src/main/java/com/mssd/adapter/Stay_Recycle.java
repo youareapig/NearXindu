@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.StayNextBean;
 import com.mssd.html.WebsActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -61,10 +62,7 @@ public class Stay_Recycle extends RecyclerView.Adapter {
         final StayNextBean.DataBean info = list.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.stayname.setText(info.getStitle());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.stayimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.stayimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.stayname.setTypeface(typeface);

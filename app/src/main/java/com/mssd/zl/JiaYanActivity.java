@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.just.library.AgentWeb;
 import com.mssd.adapter.BannerAdapter;
@@ -117,9 +118,8 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         views = new ImageView[list.size()];
         for (int i = 0; i < list.size(); i++) {
             ImageView imageView = new ImageView(this);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             views[i] = imageView;
-            ImageLoader.getInstance().displayImage(list.get(i).getUrl(), imageView);
+            Glide.with(JiaYanActivity.this).load(list.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
         }
         jiayanViewpager.setOnPageChangeListener(this);
         jiayanViewpager.setAdapter(new JiaYanBannerAdapter(views,list));

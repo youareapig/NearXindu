@@ -2,6 +2,7 @@ package com.mssd.zl;
 
 import android.*;
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -90,6 +92,7 @@ public class MainActivity extends AutoLayoutActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private long firstTime = 0;
+    private int locationVersion = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +100,9 @@ public class MainActivity extends AutoLayoutActivity {
         unbinder = ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        updateversion();
+        InitApp application = (InitApp) getApplication();
+        locationVersion = application.location;
+        getUpdate();
         Intent intent = getIntent();
         currentIndex = intent.getIntExtra("indextag", 0);
         if (currentIndex == 3) {
@@ -345,14 +350,18 @@ public class MainActivity extends AutoLayoutActivity {
         return super.onKeyUp(keyCode, event);
 
     }
-    private void updateversion() {
-        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/updateInfo");
+
+
+
+    private void getUpdate(){
+        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Index/initial");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
-                    JSONObject json = new JSONObject(result);
-                    if (json.getString("update").equals("Yes")) {
+                    JSONObject json=new JSONObject(result);
+                    int nowVersion=Integer.valueOf(json.getString("version"));
+                    if (locationVersion<nowVersion){
                         new UpdateAppManager
                                 .Builder()
                                 //当前Activity
@@ -364,7 +373,6 @@ public class MainActivity extends AutoLayoutActivity {
                                 .build()
                                 .update();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

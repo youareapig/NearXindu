@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.data.HtmlBean;
 import com.mssd.data.StayNextBean;
@@ -62,10 +63,7 @@ public class WantStayAdapter extends RecyclerView.Adapter {
         final WantEatBean.DataBean info = list.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.stayname.setText(info.getStitle());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.stayimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.stayimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.stayimg);
         viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");

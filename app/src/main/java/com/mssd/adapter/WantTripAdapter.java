@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.data.HtmlBean;
 import com.mssd.data.TripNeatBean;
@@ -43,6 +44,7 @@ public class WantTripAdapter extends RecyclerView.Adapter {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private MyShow myShow;
+
     public WantTripAdapter(List<WantEatBean.DataBean> list, Activity activity) {
         this.list = list;
         this.activity = activity;
@@ -53,7 +55,7 @@ public class WantTripAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_item_list, parent,false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_item_list, parent, false));
         return holder;
     }
 
@@ -63,10 +65,7 @@ public class WantTripAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.trip1name.setText(info.getStitle());
         viewHolder.trip2name.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.tripimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.tripimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.tripimg);
         viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
@@ -75,8 +74,8 @@ public class WantTripAdapter extends RecyclerView.Adapter {
         viewHolder.shoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tID = info.getTid()+"";
-                offCollect(position,viewHolder);
+                tID = info.getTid() + "";
+                offCollect(position, viewHolder);
             }
         });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +103,9 @@ public class WantTripAdapter extends RecyclerView.Adapter {
                     if (json.getString("code").equals("3006")) {
                         list.remove(holder.getAdapterPosition());
                         notifyItemRemoved(holder.getAdapterPosition());
-                        if (list.size()==0){
+                        if (list.size() == 0) {
                             myShow.mShow(true);
-                        }else {
+                        } else {
                             myShow.mShow(false);
                         }
                     } else {
@@ -134,17 +133,18 @@ public class WantTripAdapter extends RecyclerView.Adapter {
         });
 
     }
+
     @Override
     public int getItemCount() {
-        if (list!=null){
+        if (list != null) {
             return list.size();
         }
         return 0;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView trip1name,trip2name;
-        private ImageView tripimg,shoucang;
+        private TextView trip1name, trip2name;
+        private ImageView tripimg, shoucang;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -152,13 +152,15 @@ public class WantTripAdapter extends RecyclerView.Adapter {
             trip1name = (TextView) itemView.findViewById(R.id.trip_item1_list_text1);
             trip2name = (TextView) itemView.findViewById(R.id.trip_item1_list_text2);
             tripimg = (ImageView) itemView.findViewById(R.id.trip_item1_list_img);
-            shoucang= (ImageView) itemView.findViewById(R.id.trip_item1_list_shoucang);
+            shoucang = (ImageView) itemView.findViewById(R.id.trip_item1_list_shoucang);
         }
     }
-    public interface MyShow{
+
+    public interface MyShow {
         void mShow(boolean b);
     }
-    public void callBack(MyShow myShow){
-        this.myShow=myShow;
+
+    public void callBack(MyShow myShow) {
+        this.myShow = myShow;
     }
 }

@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.GoodsBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -45,10 +46,7 @@ public class Goods_Recycle extends RecyclerView.Adapter {
         final GoodsBean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.goodstext.setText(info.getPname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.goodsimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.goodsimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.goodsimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.goodstext.setTypeface(typeface);

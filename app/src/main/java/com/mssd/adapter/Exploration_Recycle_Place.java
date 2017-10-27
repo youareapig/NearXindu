@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.TansuoBean;
 import com.mssd.html.WebsActivity;
 import com.mssd.zl.R;
@@ -48,11 +49,8 @@ public class Exploration_Recycle_Place extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TansuoBean.DataBean.LineBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.placename.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.placeimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.placeimg.startAnimation(animation);
+        viewHolder.placename.setText(info.getStitle());
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.placeimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.placename.setTypeface(typeface);

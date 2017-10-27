@@ -3,6 +3,8 @@ package com.mssd.adapter;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,10 +75,10 @@ public class Stay_Gallery extends BaseAdapter {
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         holder.textView.setTypeface(typeface);
         if (selectItem == position % list.size()) {
-           // holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 72);
+            holder.textView.setTextSize(172);
             holder.textView.setTextColor(android.graphics.Color.parseColor("#c69d39"));
         } else {
-           // holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 62);
+            //holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 62);
         }
         return convertView;
     }

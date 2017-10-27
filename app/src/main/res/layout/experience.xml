@@ -68,7 +68,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="30"
                                 android:gravity="center"
-                                android:text="去   .   吧"
+                                android:text="去  .  吧"
                                 android:textColor="@color/mainUnChecked"
                                 android:textSize="72px" />
 

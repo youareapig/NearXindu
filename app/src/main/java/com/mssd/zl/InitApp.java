@@ -2,8 +2,12 @@ package com.mssd.zl;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.lzy.okgo.OkGo;
+import com.mob.MobApplication;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -17,19 +21,37 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.xutils.x;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.sms.SMSSDK;
 
 /**
  * Created by DELL on 2017/8/28.
  */
 
-public class InitApp extends Application {
+public class InitApp extends MobApplication {
     public ImageLoaderConfiguration config;
+    public static int location=1;
+    private boolean isUpdateWarning = true;
+    public boolean isUpdateWarning() {
+        return isUpdateWarning;
+    }
+
+    public void setUpdateWarning(boolean updateWarning) {
+        isUpdateWarning = updateWarning;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
+        try {
+            PackageInfo packageInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(),0);
+            location = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        JAnalyticsInterface.init(this);
         AutoLayoutConifg.getInstance().useDeviceSize();
         initImageLoader(getApplicationContext());
         x.Ext.init(this);
@@ -39,6 +61,8 @@ public class InitApp extends Application {
                 .debug(true, "okHttp")
                 .timeout(20 * 1000);
         OkGo.getInstance().init(this);
+
+        SMSSDK.getInstance().initSdk(this);
     }
     public void initImageLoader(Context context) {
         config = new ImageLoaderConfiguration.Builder(context)

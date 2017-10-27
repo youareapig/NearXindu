@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.DiscoverBean;
 import com.mssd.html.WebActivity;
 import com.mssd.html.WebsActivity;
@@ -47,10 +48,7 @@ public class Discover_Recycle1 extends RecyclerView.Adapter {
         final DiscoverBean.DataBeanXXXX.T1Bean.DataBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.discover1name.setText(info.getHintro());
-        ImageLoader.getInstance().displayImage(info.getUrl(), viewHolder.discover1img);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.discover1img.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.discover1img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.discover1name.setTypeface(typeface);

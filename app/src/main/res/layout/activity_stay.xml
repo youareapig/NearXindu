@@ -89,7 +89,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="30"
                                 android:gravity="center"
-                                android:text="香城  .  之宿"
+                                android:text="香城 . 之宿"
                                 android:textColor="@color/mainUnChecked"
                                 android:textSize="72px" />
 
@@ -173,7 +173,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="40px"
-            android:src="@mipmap/search_hei" />
+            android:src="@mipmap/search_hei"
+            android:visibility="gone"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1px"

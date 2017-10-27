@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -74,7 +74,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="30"
                             android:gravity="center"
-                            android:text="走   .   吧"
+                            android:text="走  .  吧"
                             android:textColor="@color/mainUnChecked"
                             android:textSize="72px" />
 
@@ -108,8 +108,7 @@
                     android:id="@+id/discover_img1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:scaleType="centerCrop" />
 
 
                 <TextView
@@ -138,8 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
+                android:layout_marginLeft="30px"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -151,8 +149,7 @@
                     android:id="@+id/discover_img2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:scaleType="centerCrop" />
 
 
                 <TextView
@@ -181,8 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
+                android:layout_marginLeft="30px"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -195,7 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    />
 
 
                 <TextView
@@ -224,8 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="600px"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
+                android:layout_marginLeft="30px"
                 android:layout_marginTop="40px" />
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -237,8 +232,7 @@
                     android:id="@+id/discover_img4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:scaleType="centerCrop" />
 
 
                 <TextView
@@ -267,8 +261,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="680px"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
+                android:layout_marginLeft="30px"
                 android:layout_marginTop="40px" />
         </com.zhy.autolayout.AutoLinearLayout>
 

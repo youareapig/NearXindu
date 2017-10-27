@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.adapter.BannerAdapter;
 import com.mssd.adapter.FoodAdapter;
@@ -268,9 +269,8 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     viewpagerImage = new ImageView[bannerList.size()];
                     for (int i = 0; i < viewpagerImage.length; i++) {
                         ImageView imageView = new ImageView(FoodActivity.this);
-                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         viewpagerImage[i] = imageView;
-                        ImageLoader.getInstance().displayImage(bannerList.get(i).getUrl(), imageView);
+                        Glide.with(FoodActivity.this).load(bannerList.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
                     }
 
                     foodViewpager.setOnPageChangeListener(FoodActivity.this);

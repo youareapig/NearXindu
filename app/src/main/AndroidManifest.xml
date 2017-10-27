@@ -27,11 +27,15 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".InitApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -106,7 +110,52 @@
             android:value="c5e922416e61d9c3c5db06c1f7e9f9c6" />
         <meta-data
             android:name="UPDATE_APP_KEY"
-            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f"/>
+            android:value="ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f" />
+        <!-- 分享 -->
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="21d242815e656" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="80fbadbae04c74107e4efaf9dbded74b" />
+
+
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 集成line客户端登录授权，需要添如下格式的过滤器 -->
+
+        </activity>
+        <activity
+            android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1106499224" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 分享 -->
         <activity
             android:name=".HistoryActivity"
             android:screenOrientation="portrait" />
@@ -176,11 +225,14 @@
         <activity
             android:name="com.mssd.html.WebActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChatWithMeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ChatWithMeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mssd.html.WebsActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name="com.mssd.html.WebsActivity"
-            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

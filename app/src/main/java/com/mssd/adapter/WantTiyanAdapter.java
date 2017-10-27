@@ -14,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.data.HtmlBean;
 import com.mssd.data.TiyanBean;
@@ -63,10 +64,7 @@ public class WantTiyanAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.experienceRecycletitle1.setText(info.getStitle());
         viewHolder.experienceRecycletitle2.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.experienceRecycleimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.experienceRecycleimg.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.experienceRecycleimg);
         viewHolder.shoucang.setImageResource(R.mipmap.shoucang1);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");

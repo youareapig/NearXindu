@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.mssd.cardslid.CardAdapter;
 import com.mssd.cardslid.CardSlidePanel;
@@ -155,8 +156,7 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
         }
 
         public void bindData(TalkHistoryBean.DataBean itemData) {
-            ImageLoader.getInstance().displayImage(itemData.getUrl(), imageView);
-
+            Glide.with(HOFActivity.this).load(itemData.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
         }
     }
 

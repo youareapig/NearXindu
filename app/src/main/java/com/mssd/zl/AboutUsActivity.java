@@ -23,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.BrowseEvent;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class AboutUsActivity extends AutoLayoutActivity {
     @BindView(R.id.aboutus_title)
@@ -40,6 +42,13 @@ public class AboutUsActivity extends AutoLayoutActivity {
         setContentView(R.layout.activity_about_us);
         unbinder = ButterKnife.bind(this);
         changeFont();
+        BrowseEvent browseEvent = new BrowseEvent("test_browseID",//设置浏览内容id
+                "深圳热点新闻",//设置浏览的内容的名称
+                "news", //设置浏览的内容类型
+                30);
+        browseEvent.addKeyValue("key_browse_event_extra3", "浏览")
+                .addKeyValue("key_browse_event_extra4", "浏览11111");
+        JAnalyticsInterface.onEvent(this, browseEvent);
         getBean();
     }
 
@@ -82,7 +91,6 @@ public class AboutUsActivity extends AutoLayoutActivity {
             @Override
             public void onFinished() {
                 customProgressDialog.cancel();
-                ;
             }
 
             @Override
@@ -90,6 +98,18 @@ public class AboutUsActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,this.getClass().getCanonicalName());
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,this.getClass().getCanonicalName());
     }
 
     @Override

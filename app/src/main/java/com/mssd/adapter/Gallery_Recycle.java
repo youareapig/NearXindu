@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.GalleryBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -41,10 +42,7 @@ public class Gallery_Recycle extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GalleryBean.DataBean bean=list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        ImageLoader.getInstance().displayImage(bean.getUrl(),viewHolder.galleryrecycleimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.galleryrecycleimg.setAnimation(animation);
+        Glide.with(activity).load(bean.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.galleryrecycleimg);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

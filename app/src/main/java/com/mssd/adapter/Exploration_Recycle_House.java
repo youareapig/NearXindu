@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.TansuoBean;
 import com.mssd.html.WebActivity;
 import com.mssd.html.WebsActivity;
@@ -50,11 +51,8 @@ public class Exploration_Recycle_House extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TansuoBean.DataBean.StayBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.housename.setText(info.getSname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.houseimg);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.houseimg.startAnimation(animation);
+        viewHolder.housename.setText(info.getStitle());
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.houseimg);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.housename.setTypeface(typeface);

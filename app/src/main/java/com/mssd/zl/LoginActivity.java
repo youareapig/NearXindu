@@ -3,7 +3,6 @@ package com.mssd.zl;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +37,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jpush.sms.SMSSDK;
+import cn.jpush.sms.listener.SmscheckListener;
+import cn.jpush.sms.listener.SmscodeListener;
 
 public class LoginActivity extends AutoLayoutActivity {
     @BindView(R.id.login_title)
@@ -57,12 +60,15 @@ public class LoginActivity extends AutoLayoutActivity {
     LinearLayout loginMain;
     @BindView(R.id.login_main1)
     LinearLayout loginMain1;
+    @BindView(R.id.login_back)
+    RelativeLayout loginBack;
     private Unbinder unbinder;
     private Typeface typeface, typeface1;
     private String string_userphone, string_code;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int intentTag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +77,9 @@ public class LoginActivity extends AutoLayoutActivity {
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         changeFont();
-        Intent intent=getIntent();
-        intentTag=intent.getIntExtra("intentTag",0);
-        keepLoginBtnNotOver(loginMain,loginMain1);
+        Intent intent = getIntent();
+        intentTag = intent.getIntExtra("intentTag", 0);
+        keepLoginBtnNotOver(loginMain, loginMain1);
         loginMain.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -131,7 +137,7 @@ public class LoginActivity extends AutoLayoutActivity {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.login_getvercode, R.id.login_login, R.id.login_text2})
+    @OnClick({R.id.login_getvercode, R.id.login_login, R.id.login_text2, R.id.login_back})
     public void onViewClicked(View view) {
         string_code = loginUsercode.getText().toString().trim();
         string_userphone = loginUserphone.getText().toString().trim();
@@ -139,17 +145,38 @@ public class LoginActivity extends AutoLayoutActivity {
         boolean isPhone = classPathResource.isMobileNO(string_userphone);
         switch (view.getId()) {
             case R.id.login_getvercode:
-                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(loginGetvercode, 60000, 1000);
-                mCountDownTimerUtils.start();
+                SMSSDK.getInstance().getSmsCodeAsyn(string_userphone, "1", new SmscodeListener() {
+                    @Override
+                    public void getCodeSuccess(String s) {
+                        CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(loginGetvercode, 60000, 1000);
+                        mCountDownTimerUtils.start();
+                    }
+
+                    @Override
+                    public void getCodeFail(int i, String s) {
+                        ToastUtils.showShort(LoginActivity.this, "获取验证码失败");
+                    }
+                });
                 break;
             case R.id.login_login:
                 if (isPhone == false) {
-                    Toast.makeText(this, "您输入的电话号码不正确，请核对和输入", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您输入的电话号码不正确，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     if (TextUtils.isEmpty(string_code)) {
                         Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
                     } else {
-                        loginNet(string_userphone);
+                        SMSSDK.getInstance().checkSmsCodeAsyn(string_userphone, string_code, new SmscheckListener() {
+                            @Override
+                            public void checkCodeSuccess(String s) {
+                                loginNet(string_userphone);
+                            }
+
+                            @Override
+                            public void checkCodeFail(int i, String s) {
+                                ToastUtils.showShort(LoginActivity.this, "验证码错误");
+                            }
+                        });
+
                     }
 
                 }
@@ -157,6 +184,9 @@ public class LoginActivity extends AutoLayoutActivity {
             case R.id.login_text2:
                 Intent intent = new Intent(LoginActivity.this, AgreementActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.login_back:
+                finish();
                 break;
         }
     }
@@ -174,7 +204,7 @@ public class LoginActivity extends AutoLayoutActivity {
                     editor.putString("userid", bean.getData().getId() + "");
                     editor.putBoolean("islogin", true);
                     editor.commit();
-                    switch (intentTag){
+                    switch (intentTag) {
                         case 1:
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("indextag", 3);
@@ -226,7 +256,7 @@ public class LoginActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(LoginActivity.this,R.string.erroe);
+                ToastUtils.showShort(LoginActivity.this, R.string.erroe);
             }
 
             @Override
@@ -249,7 +279,7 @@ public class LoginActivity extends AutoLayoutActivity {
                 // 获取root在窗体的可视区域
                 root.getWindowVisibleDisplayFrame(rect);
                 // 获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
-                int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom-270;
+                int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom - 270;
                 // 若不可视区域高度大于200，则键盘显示,其实相当于键盘的高度
                 if (rootInvisibleHeight > 200) {
                     // 显示键盘时

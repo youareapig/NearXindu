@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mssd.data.FoodDateBean;
 import com.mssd.html.WebActivity;
 import com.mssd.utils.SingleModleUrl;
@@ -45,10 +46,7 @@ public class Food_Recycle2 extends RecyclerView.Adapter {
         final FoodDateBean.DataBean.FeastBean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.food2name.setText(info.getFname());
-        ImageLoader.getInstance().displayImage(info.getUrl(),viewHolder.food2img);
-        AlphaAnimation animation= new AlphaAnimation(0.5f,1);
-        animation.setDuration(500);
-        viewHolder.food2img.setAnimation(animation);
+        Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.food2img);
         AssetManager assetManager = activity.getAssets();
         Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         viewHolder.food2name.setTypeface(typeface);
