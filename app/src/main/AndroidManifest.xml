@@ -43,11 +43,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- =====================极光推送配置================= -->
         <service
@@ -118,7 +114,6 @@
         <meta-data
             android:name="Mob-AppSecret"
             android:value="80fbadbae04c74107e4efaf9dbded74b" />
-
 
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -231,8 +226,14 @@
         <activity
             android:name="com.mssd.html.WebsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".StartActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

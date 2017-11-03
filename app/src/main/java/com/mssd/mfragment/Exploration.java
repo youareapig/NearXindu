@@ -206,10 +206,11 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
             ImageView imageView = new ImageView(getActivity());
             viewpagerImage[i] = imageView;
             Glide.with(getActivity()).load(bannerList.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
+            Log.e("tag","tupain"+bannerList.get(i).getUrl());
 
         }
         explorationViewpager.setOnPageChangeListener(Exploration.this);
-        explorationViewpager.setAdapter(new BannerAdapter(viewpagerImage));
+        explorationViewpager.setAdapter(new BannerAdapter(viewpagerImage,bannerList));
         handler = new Handler() {
             int bannerNo = 0;
 

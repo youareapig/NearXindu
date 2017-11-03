@@ -73,8 +73,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
     }
 
     private void initbean() {
-        hofText1.setText(list.get(0).getHname());
-        hofText2.setText(list.get(0).getHtag());
+        hofText1.setText(list.get(0).getHtag());
+        hofText2.setText(list.get(0).getHname());
         hofCard.setCardSwitchListener(this);
         hofCard.setAdapter(new CardAdapter() {
             @Override
@@ -136,9 +136,9 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
 
     @Override
     public void onCardVanish(int index, int type) {
-        Toast.makeText(this, "-----" + index + "------" + type, Toast.LENGTH_LONG).show();
-        hofText1.setText(list.get((index + 1) % list.size()).getHname());
-        hofText2.setText(list.get((index + 1) % list.size()).getHtag());
+        //Toast.makeText(this, "-----" + index + "------" + type, Toast.LENGTH_LONG).show();
+        hofText1.setText(list.get((index + 1) % list.size()).getHtag());
+        hofText2.setText(list.get((index + 1) % list.size()).getHname());
     }
 
     @OnClick(R.id.hof_back)
@@ -156,7 +156,8 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
         }
 
         public void bindData(TalkHistoryBean.DataBean itemData) {
-            Glide.with(HOFActivity.this).load(itemData.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
+            ImageLoader.getInstance().displayImage(itemData.getUrl(),imageView);
+            //Glide.with(HOFActivity.this).load(itemData.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
         }
     }
 

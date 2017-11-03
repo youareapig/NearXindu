@@ -2,9 +2,10 @@
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hof_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/hof_main"
+    android:background="@mipmap/mrt"
     tools:context="com.mssd.zl.HOFActivity">
 
 
@@ -22,9 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100px"
+        android:layout_marginBottom="120px"
         android:layout_marginTop="100px"
-        android:text="第一标题"
         android:textColor="#fff"
         android:textSize="72px" />
 
@@ -36,12 +36,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40px"
         android:layout_marginTop="50px"
-        android:text="第二标题"
         android:textColor="#fff"
         android:textSize="52px" />
 
-    <com.zhy.autolayout.AutoRelativeLayout
-        style="@style/TitleStyle">
+    <TextView
+        android:layout_width="100px"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="68px"
+        android:layout_marginLeft="320px"
+        android:background="#fff" />
+
+    <TextView
+        android:layout_width="100px"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="68px"
+        android:layout_marginRight="320px"
+        android:background="#fff" />
+
+    <com.zhy.autolayout.AutoRelativeLayout style="@style/TitleStyle">
+
         <RelativeLayout
             android:id="@+id/hof_back"
             style="@style/backview">
@@ -52,13 +68,14 @@
                 android:layout_centerInParent="true"
                 android:src="@mipmap/back_bai_icon" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/hofTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="名人堂"
-            android:textColor="@color/mainUnChecked"
+            android:textColor="#fff"
             android:textSize="72px" />
 
     </com.zhy.autolayout.AutoRelativeLayout>

@@ -1,11 +1,13 @@
 package com.mssd.html;
 
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.webkit.WebSettings;
@@ -81,6 +83,7 @@ public class WebsActivity extends AutoLayoutActivity {
                 } else {
                     shoucang.setImageResource(R.mipmap.shoucang1);
                 }
+                Log.e("tag","地址------>"+bean.getData().getLink());
                 webview.loadUrl(bean.getData().getLink());
             }
 
@@ -257,4 +260,17 @@ public class WebsActivity extends AutoLayoutActivity {
         });
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (webview.canGoBack()) {
+                webview.goBack();//返回上一页面
+                return true;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

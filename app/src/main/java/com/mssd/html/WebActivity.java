@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -17,10 +18,14 @@ import com.just.library.ChromeClientCallbackManager;
 import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class WebActivity extends AutoLayoutActivity {
@@ -77,6 +82,14 @@ public class WebActivity extends AutoLayoutActivity {
     };
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (agentWeb.handleKeyEvent(keyCode, event)) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         agentWeb.getWebLifeCycle().onPause();
@@ -117,7 +130,7 @@ public class WebActivity extends AutoLayoutActivity {
 // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl(url);
 // text是分享文本，所有平台都需要这个字段
-       // oks.setText("我是分享文本");
+        oks.setText("我是分享文本");
 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
 // url仅在微信（包括好友和朋友圈）中使用
@@ -129,8 +142,24 @@ public class WebActivity extends AutoLayoutActivity {
 // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(url);
         //设置网络图片链接
-        //oks.setImageUrl("http://192.168.10.130/uploads/banner/20170926/7242f24fe1000c939c658ddf968ca5d0.jpg");
+        oks.setImageUrl("http://www.qiecd.com/uploads/banner/20171026/b221224367de717641793bd9d2942f36.jpg");
 // 启动分享GUI
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                    Log.e("tag","分享失败"+throwable.getMessage());
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
         oks.show(this);
+
     }
 }

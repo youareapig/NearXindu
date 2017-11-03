@@ -100,7 +100,6 @@
                         android:layout_below="@+id/trip_show_img"
                         android:layout_marginLeft="40px"
                         android:layout_marginTop="40px"
-                        android:text="探秘一中古老的生活方式"
                         android:textColor="#515151"
                         android:textSize="52px" />
 
@@ -111,7 +110,6 @@
                         android:layout_below="@+id/trip_show_text1"
                         android:layout_marginLeft="40px"
                         android:layout_marginTop="40px"
-                        android:text="山岔沟"
                         android:textColor="#888888"
                         android:textSize="44px" />
                     <ImageView
@@ -127,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20px"
-                    android:layout_marginTop="20px"
+                    android:layout_marginTop="78px"
                     android:background="@color/bottomBG" />
 
                 <RelativeLayout
@@ -182,6 +180,7 @@
                     android:paddingTop="10px" />
 
                 <RelativeLayout
+                    android:layout_marginTop="-10px"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

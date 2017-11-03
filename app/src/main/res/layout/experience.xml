@@ -23,7 +23,8 @@
 
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400px">
+                    android:layout_height="400px"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/experience_recycleTop"
@@ -37,7 +38,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20px"
-                    android:background="@color/bottomBG" />
+                    android:background="@color/bottomBG"
+                    android:visibility="gone"/>
 
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"

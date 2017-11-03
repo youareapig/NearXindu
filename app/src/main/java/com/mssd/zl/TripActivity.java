@@ -196,7 +196,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 return false;
             }
         };
-        tripRecycleList.addItemDecoration(new ListItemDecoration(20));
+        tripRecycleList.addItemDecoration(new ListItemDecoration(78));
         tripRecycleList.setLayoutManager(linearLayoutManager);
     }
 

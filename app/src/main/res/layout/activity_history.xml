@@ -30,18 +30,20 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
+                    android:alpha="0.2"
+                    android:background="#000" />
+
                 <TextView
                     android:id="@+id/history_Toptext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:textColor="#fff"
-                    android:textSize="72px"
-                    android:layout_centerInParent="true"/>
+                    android:textSize="72px" />
 
             </RelativeLayout>
 
@@ -65,6 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="20px"
+                        android:alpha="0.5"
                         android:background="@drawable/kong" />
 
                     <TextView
@@ -103,8 +106,8 @@
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle"
                             android:background="@color/bottomBG"
-                            android:text="查看全部"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:text="查看全部" />
                     </RelativeLayout>
                 </HorizontalScrollView>
             </RelativeLayout>
@@ -125,24 +128,22 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/test" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
+                    android:alpha="0.2"
+                    android:background="#000" />
+
                 <TextView
                     android:id="@+id/history_Toptext1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:textColor="#fff"
-                    android:textSize="72px"
-                    android:layout_centerInParent="true"/>
+                    android:textSize="72px" />
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20px"
-                android:background="@color/bottomBG" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -198,46 +199,12 @@
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle1"
                             android:background="@color/bottomBG"
-                            android:text="查看全部"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:text="查看全部" />
                     </RelativeLayout>
                 </HorizontalScrollView>
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20px"
-                android:layout_marginTop="100px"
-                android:background="@color/bottomBG" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="500px">
-
-                <ImageView
-                    android:id="@+id/history_Topimg2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
-                <TextView
-                    android:id="@+id/history_Toptext2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20px"
-                android:background="@color/bottomBG" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -255,6 +222,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="20px"
+                        android:alpha="0.5"
                         android:background="@drawable/kong" />
 
                     <TextView
@@ -293,10 +261,41 @@
                             android:layout_marginLeft="20px"
                             android:layout_toRightOf="@+id/historyRecycle2"
                             android:background="@color/bottomBG"
-                            android:text="查看全部"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:text="查看全部" />
                     </RelativeLayout>
                 </HorizontalScrollView>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/bottomBG" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px">
+
+                <ImageView
+                    android:id="@+id/history_Topimg2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.2"
+                    android:background="#000" />
+
+                <TextView
+                    android:id="@+id/history_Toptext2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="72px" />
             </RelativeLayout>
         </LinearLayout>
     </com.mssd.utils.ObservableScrollView>
@@ -305,6 +304,7 @@
         android:id="@+id/history_Title"
         style="@style/TitleStyle"
         android:visibility="gone">
+
         <RelativeLayout
             android:id="@+id/history_back"
             style="@style/backview">
@@ -315,6 +315,7 @@
                 android:layout_centerInParent="true"
                 android:src="@mipmap/back_hei_icon" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/historyText1"
             android:layout_width="wrap_content"

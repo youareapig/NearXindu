@@ -42,6 +42,6 @@
         android:layout_height="54px"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40px"
-        android:layout_marginTop="40px"
+        android:layout_marginTop="60px"
         android:src="@mipmap/shoucang" />
 </com.zhy.autolayout.AutoRelativeLayout>

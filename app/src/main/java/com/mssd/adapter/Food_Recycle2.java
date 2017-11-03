@@ -48,7 +48,7 @@ public class Food_Recycle2 extends RecyclerView.Adapter {
         viewHolder.food2name.setText(info.getFname());
         Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.food2img);
         AssetManager assetManager = activity.getAssets();
-        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
+        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         viewHolder.food2name.setTypeface(typeface);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

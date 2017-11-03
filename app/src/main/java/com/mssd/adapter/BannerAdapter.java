@@ -1,5 +1,6 @@
 package com.mssd.adapter;
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mssd.data.FoodDateBean;
+import com.mssd.data.TansuoBean;
+import com.mssd.html.WebActivity;
 
 import java.util.List;
 
@@ -15,8 +18,10 @@ import java.util.List;
  */
 public class BannerAdapter extends PagerAdapter {
     private ImageView[] imageViews;
-    public BannerAdapter(ImageView[] imageViews) {
+    private List<TansuoBean.DataBean.BannerBean> list;
+    public BannerAdapter(ImageView[] imageViews,List<TansuoBean.DataBean.BannerBean> list) {
         this.imageViews=imageViews;
+        this.list=list;
         notifyDataSetChanged();
     }
 
@@ -41,6 +46,14 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+        imageViews[position].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url",list.get(position).getLink());
+                v.getContext().startActivity(intent);
+            }
+        });
         try {
             container.addView(imageViews[position % imageViews.length], 0);
         }catch (Exception e){
