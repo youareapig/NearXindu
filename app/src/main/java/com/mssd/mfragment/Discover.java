@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,12 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.mssd.adapter.Discover_Recycle1;
 import com.mssd.adapter.Discover_Recycle2;
 import com.mssd.adapter.Discover_Recycle3;
@@ -27,7 +29,6 @@ import com.mssd.html.WebActivity;
 import com.mssd.myview.CustomProgressDialog;
 import com.mssd.utils.MyScrollView;
 import com.mssd.utils.SingleModleUrl;
-import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.SpacesItemDecoration2;
 import com.mssd.utils.ToastUtils;
 import com.mssd.zl.GalleryActivity;
@@ -35,7 +36,6 @@ import com.mssd.zl.GoodsActivity;
 import com.mssd.zl.PedestrianActivity;
 import com.mssd.zl.R;
 import com.mssd.zl.TalkHistoryActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -87,6 +87,8 @@ public class Discover extends Fragment {
     ImageView discoverImg4;
     @BindView(R.id.discover_text4)
     TextView discoverText4;
+    @BindView(R.id.discover_pull)
+    PullToRefreshLayout discoverPull;
     private Unbinder unbinder;
     private List<DiscoverBean.DataBeanXXXX.T1Bean.DataBean> list1;
     private List<DiscoverBean.DataBeanXXXX.T2Bean.DataBeanX> list2;
@@ -101,6 +103,24 @@ public class Discover extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         changeFont();
         getNetBean();
+        discoverPull.setRefreshListener(new BaseRefreshListener() {
+            @Override
+            public void refresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getNetBean();
+                        discoverPull.finishRefresh();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void loadMore() {
+
+            }
+        });
+        discoverPull.setCanLoadMore(false);
         return view;
     }
 
@@ -164,6 +184,8 @@ public class Discover extends Fragment {
                     discoverText3.setText(bean.getData().getT3().getPic().getContent());
                     Glide.with(getActivity()).load(bean.getData().getT3().getPic().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverImg3);
                     discoverText4.setText(bean.getData().getT4().getPic().getContent());
+                    Glide.with(getActivity()).load(bean.getData().getT4().getPic().getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(discoverImg4);
+
 
                     list1 = bean.getData().getT1().getData();
                     list2 = bean.getData().getT2().getData();

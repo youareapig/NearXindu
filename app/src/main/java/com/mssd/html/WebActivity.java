@@ -3,11 +3,14 @@ package com.mssd.html;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,6 +22,8 @@ import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +44,9 @@ public class WebActivity extends AutoLayoutActivity {
     ImageView webShare;
     private AgentWeb agentWeb;
     private Unbinder unbinder;
-    private String url, Title;
+    private String url, Title, imgUrl;
+    private StringBuffer sb;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,7 @@ public class WebActivity extends AutoLayoutActivity {
     private void init() {
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        Log.e("tag", "地址---->" + url);
+        Log.e("tag", "address" + url);
         agentWeb = AgentWeb.with(this)//传入Activity or Fragment
                 .setAgentWebParent(layout, new LinearLayout.LayoutParams(-1, -1))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams ,第一个参数和第二个参数应该对应。
                 .useDefaultIndicator()// 使用默认进度条
@@ -62,6 +69,29 @@ public class WebActivity extends AutoLayoutActivity {
                 .createAgentWeb()//
                 .ready()
                 .go(url);
+        webView = agentWeb.getWebCreator().get();
+        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                view.loadUrl("javascript:window.java_obj.showSource(" + "document.getElementsByTagName('img')[0].src);");
+                view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("http:") || url.startsWith("https:")) {
+                    view.loadUrl(url);
+                    return false;
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+
+            }
+        });
     }
 
     private void changeFont() {
@@ -75,11 +105,28 @@ public class WebActivity extends AutoLayoutActivity {
         @Override
 
         public void onReceivedTitle(WebView view, String title) {
-            talkTitle.setText(title);
+            //talkTitle.setText(title);
             Title = title;
         }
 
     };
+
+    public final class InJavaScriptLocalObj {
+        @JavascriptInterface
+        public void showSource(String html) {
+            imgUrl = html;
+        }
+
+        @JavascriptInterface
+        public void showDescription(String str) {
+            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
+            Matcher m = p.matcher(str);
+            sb = new StringBuffer();
+            while (m.find()) {
+                sb.append(m.group(1));
+            }
+        }
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -126,11 +173,17 @@ public class WebActivity extends AutoLayoutActivity {
         oks.disableSSOWhenAuthorize();
 
 // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        if (Title == "") {
+            Title = "详情";
+        }
         oks.setTitle(Title);
 // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl(url);
 // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
+        if (sb.toString() == null) {
+            sb.append("有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。");
+        }
+        oks.setText(sb.toString());
 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
 // url仅在微信（包括好友和朋友圈）中使用
@@ -142,7 +195,7 @@ public class WebActivity extends AutoLayoutActivity {
 // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(url);
         //设置网络图片链接
-        oks.setImageUrl("http://www.qiecd.com/uploads/banner/20171026/b221224367de717641793bd9d2942f36.jpg");
+        oks.setImageUrl(imgUrl);
 // 启动分享GUI
         oks.setCallback(new PlatformActionListener() {
             @Override
@@ -151,7 +204,7 @@ public class WebActivity extends AutoLayoutActivity {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-                    Log.e("tag","分享失败"+throwable.getMessage());
+                Log.e("tag", "分享失败" + throwable.getMessage());
             }
 
             @Override

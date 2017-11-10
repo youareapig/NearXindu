@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class GalleryActivity extends AutoLayoutActivity {
     @BindView(R.id.gallery_title)
@@ -129,5 +130,17 @@ public class GalleryActivity extends AutoLayoutActivity {
     @OnClick(R.id.gallery_back)
     public void onViewClicked() {
         finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"画廊");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"画廊");
     }
 }

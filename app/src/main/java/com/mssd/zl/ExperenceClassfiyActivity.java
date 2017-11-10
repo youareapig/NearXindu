@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class ExperenceClassfiyActivity extends AutoLayoutActivity {
     @BindView(R.id.experenceclassfiy_titleName)
@@ -105,6 +106,18 @@ public class ExperenceClassfiyActivity extends AutoLayoutActivity {
         }
         page = 1;
         getNetBean();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"体验分类");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"体验分类");
     }
 
     private void initbean() {

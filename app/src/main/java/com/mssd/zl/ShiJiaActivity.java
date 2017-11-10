@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class ShiJiaActivity extends AutoLayoutActivity {
     @BindView(R.id.shijia_title)
@@ -207,5 +208,17 @@ public class ShiJiaActivity extends AutoLayoutActivity {
     @OnClick(R.id.shijia_back)
     public void onViewClicked() {
         finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"食家");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"食家");
     }
 }

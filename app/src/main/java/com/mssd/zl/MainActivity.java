@@ -52,6 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class MainActivity extends AutoLayoutActivity {
     @BindView(R.id.main_Fragment)
@@ -393,5 +394,17 @@ public class MainActivity extends AutoLayoutActivity {
 
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"首页");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"首页");
     }
 }

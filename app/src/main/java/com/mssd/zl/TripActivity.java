@@ -53,6 +53,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class TripActivity extends AutoLayoutActivity implements ObservableScrollView.ScrollViewListener {
     @BindView(R.id.trip_recycleTop)
@@ -265,7 +266,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "3");
         params.addBodyParameter("uid", userID);
-        Log.e("tag","userid"+userID);
+        Log.e("tag", "userid" + userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -500,5 +501,18 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     @OnClick(R.id.trip_back)
     public void onViewClicked() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this, "行");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this, "行");
     }
 }

@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class ShiTangActivity extends AutoLayoutActivity {
     @BindView(R.id.shitang_title)
@@ -93,5 +94,17 @@ public class ShiTangActivity extends AutoLayoutActivity {
     @OnClick(R.id.shitang_back)
     public void onViewClicked() {
         finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"食堂");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"食堂");
     }
 }

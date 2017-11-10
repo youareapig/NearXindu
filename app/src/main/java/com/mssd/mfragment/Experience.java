@@ -116,11 +116,11 @@ public class Experience extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         mlist = new ArrayList<>();
-        bean1 = new TiyanClassfiyBean("户外活动", R.mipmap.test, "19");
-        bean2 = new TiyanClassfiyBean("艺术探究", R.mipmap.test, "20");
-        bean3 = new TiyanClassfiyBean("匠心手作", R.mipmap.test, "21");
-        bean4 = new TiyanClassfiyBean("茶会雅事", R.mipmap.test, "22");
-        bean5 = new TiyanClassfiyBean("生活美学", R.mipmap.test, "23");
+        bean1 = new TiyanClassfiyBean("户外活动", R.mipmap.shi_icon, "19");
+        bean2 = new TiyanClassfiyBean("艺术探究", R.mipmap.shi_icon, "20");
+        bean3 = new TiyanClassfiyBean("匠心手作", R.mipmap.shi_icon, "21");
+        bean4 = new TiyanClassfiyBean("茶会雅事", R.mipmap.shi_icon, "22");
+        bean5 = new TiyanClassfiyBean("生活美学", R.mipmap.shi_icon, "23");
         mlist.add(bean1);
         mlist.add(bean2);
         mlist.add(bean3);

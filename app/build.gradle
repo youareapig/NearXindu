@@ -66,7 +66,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'com.just.agentweb:agentweb:2.0.1'
     compile 'com.jwenfeng.pulltorefresh:library:1.2.6'
-    compile 'com.github.lany192:ProgressWebView:1.0.0'
     compile 'com.qianwen:update-app:3.3.8'
     compile 'com.qianwen:okhttp-utils:3.8.0'
     compile 'com.lzy.net:okgo:3.0.4'

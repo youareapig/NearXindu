@@ -4,270 +4,279 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.mssd.utils.MyScrollView
-        android:id="@+id/discover_scroll"
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/discover_pull"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <com.zhy.autolayout.AutoLinearLayout
+
+        <com.mssd.utils.MyScrollView
+            android:id="@+id/discover_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:scrollbars="none">
 
-            <com.zhy.autolayout.AutoRelativeLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="500px">
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/discover_Topimg"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-                <TextView
-                    android:id="@+id/discover_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    />
+                    android:layout_height="500px">
 
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="350px">
-
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:layout_width="650px"
-                    android:layout_height="160px"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
-
-                    <com.zhy.autolayout.AutoLinearLayout
+                    <ImageView
+                        android:id="@+id/discover_Topimg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="67"
-                            android:background="#888888" />
-
-                        <TextView
-                            android:id="@+id/discover_tx1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="30"
-                            android:gravity="center"
-                            android:text="走  .  吧"
-                            android:textColor="@color/mainUnChecked"
-                            android:textSize="72px" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="67"
-                            android:background="#888888" />
-
-                    </com.zhy.autolayout.AutoLinearLayout>
+                        android:scaleType="centerCrop" />
 
                     <TextView
-                        android:id="@+id/discover_tx2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:text="去品味这里独有的历史人文"
-                        android:textColor="@color/mainUnChecked"
-                        android:textSize="48px" />
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:alpha="0.2"
+                        android:background="#000" />
 
-                </com.zhy.autolayout.AutoLinearLayout>
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    <TextView
+                        android:id="@+id/discover_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
 
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="500px">
+                </com.zhy.autolayout.AutoRelativeLayout>
 
-                <ImageView
-                    android:id="@+id/discover_img1"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="350px">
 
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="650px"
+                        android:layout_height="160px"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
 
-                <TextView
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="67"
+                                android:background="#888888" />
+
+                            <TextView
+                                android:id="@+id/discover_tx1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="30"
+                                android:gravity="center"
+                                android:text="走  .  吧"
+                                android:textColor="@color/mainUnChecked"
+                                android:textSize="72px" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="67"
+                                android:background="#888888" />
+
+                        </com.zhy.autolayout.AutoLinearLayout>
+
+                        <TextView
+                            android:id="@+id/discover_tx2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|bottom"
+                            android:text="去品味这里独有的历史人文"
+                            android:textColor="@color/mainUnChecked"
+                            android:textSize="48px" />
+
+                    </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
-                <TextView
-                    android:id="@+id/discover_text1"
+                    android:layout_height="500px">
+
+                    <ImageView
+                        android:id="@+id/discover_img1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.2"
+                        android:background="#000" />
+
+                    <TextView
+                        android:id="@+id/discover_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+
+                    <ImageView
+                        android:layout_width="55px"
+                        android:layout_height="48px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/sanjiao_icon" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/discover_recycle1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    />
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    android:layout_height="600px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="40px" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/discover_recycle1"
-                android:layout_width="wrap_content"
-                android:layout_height="600px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="40px" />
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:layout_marginTop="160px">
-
-                <ImageView
-                    android:id="@+id/discover_img2"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="500px"
+                    android:layout_marginTop="160px">
+
+                    <ImageView
+                        android:id="@+id/discover_img2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
-                <TextView
-                    android:id="@+id/discover_text2"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.2"
+                        android:background="#000" />
+
+                    <TextView
+                        android:id="@+id/discover_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+
+                    <ImageView
+                        android:layout_width="55px"
+                        android:layout_height="48px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/sanjiao_icon" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/discover_recycle2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    />
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    android:layout_height="600px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="40px" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/discover_recycle2"
-                android:layout_width="wrap_content"
-                android:layout_height="600px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="40px" />
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:layout_marginTop="160px">
-
-                <ImageView
-                    android:id="@+id/discover_img3"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    />
+                    android:layout_height="500px"
+                    android:layout_marginTop="160px">
+
+                    <ImageView
+                        android:id="@+id/discover_img3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
-                <TextView
-                    android:id="@+id/discover_text3"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.2"
+                        android:background="#000" />
+
+                    <TextView
+                        android:id="@+id/discover_text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+
+                    <ImageView
+                        android:layout_width="55px"
+                        android:layout_height="48px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/sanjiao_icon" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/discover_recycle3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    />
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    android:layout_height="600px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="40px" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/discover_recycle3"
-                android:layout_width="wrap_content"
-                android:layout_height="600px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="40px" />
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:layout_marginTop="160px">
-
-                <ImageView
-                    android:id="@+id/discover_img4"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="500px"
+                    android:layout_marginTop="160px">
+
+                    <ImageView
+                        android:id="@+id/discover_img4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000"
-                    android:alpha="0.2"/>
-                <TextView
-                    android:id="@+id/discover_text4"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.2"
+                        android:background="#000" />
+
+                    <TextView
+                        android:id="@+id/discover_text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="72px" />
+
+                    <ImageView
+                        android:layout_width="55px"
+                        android:layout_height="48px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/sanjiao_icon" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/discover_recycle4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#fff"
-                    android:textSize="72px"
-                    />
-                <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="48px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/sanjiao_icon" />
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/discover_recycle4"
-                android:layout_width="wrap_content"
-                android:layout_height="680px"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="40px" />
-        </com.zhy.autolayout.AutoLinearLayout>
+                    android:layout_height="680px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="40px" />
+            </com.zhy.autolayout.AutoLinearLayout>
 
 
-    </com.mssd.utils.MyScrollView>
-
+        </com.mssd.utils.MyScrollView>
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 
 
 </com.zhy.autolayout.AutoFrameLayout>

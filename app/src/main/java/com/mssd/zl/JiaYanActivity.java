@@ -40,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener {
     @BindView(R.id.jiayan_title)
@@ -226,5 +227,17 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
                 return false;
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"家宴");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"家宴");
     }
 }

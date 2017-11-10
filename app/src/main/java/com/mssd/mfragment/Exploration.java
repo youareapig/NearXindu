@@ -206,7 +206,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
             ImageView imageView = new ImageView(getActivity());
             viewpagerImage[i] = imageView;
             Glide.with(getActivity()).load(bannerList.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
-            Log.e("tag","tupain"+bannerList.get(i).getUrl());
 
         }
         explorationViewpager.setOnPageChangeListener(Exploration.this);
@@ -349,7 +348,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag","修改了数据"+result);
                 explorationScroll.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
                 TansuoBean bean = gson.fromJson(result, TansuoBean.class);
@@ -384,7 +382,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
 
             @Override
             public boolean onCache(String result) {
-
                 return false;
             }
         });

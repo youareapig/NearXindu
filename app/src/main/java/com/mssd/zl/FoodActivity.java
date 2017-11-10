@@ -51,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener, ObservableScrollView.ScrollViewListener {
     @BindView(R.id.food_recycleTop)
@@ -121,9 +122,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         list = new ArrayList<>();
-        locationBean1 = new LocationBean("家  .宴", R.mipmap.test);
-        locationBean2 = new LocationBean("食  .堂", R.mipmap.test);
-        locationBean3 = new LocationBean("食  .家", R.mipmap.test);
+        locationBean1 = new LocationBean("家  .宴", R.mipmap.jiayan_icon);
+        locationBean2 = new LocationBean("食  .堂", R.mipmap.shitang_icon);
+        locationBean3 = new LocationBean("食  .家", R.mipmap.shijia_icon);
         list.add(locationBean1);
         list.add(locationBean2);
         list.add(locationBean3);
@@ -393,5 +394,17 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         super.onRestart();
         userID = sharedPreferences.getString("userid", "0");
         reStar();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"食主页");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"食主页");
     }
 }

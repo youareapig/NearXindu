@@ -102,14 +102,14 @@ public class AboutUsActivity extends AutoLayoutActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        JAnalyticsInterface.onPageStart(this,this.getClass().getCanonicalName());
+        JAnalyticsInterface.onPageStart(this,"关于我们");
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        JAnalyticsInterface.onPageEnd(this,this.getClass().getCanonicalName());
+        JAnalyticsInterface.onPageEnd(this,"关于我们");
     }
 
     @Override

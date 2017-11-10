@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.CardSwitchListener {
 
@@ -203,5 +204,17 @@ public class HOFActivity extends AutoLayoutActivity implements CardSlidePanel.Ca
                 return false;
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"名人堂");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"名人堂");
     }
 }

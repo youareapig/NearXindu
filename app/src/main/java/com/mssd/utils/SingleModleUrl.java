@@ -11,6 +11,8 @@ public class SingleModleUrl {
     private String imgUrl = "http://www.qiecd.com/";
     private String testUrl = "http://www.qiecd.com/api.php/";
 
+//    private String imgUrl = "http://192.168.10.253/";
+//    private String testUrl = "http://192.168.10.253/api.php/";
 
     public String getImgUrl() {
         return imgUrl;

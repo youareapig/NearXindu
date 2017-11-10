@@ -1,23 +1,26 @@
 package com.mssd.html;
 
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.webkit.WebSettings;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.just.library.AgentWeb;
-import com.lany.library.ProgressWebView;
+import com.just.library.ChromeClientCallbackManager;
 import com.mssd.data.HtmlBean;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.LoginActivity;
@@ -30,10 +33,14 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class WebsActivity extends AutoLayoutActivity {
 
@@ -47,16 +54,15 @@ public class WebsActivity extends AutoLayoutActivity {
     ImageView share;
     @BindView(R.id.shoucang)
     ImageView shoucang;
-    @BindView(R.id.webview)
-    ProgressWebView webview;
     private Unbinder unbinder;
     private String userID, cID, type;
     private int ischeck;
     private SharedPreferences sharedPreferences;
     private boolean isLogin;
-    private WebSettings webSettings;
-    private String urlType;
-
+    private String urlType, mUrl, title1,imgUrl;
+    private StringBuffer sb;
+    private AgentWeb agentWeb;
+    private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +89,32 @@ public class WebsActivity extends AutoLayoutActivity {
                 } else {
                     shoucang.setImageResource(R.mipmap.shoucang1);
                 }
-                Log.e("tag","地址------>"+bean.getData().getLink());
-                webview.loadUrl(bean.getData().getLink());
+                mUrl = bean.getData().getLink();
+                webView.loadUrl(mUrl);
+                webView.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
+
+                webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+                        view.loadUrl("javascript:window.java_obj.showSource("
+                                + "document.getElementsByTagName('img')[0].src);");
+
+                        view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+                    }
+
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        if (url.startsWith("http:") || url.startsWith("https:")) {
+                            view.loadUrl(url);
+                            return false;
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(intent);
+                            return true;
+                        }
+                    }
+                });
             }
 
             @Override
@@ -108,8 +138,27 @@ public class WebsActivity extends AutoLayoutActivity {
             }
         });
     }
+    private ChromeClientCallbackManager.ReceivedTitleCallback mCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
 
+        @Override
+
+        public void onReceivedTitle(WebView view, String title) {
+            //talkTitle.setText(title);
+            title1 = title;
+            Log.e("mm","标题"+title);
+        }
+
+    };
     private void init() {
+        agentWeb = AgentWeb.with(WebsActivity.this)
+                .setAgentWebParent(layout, new LinearLayout.LayoutParams(-1, -1))
+                .useDefaultIndicator()
+                .defaultProgressBarColor()
+                .setReceivedTitleCallback(mCallback) //设置 Web 页面的 title 回调
+                .createAgentWeb()//
+                .ready()
+                .go(mUrl);
+        webView=agentWeb.getWebCreator().get();
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
@@ -118,30 +167,30 @@ public class WebsActivity extends AutoLayoutActivity {
         if (type.equals("1") || type.equals("2")) {
             urlType = "Show/roomboard";
         }
-        if (type.equals("4")||type.equals("3")) {
+        if (type.equals("4") || type.equals("3")) {
             urlType = "Show/expere";
         }
-        webSettings = webview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-// 让JavaScript可以自动打开windows
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-// 设置缓存
-        webSettings.setAppCacheEnabled(true);
-// 设置缓存模式,一共有四种模式
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-// 设置缓存路径
-//        webSettings.setAppCachePath("");
-// 支持缩放(适配到当前屏幕)
-        webSettings.setSupportZoom(true);
-// 将图片调整到合适的大小
-        webSettings.setUseWideViewPort(true);
-// 支持内容重新布局,一共有四种方式
-// 默认的是NARROW_COLUMNS
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-// 设置可以被显示的屏幕控制
-        webSettings.setDisplayZoomControls(true);
-// 设置默认字体大小
-        //webSettings.setDefaultFontSize(12);
+//        webSettings = webview.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//// 让JavaScript可以自动打开windows
+//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+//// 设置缓存
+//        webSettings.setAppCacheEnabled(true);
+//// 设置缓存模式,一共有四种模式
+//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//// 设置缓存路径
+////        webSettings.setAppCachePath("");
+//// 支持缩放(适配到当前屏幕)
+//        webSettings.setSupportZoom(true);
+//// 将图片调整到合适的大小
+//        webSettings.setUseWideViewPort(true);
+//// 支持内容重新布局,一共有四种方式
+//// 默认的是NARROW_COLUMNS
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//// 设置可以被显示的屏幕控制
+//        webSettings.setDisplayZoomControls(true);
+//// 设置默认字体大小
+//        //webSettings.setDefaultFontSize(12);
     }
 
 
@@ -167,6 +216,7 @@ public class WebsActivity extends AutoLayoutActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.share:
+                showShare();
                 break;
             case R.id.shoucang:
                 if (isLogin == true) {
@@ -178,6 +228,39 @@ public class WebsActivity extends AutoLayoutActivity {
                 }
                 break;
         }
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+//关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        if (title1==null){
+            title1="详情";
+        }
+        oks.setTitle(title1);
+// titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl(mUrl);
+// text是分享文本，所有平台都需要这个字段
+        if (sb.toString()==null){
+            sb.append("有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。");
+        }
+        oks.setText(sb.toString());
+// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+//oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+// url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(mUrl);
+// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        //oks.setComment("我是测试评论文本");
+// site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite("惬成都");
+// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(mUrl);
+        //设置网络图片链接
+        oks.setImageUrl(imgUrl);
+        oks.show(this);
+
     }
 
     private void addCollect() {
@@ -261,15 +344,31 @@ public class WebsActivity extends AutoLayoutActivity {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (webview.canGoBack()) {
-                webview.goBack();//返回上一页面
-                return true;
-            }
+    public final class InJavaScriptLocalObj {
+        @JavascriptInterface
+        public void showSource(String html) {
+            imgUrl=html;
+            Log.e("mm","tupian"+html);
         }
 
+        @JavascriptInterface
+        public void showDescription(String str) {
+            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
+            Matcher m = p.matcher(str);
+            sb=new StringBuffer();
+            while (m.find())
+            {
+                sb.append(m.group(1));
+            }
+            Log.e("mm","内容"+sb);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (agentWeb.handleKeyEvent(keyCode, event)) {
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 

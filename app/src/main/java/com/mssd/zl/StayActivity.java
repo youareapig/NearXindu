@@ -40,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class StayActivity extends AutoLayoutActivity implements ObservableScrollView.ScrollViewListener {
     @BindView(R.id.stay_gallery)
@@ -175,7 +176,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
 
             }
         });
-        stayTopBg.setImageResource(R.mipmap.test);
 
     }
 
@@ -320,5 +320,17 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     @OnClick(R.id.stay_back)
     public void onViewClicked() {
         finish();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"宿");
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"宿");
     }
 }

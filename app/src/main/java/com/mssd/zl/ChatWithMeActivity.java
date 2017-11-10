@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatWithMeActivity extends AutoLayoutActivity {
@@ -78,7 +79,18 @@ public class ChatWithMeActivity extends AutoLayoutActivity {
         chatSend.setTypeface(typeface);
         chatContent.setTypeface(typeface);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(this,"和我聊聊");
+    }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(this,"和我聊聊");
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
