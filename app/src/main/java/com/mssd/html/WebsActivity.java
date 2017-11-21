@@ -59,10 +59,11 @@ public class WebsActivity extends AutoLayoutActivity {
     private int ischeck;
     private SharedPreferences sharedPreferences;
     private boolean isLogin;
-    private String urlType, mUrl, title1,imgUrl;
+    private String urlType, mUrl, title1, imgUrl;
     private StringBuffer sb;
     private AgentWeb agentWeb;
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +139,7 @@ public class WebsActivity extends AutoLayoutActivity {
             }
         });
     }
+
     private ChromeClientCallbackManager.ReceivedTitleCallback mCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
 
         @Override
@@ -145,10 +147,11 @@ public class WebsActivity extends AutoLayoutActivity {
         public void onReceivedTitle(WebView view, String title) {
             //talkTitle.setText(title);
             title1 = title;
-            Log.e("mm","标题"+title);
+            Log.e("mm", "标题" + title);
         }
 
     };
+
     private void init() {
         agentWeb = AgentWeb.with(WebsActivity.this)
                 .setAgentWebParent(layout, new LinearLayout.LayoutParams(-1, -1))
@@ -158,7 +161,7 @@ public class WebsActivity extends AutoLayoutActivity {
                 .createAgentWeb()//
                 .ready()
                 .go(mUrl);
-        webView=agentWeb.getWebCreator().get();
+        webView = agentWeb.getWebCreator().get();
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
@@ -216,7 +219,11 @@ public class WebsActivity extends AutoLayoutActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.share:
-                showShare();
+                try {
+                    showShare();
+                } catch (Exception e) {
+                    Log.e("tag", "加载未完成");
+                }
                 break;
             case R.id.shoucang:
                 if (isLogin == true) {
@@ -236,14 +243,14 @@ public class WebsActivity extends AutoLayoutActivity {
         oks.disableSSOWhenAuthorize();
 
 // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
-        if (title1==null){
-            title1="详情";
+        if (title1 == null) {
+            title1 = "详情";
         }
         oks.setTitle(title1);
 // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl(mUrl);
 // text是分享文本，所有平台都需要这个字段
-        if (sb.toString()==null){
+        if (sb.toString() == null) {
             sb.append("有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。");
         }
         oks.setText(sb.toString());
@@ -347,20 +354,19 @@ public class WebsActivity extends AutoLayoutActivity {
     public final class InJavaScriptLocalObj {
         @JavascriptInterface
         public void showSource(String html) {
-            imgUrl=html;
-            Log.e("mm","tupian"+html);
+            imgUrl = html;
+            Log.e("mm", "tupian" + html);
         }
 
         @JavascriptInterface
         public void showDescription(String str) {
             Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
             Matcher m = p.matcher(str);
-            sb=new StringBuffer();
-            while (m.find())
-            {
+            sb = new StringBuffer();
+            while (m.find()) {
                 sb.append(m.group(1));
             }
-            Log.e("mm","内容"+sb);
+            Log.e("mm", "内容" + sb);
         }
     }
 
@@ -372,4 +378,15 @@ public class WebsActivity extends AutoLayoutActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.in,R.anim.out);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.in,R.anim.out);
+    }
 }

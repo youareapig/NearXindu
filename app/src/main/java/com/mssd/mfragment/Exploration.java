@@ -272,6 +272,7 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
             case R.id.exploration_classfiy1:
                 intent1 = new Intent(getActivity(), HistoryActivity.class);
                 startActivity(intent1);
+                //getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
             case R.id.exploration_classfiy2:
                 intent2 = new Intent(getActivity(), FoodActivity.class);

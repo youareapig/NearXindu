@@ -52,7 +52,6 @@ public class Trip extends Fragment {
         View view = inflater.inflate(R.layout.wanttrip, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
-        getNetBean();
         wantEatRecycle.addItemDecoration(new ListItemDecoration(20));
         return view;
     }

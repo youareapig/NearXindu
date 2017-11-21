@@ -52,7 +52,6 @@ public class Eat extends Fragment {
         View view = inflater.inflate(R.layout.wanteat, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
-        getNetBean();
 
         return view;
     }

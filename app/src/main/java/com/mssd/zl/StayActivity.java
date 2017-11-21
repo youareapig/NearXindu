@@ -325,6 +325,7 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"宿");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -332,5 +333,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"宿");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

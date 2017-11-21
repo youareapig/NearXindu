@@ -135,9 +135,7 @@
                     <ImageView
                         android:id="@+id/trip_show1_img"
                         android:layout_width="match_parent"
-                        android:layout_height="600px"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/test" />
+                        android:layout_height="600px" />
 
                     <TextView
                         android:id="@+id/trip_show1_text1"

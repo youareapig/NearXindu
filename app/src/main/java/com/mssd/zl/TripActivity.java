@@ -159,9 +159,9 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     }
 
     private void initbean() {
-        locationBean1 = new LocationBean("画廊", R.mipmap.test);
-        locationBean2 = new LocationBean("好物", R.mipmap.test);
-        locationBean3 = new LocationBean("行者", R.mipmap.test);
+        locationBean1 = new LocationBean("画廊", R.mipmap.hualang_icon);
+        locationBean2 = new LocationBean("好物", R.mipmap.haowu_icon);
+        locationBean3 = new LocationBean("行者", R.mipmap.xingzhe_icon);
         mlist.add(locationBean1);
         mlist.add(locationBean2);
         mlist.add(locationBean3);
@@ -507,6 +507,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this, "行");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -514,5 +515,6 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this, "行");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

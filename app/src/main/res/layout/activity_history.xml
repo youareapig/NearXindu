@@ -27,9 +27,7 @@
                 <ImageView
                     android:id="@+id/history_Topimg"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -125,9 +123,7 @@
                 <ImageView
                     android:id="@+id/history_Topimg1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -279,9 +275,7 @@
                 <ImageView
                     android:id="@+id/history_Topimg2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/test" />
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:layout_width="match_parent"

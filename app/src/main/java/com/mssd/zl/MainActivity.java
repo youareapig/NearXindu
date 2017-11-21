@@ -160,6 +160,7 @@ public class MainActivity extends AutoLayoutActivity {
 
     }
 
+
     private void initLocation() {
         mLocationClient = new AMapLocationClient(getApplicationContext());
         //设置定位回调监听
@@ -399,6 +400,7 @@ public class MainActivity extends AutoLayoutActivity {
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"首页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -406,5 +408,6 @@ public class MainActivity extends AutoLayoutActivity {
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"首页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

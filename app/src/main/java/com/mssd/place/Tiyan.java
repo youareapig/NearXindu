@@ -52,7 +52,6 @@ public class Tiyan extends Fragment {
         View view = inflater.inflate(R.layout.want, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
-        getNetBean();
         wantEatRecycle.addItemDecoration(new ListItemDecoration(80));
         return view;
     }

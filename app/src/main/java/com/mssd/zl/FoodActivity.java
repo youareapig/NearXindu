@@ -399,6 +399,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"食主页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -406,5 +407,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"食主页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 }

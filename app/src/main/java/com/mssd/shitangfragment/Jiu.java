@@ -57,7 +57,6 @@ public class Jiu extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID= sharedPreferences.getString("userid", "0");
-        firstBean();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
             @Override
             public boolean canScrollVertically() {

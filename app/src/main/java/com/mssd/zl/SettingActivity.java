@@ -166,12 +166,14 @@ public class SettingActivity extends AutoLayoutActivity {
                     final AlertDialog dialog = new AlertDialog.Builder(SettingActivity.this).create();
                     LayoutInflater inflater = getLayoutInflater();
                     View v = inflater.inflate(R.layout.bestversion, null);
+                    TextView textView= (TextView) v.findViewById(R.id.versionText);
+                    textView.setTypeface(typeface);
                     dialog.setView(v);
                     dialog.show();
                     Window window = dialog.getWindow();
                     WindowManager.LayoutParams layoutParams = window.getAttributes();
                     layoutParams.alpha = 0.6f;
-                    layoutParams.width = 650;
+                    layoutParams.width = 850;
                     window.setAttributes(layoutParams);
                     dialog.setCanceledOnTouchOutside(true);
                 }

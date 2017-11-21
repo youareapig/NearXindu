@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
@@ -267,6 +269,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"历史主页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -274,5 +277,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"历史主页");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
+
 }

@@ -53,7 +53,6 @@ public class Stay extends Fragment {
         View view = inflater.inflate(R.layout.wantstay, container, false);
         unbinder = ButterKnife.bind(this, view);
         initbean();
-        getNetBean();
         shitangFragmentRecycle.addItemDecoration(new ListItemDecoration(120));
         return view;
 

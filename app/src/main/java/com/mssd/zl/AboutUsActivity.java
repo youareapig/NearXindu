@@ -103,6 +103,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"关于我们");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
 
@@ -110,6 +111,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"关于我们");
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     @Override

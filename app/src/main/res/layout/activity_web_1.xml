@@ -23,7 +23,7 @@
                 android:layout_width="26px"
                 android:layout_height="49px"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/back_hei_icon" />
+                android:src="@mipmap/back_bai_icon" />
         </RelativeLayout>
 
         <TextView

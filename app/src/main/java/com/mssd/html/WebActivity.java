@@ -140,12 +140,14 @@ public class WebActivity extends AutoLayoutActivity {
     protected void onPause() {
         super.onPause();
         agentWeb.getWebLifeCycle().onPause();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         agentWeb.getWebLifeCycle().onResume();
+        overridePendingTransition(R.anim.in,R.anim.out);
     }
 
     @Override
@@ -162,7 +164,11 @@ public class WebActivity extends AutoLayoutActivity {
                 finish();
                 break;
             case R.id.web_share:
-                showShare();
+                try {
+                    showShare();
+                }catch (Exception e){
+                    Log.e("tag","加载未完成");
+                }
                 break;
         }
     }
