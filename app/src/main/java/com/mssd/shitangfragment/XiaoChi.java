@@ -1,0 +1,206 @@
+package com.mssd.shitangfragment;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
+import com.mssd.adapter.ShiTang_Fragment_recycle;
+import com.mssd.data.ShitangNextBean;
+import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
+import com.mssd.zl.R;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * Created by DELL on 2017/9/12.
+ */
+
+public class XiaoChi extends Fragment {
+    @BindView(R.id.shitang_fragment_recycle)
+    RecyclerView shitangFragmentRecycle;
+    @BindView(R.id.shitang_fragment_pull)
+    PullToRefreshLayout shitangFragmentPull;
+    @BindView(R.id.isShow)
+    TextView isShow;
+    private Unbinder unbinder;
+    private List<ShitangNextBean.DataBean> list = new ArrayList<>();
+    private int page = 1;
+    private ShiTang_Fragment_recycle adapter;
+    private SharedPreferences sharedPreferences;
+    private String userID;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.shitangfragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
+        userID= sharedPreferences.getString("userid", "0");
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        shitangFragmentRecycle.setLayoutManager(linearLayoutManager);
+
+        shitangFragmentPull.setRefreshListener(new BaseRefreshListener() {
+            @Override
+            public void refresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (list != null) {
+                            list.clear();
+                        }
+                        page = 1;
+                        firstBean();
+                        shitangFragmentPull.finishRefresh();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void loadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        page++;
+                        loadBean();
+                        shitangFragmentPull.finishLoadMore();
+                    }
+                }, 2000);
+            }
+        });
+        return view;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        userID= sharedPreferences.getString("userid", "0");
+        if (list != null) {
+            list.clear();
+        }
+        page = 1;
+        firstBean();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
+    public void firstBean() {
+        shitangFragmentPull.setVisibility(View.GONE);
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
+        params.addBodyParameter("type", "1");
+        params.addBodyParameter("cid", "24");
+        params.addBodyParameter("uid",userID);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                shitangFragmentPull.setVisibility(View.VISIBLE);
+                Gson gson = new Gson();
+                ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
+                if (bean.getCode() == 2000) {
+                    shitangFragmentRecycle.setVisibility(View.VISIBLE);
+                    isShow.setVisibility(View.GONE);
+                    list.addAll(bean.getData());
+                    adapter = new ShiTang_Fragment_recycle(list, getActivity());
+                    shitangFragmentRecycle.setAdapter(adapter);
+                    shitangFragmentPull.setCanLoadMore(true);
+                } else {
+                    shitangFragmentRecycle.setVisibility(View.GONE);
+                    isShow.setVisibility(View.VISIBLE);
+                    shitangFragmentPull.setCanLoadMore(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.showShort(getActivity(),R.string.erroe);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
+                return false;
+            }
+        });
+
+    }
+
+    public void loadBean() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
+        params.addBodyParameter("type", "1");
+        params.addBodyParameter("cid", "5");
+        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("page", page + "");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
+                if (bean.getCode() == 2000) {
+                    list.addAll(bean.getData());
+                    adapter.notifyItemRangeChanged(0,bean.getData().size());
+                }else {
+                    ToastUtils.showShort(getActivity(),R.string.end);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.showShort(getActivity(),R.string.erroe);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+
+                return false;
+            }
+        });
+
+    }
+}

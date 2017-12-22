@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +25,6 @@ import com.mssd.utils.ObservableScrollView;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.SpacesItemDecoration;
 import com.mssd.utils.ToastUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.xutils.common.Callback;
@@ -90,6 +86,8 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
     RelativeLayout historyBack;
     @BindView(R.id.history_talk)
     RelativeLayout historyTalk;
+    @BindView(R.id.xcmap)
+    RelativeLayout xcmap;
     private Unbinder unbinder;
     private int heigh = 300;
     private List<HistoryIndexBean.DataBean.T2Bean> list1;
@@ -174,7 +172,7 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
         }
     }
 
-    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3, R.id.history_back, R.id.history_talk})
+    @OnClick({R.id.historyRecycleImg1, R.id.historyRecycleEndImg1, R.id.historyRecycleImg2, R.id.historyRecycleEndImg2, R.id.historyRecycleImg3, R.id.historyRecycleEndImg3, R.id.history_back, R.id.history_talk,R.id.xcmap})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.historyRecycleImg1:
@@ -208,6 +206,10 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
                 Intent intent4 = new Intent(HistoryActivity.this, WebActivity.class);
                 intent4.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl() + "show/playvideo");
                 startActivity(intent4);
+                break;
+            case R.id.xcmap:
+                Intent intent7=new Intent(HistoryActivity.this,XCMapActivity.class);
+                startActivity(intent7);
                 break;
         }
     }
@@ -265,19 +267,20 @@ public class HistoryActivity extends AutoLayoutActivity implements ObservableScr
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        JAnalyticsInterface.onPageStart(this,"历史主页");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        JAnalyticsInterface.onPageStart(this, "历史主页");
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        JAnalyticsInterface.onPageEnd(this,"历史主页");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        JAnalyticsInterface.onPageEnd(this, "历史主页");
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 }

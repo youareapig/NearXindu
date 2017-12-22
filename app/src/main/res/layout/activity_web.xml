@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.mssd.html.WebActivity">
 
-    <RelativeLayout
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+        </RelativeLayout>
 
     <RelativeLayout style="@style/TitleStyle">
 
@@ -23,7 +23,7 @@
                 android:layout_width="26px"
                 android:layout_height="49px"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/back_bai_icon" />
+                android:src="@mipmap/back_hei_icon" />
         </RelativeLayout>
 
         <TextView

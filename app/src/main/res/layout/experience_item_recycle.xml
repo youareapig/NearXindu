@@ -7,7 +7,8 @@
     <ImageView
         android:id="@+id/experience_item_recycle_img"
         android:layout_width="match_parent"
-        android:layout_height="600px" />
+        android:layout_height="600px"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/experience_item_recycle_title1"

@@ -1,12 +1,11 @@
 package com.mssd.jpush;
 
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.jpush.android.api.JPushInterface;
 
 public class JpushActivity extends AutoLayoutActivity {
     @BindView(R.id.notice_recycle)
@@ -41,6 +39,8 @@ public class JpushActivity extends AutoLayoutActivity {
     MyScrollView noticeScroll;
     @BindView(R.id.shijia_back)
     RelativeLayout shijiaBack;
+    @BindView(R.id.isShow)
+    TextView isShow;
     private String requestContent;
     private Unbinder unbinder;
     private List<JpushBean> list = new ArrayList<>();
@@ -85,6 +85,8 @@ public class JpushActivity extends AutoLayoutActivity {
         try {
             list = db.selector(JpushBean.class).orderBy("id", true).findAll();
             if (list != null) {
+                noticeScroll.setVisibility(View.VISIBLE);
+                isShow.setVisibility(View.GONE);
                 LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
                     @Override
                     public boolean canScrollVertically() {
@@ -95,7 +97,8 @@ public class JpushActivity extends AutoLayoutActivity {
                 noticeRecycle.setLayoutManager(gridLayoutManager);
                 noticeRecycle.setAdapter(new NoticeAdapter(list, this));
             } else {
-                ToastUtils.showShort(this, "暂无消息");
+                noticeScroll.setVisibility(View.GONE);
+                isShow.setVisibility(View.VISIBLE);
             }
 
         } catch (Exception e) {

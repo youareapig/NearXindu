@@ -270,6 +270,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     viewpagerImage = new ImageView[bannerList.size()];
                     for (int i = 0; i < viewpagerImage.length; i++) {
                         ImageView imageView = new ImageView(FoodActivity.this);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         viewpagerImage[i] = imageView;
                         Glide.with(FoodActivity.this).load(bannerList.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
                     }
@@ -399,7 +400,7 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"食主页");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
 
@@ -407,6 +408,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"食主页");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }

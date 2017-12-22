@@ -22,9 +22,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.facebook.rebound.ui.Util;
 import com.google.gson.Gson;
 import com.mssd.data.UpdataHeadBean;
@@ -58,6 +61,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by DELL on 2017/8/30.
@@ -65,7 +69,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Mine extends Fragment {
     @BindView(R.id.mine_head)
-    CircleImageView mineHead;
+    ImageView mineHead;
     @BindView(R.id.mine_name)
     TextView mineName;
     @BindView(R.id.mine_editprofil)
@@ -260,11 +264,15 @@ public class Mine extends Fragment {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "上传成功" + result);
                 Gson gson = new Gson();
                 UpdataHeadBean bean = gson.fromJson(result, UpdataHeadBean.class);
                 if (bean.getCode() == 3003) {
-                    ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
+                    Glide.with(getActivity())
+                            .load(bean.getData().getHeadpic())
+                            .placeholder(R.mipmap.yuan)
+                            .error(R.mipmap.yuan)
+                            .bitmapTransform(new CenterCrop(getActivity()),new CropCircleTransformation(getActivity()))
+                            .into(mineHead);
                 } else {
                     ToastUtils.showShort(getActivity(),"上传失败!");
                 }
@@ -303,7 +311,12 @@ public class Mine extends Fragment {
                 UserBean bean = gson.fromJson(result, UserBean.class);
                 if (bean.getCode() == 3000) {
                     if (bean.getData().getHeadpic() != "") {
-                        ImageLoader.getInstance().displayImage(bean.getData().getHeadpic(), mineHead);
+                        Glide.with(getActivity())
+                                .load(bean.getData().getHeadpic())
+                                .placeholder(R.mipmap.yuan)
+                                .error(R.mipmap.yuan)
+                                .bitmapTransform(new CenterCrop(getActivity()),new CropCircleTransformation(getActivity()))
+                                .into(mineHead);
                         editor.putString("userHead",bean.getData().getHeadpic());
                         editor.commit();
                     }

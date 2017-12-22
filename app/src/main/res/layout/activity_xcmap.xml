@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mssd.zl.XCMapActivity">
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/map_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout style="@style/TitleStyle">
+
+        <RelativeLayout
+            android:id="@+id/map_back"
+            style="@style/backview" >
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_bai_icon" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/map_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</RelativeLayout>

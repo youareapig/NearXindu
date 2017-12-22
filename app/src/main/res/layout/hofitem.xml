@@ -16,12 +16,11 @@
         android:layout_centerHorizontal="true"
         >
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <ImageView
             android:id="@+id/card_image_view"
             android:layout_width="900px"
             android:layout_height="1200px"
             android:scaleType="centerCrop"
-            app:riv_corner_radius="10px"
             android:background="#00000000"
             android:elevation="30px"
             />

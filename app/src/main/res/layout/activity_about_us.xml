@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
+            android:background="#eeeeee" />
     </RelativeLayout>
     <TextView
         android:id="@+id/aboutus_content"

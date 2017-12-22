@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eeeeee"
     android:orientation="vertical"
-    tools:context="com.mssd.jpush.JpushActivity"
-    android:background="#eeeeee">
+    tools:context="com.mssd.jpush.JpushActivity">
 
-    <RelativeLayout style="@style/TitleStyle"
+    <RelativeLayout
+        style="@style/TitleStyle"
         android:background="#fff">
 
         <RelativeLayout
             android:id="@+id/shijia_back"
             style="@style/backview"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
             <ImageView
                 android:layout_width="26px"
@@ -44,10 +45,21 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:layout_marginTop="100px"
                 android:id="@+id/notice_recycle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="100px" />
         </RelativeLayout>
     </com.mssd.utils.MyScrollView>
+
+    <TextView
+        android:id="@+id/isShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="700px"
+        android:text="暂无数据"
+        android:textColor="@color/mainUnChecked"
+        android:textSize="46px"
+        android:visibility="gone"/>
 </LinearLayout>

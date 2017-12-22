@@ -16,6 +16,7 @@ import com.mssd.shitangfragment.Fan;
 import com.mssd.shitangfragment.Jiu;
 import com.mssd.shitangfragment.Mian;
 import com.mssd.shitangfragment.Su;
+import com.mssd.shitangfragment.XiaoChi;
 import com.mssd.xtab.XTabLayout;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -62,15 +63,17 @@ public class ShiTangActivity extends AutoLayoutActivity {
         list1.add(new Mian());
         list1.add(new Cha());
         list1.add(new Su());
+        list1.add(new XiaoChi());
         titleList.add("全部");
         titleList.add("酒馆");
         titleList.add("饭馆");
         titleList.add("面馆");
         titleList.add("茶馆");
         titleList.add("素食");
+        titleList.add("小吃");
         adapter=new ShiTangTabAdapter(getSupportFragmentManager(), titleList, list1);
         shitangViewpager.setAdapter(adapter);
-        shitangViewpager.setOffscreenPageLimit(6);
+        shitangViewpager.setOffscreenPageLimit(7);
         shitangTab.setupWithViewPager(shitangViewpager);
         shitangTab.getTabAt(0).select();
         shitangTab.getTabAt(1).select();

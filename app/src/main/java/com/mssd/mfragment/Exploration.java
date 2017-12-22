@@ -204,6 +204,7 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
         viewpagerImage = new ImageView[bannerList.size()];
         for (int i = 0; i < viewpagerImage.length; i++) {
             ImageView imageView = new ImageView(getActivity());
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             viewpagerImage[i] = imageView;
             Glide.with(getActivity()).load(bannerList.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
 

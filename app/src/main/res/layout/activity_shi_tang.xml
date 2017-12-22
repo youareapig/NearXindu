@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
+            android:background="#eeeeee" />
         <ImageView
             android:id="@+id/shitang_search"
             android:layout_width="52px"

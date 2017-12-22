@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.just.library.AgentWeb;
 import com.just.library.ChromeClientCallbackManager;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
@@ -44,7 +46,7 @@ public class WebActivity extends AutoLayoutActivity {
     ImageView webShare;
     private AgentWeb agentWeb;
     private Unbinder unbinder;
-    private String url, Title, imgUrl;
+    private String url, Title, imgUrl,shareContent;
     private StringBuffer sb;
     private WebView webView;
 
@@ -70,13 +72,15 @@ public class WebActivity extends AutoLayoutActivity {
                 .ready()
                 .go(url);
         webView = agentWeb.getWebCreator().get();
+        webView.setVerticalScrollBarEnabled(false);
         webView.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 view.loadUrl("javascript:window.java_obj.showSource(" + "document.getElementsByTagName('img')[0].src);");
-                view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+               // view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+                view.loadUrl("javascript:window.java_obj.showDescription(document.getElementById('share').innerHTML);");
             }
 
             @Override
@@ -119,12 +123,14 @@ public class WebActivity extends AutoLayoutActivity {
 
         @JavascriptInterface
         public void showDescription(String str) {
-            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
-            Matcher m = p.matcher(str);
-            sb = new StringBuffer();
-            while (m.find()) {
-                sb.append(m.group(1));
-            }
+//            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
+//            Matcher m = p.matcher(str);
+//            sb = new StringBuffer();
+//            while (m.find()) {
+//                sb.append(m.group(1));
+//            }
+            shareContent=str;
+            Log.e("tag","分享内容"+str);
         }
     }
 
@@ -140,14 +146,14 @@ public class WebActivity extends AutoLayoutActivity {
     protected void onPause() {
         super.onPause();
         agentWeb.getWebLifeCycle().onPause();
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         agentWeb.getWebLifeCycle().onResume();
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     @Override
@@ -167,7 +173,7 @@ public class WebActivity extends AutoLayoutActivity {
                 try {
                     showShare();
                 }catch (Exception e){
-                    Log.e("tag","加载未完成");
+                    ToastUtils.showShort(this,"正在加载请稍后");
                 }
                 break;
         }
@@ -186,10 +192,10 @@ public class WebActivity extends AutoLayoutActivity {
 // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl(url);
 // text是分享文本，所有平台都需要这个字段
-        if (sb.toString() == null) {
-            sb.append("有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。");
+        if (shareContent == null) {
+            shareContent="有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。";
         }
-        oks.setText(sb.toString());
+        oks.setText(shareContent);
 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
 // url仅在微信（包括好友和朋友圈）中使用
@@ -221,4 +227,5 @@ public class WebActivity extends AutoLayoutActivity {
         oks.show(this);
 
     }
+
 }

@@ -2,8 +2,11 @@ package com.mssd.zl;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -18,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.gson.Gson;
 import com.just.library.AgentWeb;
 import com.mssd.adapter.BannerAdapter;
@@ -41,6 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPageChangeListener {
     @BindView(R.id.jiayan_title)
@@ -87,6 +92,7 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void getViewpager() {
         viewpagerTips = new ImageView[list.size()];
         for (int i = 0; i < viewpagerTips.length; i++) {
@@ -120,7 +126,13 @@ public class JiaYanActivity extends AutoLayoutActivity implements ViewPager.OnPa
         for (int i = 0; i < list.size(); i++) {
             ImageView imageView = new ImageView(this);
             views[i] = imageView;
-            Glide.with(JiaYanActivity.this).load(list.get(i).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(imageView);
+            Glide.with(JiaYanActivity.this)
+                    .load(list.get(i).getUrl())
+                   // .bitmapTransform(new CenterCrop(JiaYanActivity.this),new CropCircleTransformation(JiaYanActivity.this))
+                    .centerCrop()
+                    .placeholder(R.mipmap.hui)
+                    .error(R.mipmap.hui)
+                    .into(imageView);
         }
         jiayanViewpager.setOnPageChangeListener(this);
         jiayanViewpager.setAdapter(new JiaYanBannerAdapter(views,list));

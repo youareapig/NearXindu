@@ -11,5 +11,5 @@
         android:gravity="center"
         android:text="酒店"
         android:textColor="@color/mainUnChecked"
-        android:textSize="62px" />
+        android:textSize="68px" />
 </com.zhy.autolayout.AutoRelativeLayout>

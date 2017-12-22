@@ -8,6 +8,7 @@
     tools:context="com.mssd.zl.HistoryActivity">
 
 
+
     <com.mssd.utils.ObservableScrollView
         android:id="@+id/history_scroll"
         android:layout_width="match_parent"
@@ -27,7 +28,8 @@
                 <ImageView
                     android:id="@+id/history_Topimg"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,13 +119,15 @@
                 android:background="@color/bottomBG" />
 
             <RelativeLayout
+                android:id="@+id/xcmap"
                 android:layout_width="match_parent"
                 android:layout_height="500px">
 
                 <ImageView
                     android:id="@+id/history_Topimg1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -266,16 +270,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20px"
-                android:background="@color/bottomBG" />
+                android:background="@color/bottomBG"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="500px">
+                android:layout_height="500px"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/history_Topimg2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -293,7 +300,6 @@
             </RelativeLayout>
         </LinearLayout>
     </com.mssd.utils.ObservableScrollView>
-
     <RelativeLayout
         android:id="@+id/history_Title"
         style="@style/TitleStyle"

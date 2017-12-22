@@ -83,7 +83,7 @@ public class ChatWithMeActivity extends AutoLayoutActivity {
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this,"和我聊聊");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
 
@@ -91,7 +91,7 @@ public class ChatWithMeActivity extends AutoLayoutActivity {
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this,"和我聊聊");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
     @Override
     protected void onDestroy() {

@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_alignParentBottom="true"
-                    android:background="#bfbfbf" />
+                    android:background="#eeeeee" />
             </RelativeLayout>
 
             <LinearLayout
@@ -231,7 +231,7 @@
                 android:layout_height="130px"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="70px"
-                android:layout_marginTop="120px"
+                android:layout_marginTop="360px"
                 android:background="@drawable/button"
                 android:gravity="center"
                 android:textColor="@color/mainChecked"

@@ -9,7 +9,7 @@
     <SurfaceView
         android:id="@+id/start_surface"
         android:layout_width="match_parent"
-        android:layout_height="600px"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true" />
 
     <RelativeLayout
@@ -32,15 +32,4 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:layout_width="800px"
-        android:layout_height="126px"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="300px"
-        android:background="@drawable/start_login"
-        android:gravity="center"
-        android:text="注册/登录"
-        android:textColor="#fff"
-        android:textSize="48px" />
 </RelativeLayout>

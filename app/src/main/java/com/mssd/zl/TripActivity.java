@@ -419,11 +419,9 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         params.addBodyParameter("uid", userID);
         params.addBodyParameter("type", "3");
         params.addBodyParameter("tid", tID);
-        Log.e("tag", "参数说明----->" + userID + "   " + tID);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag", "收藏" + result);
                 try {
                     JSONObject json = new JSONObject(result);
                     if (json.getString("code").equals("3004")) {
@@ -507,7 +505,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onResume() {
         super.onResume();
         JAnalyticsInterface.onPageStart(this, "行");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
 
@@ -515,6 +513,6 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
     protected void onPause() {
         super.onPause();
         JAnalyticsInterface.onPageEnd(this, "行");
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }

@@ -23,6 +23,7 @@ import com.just.library.AgentWeb;
 import com.just.library.ChromeClientCallbackManager;
 import com.mssd.data.HtmlBean;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.mssd.zl.LoginActivity;
 import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -59,7 +60,7 @@ public class WebsActivity extends AutoLayoutActivity {
     private int ischeck;
     private SharedPreferences sharedPreferences;
     private boolean isLogin;
-    private String urlType, mUrl, title1, imgUrl;
+    private String urlType, mUrl, title1, imgUrl,shareContent;
     private StringBuffer sb;
     private AgentWeb agentWeb;
     private WebView webView;
@@ -101,7 +102,8 @@ public class WebsActivity extends AutoLayoutActivity {
                         view.loadUrl("javascript:window.java_obj.showSource("
                                 + "document.getElementsByTagName('img')[0].src);");
 
-                        view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+                        //view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+                        view.loadUrl("javascript:window.java_obj.showDescription(document.getElementById('share').innerHTML);");
                     }
 
                     @Override
@@ -162,6 +164,7 @@ public class WebsActivity extends AutoLayoutActivity {
                 .ready()
                 .go(mUrl);
         webView = agentWeb.getWebCreator().get();
+        webView.setVerticalScrollBarEnabled(false);
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         isLogin = sharedPreferences.getBoolean("islogin", false);
@@ -222,7 +225,7 @@ public class WebsActivity extends AutoLayoutActivity {
                 try {
                     showShare();
                 } catch (Exception e) {
-                    Log.e("tag", "加载未完成");
+                    ToastUtils.showShort(this,"正在加载请稍后");
                 }
                 break;
             case R.id.shoucang:
@@ -250,10 +253,10 @@ public class WebsActivity extends AutoLayoutActivity {
 // titleUrl是标题的网络链接，QQ和QQ空间等使用
         oks.setTitleUrl(mUrl);
 // text是分享文本，所有平台都需要这个字段
-        if (sb.toString() == null) {
-            sb.append("有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。");
+        if (shareContent == null) {
+            shareContent="有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。";
         }
-        oks.setText(sb.toString());
+        oks.setText(shareContent);
 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
 // url仅在微信（包括好友和朋友圈）中使用
@@ -360,13 +363,14 @@ public class WebsActivity extends AutoLayoutActivity {
 
         @JavascriptInterface
         public void showDescription(String str) {
-            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
-            Matcher m = p.matcher(str);
-            sb = new StringBuffer();
-            while (m.find()) {
-                sb.append(m.group(1));
-            }
-            Log.e("mm", "内容" + sb);
+//            Pattern p = Pattern.compile("<p.*?>(.*?)</p>");
+//            Matcher m = p.matcher(str);
+//            sb = new StringBuffer();
+//            while (m.find()) {
+//                sb.append(m.group(1));
+//            }
+            shareContent=str;
+            Log.e("tag","分享内容"+str);
         }
     }
 
@@ -381,12 +385,12 @@ public class WebsActivity extends AutoLayoutActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        overridePendingTransition(R.anim.in,R.anim.out);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }
