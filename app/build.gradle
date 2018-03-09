@@ -9,8 +9,8 @@ android {
         applicationId "com.mssd.zl"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.0.0"
+        versionCode 4
+        versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips'
@@ -74,8 +74,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'cn.jiguang.sdk:janalytics:1.1.1'
     compile 'jp.wasabeef:glide-transformations:2.0.0'
+    compile 'com.github.chrisbanes:PhotoView:1.3.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     apt 'com.zhy:mpermission-compiler:1.0.0'
-    compile 'com.github.chrisbanes:PhotoView:1.3.0'
 }

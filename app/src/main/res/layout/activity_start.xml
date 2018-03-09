@@ -19,7 +19,7 @@
         android:layout_marginRight="60px"
         android:layout_marginTop="60px"
         android:background="@drawable/skip"
-        android:alpha="0.1">
+        android:alpha="0.3">
 
         <TextView
             android:id="@+id/start_go"

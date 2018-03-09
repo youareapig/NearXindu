@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="870px">
+    android:layout_height="870px"
+    android:background="#fff">
 
     <TextView
         android:id="@+id/shitang_tag"
@@ -52,7 +53,7 @@
         android:layout_height="54px"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40px"
-        android:layout_marginTop="40px"
+        android:layout_marginTop="60px"
         android:src="@mipmap/shoucang" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

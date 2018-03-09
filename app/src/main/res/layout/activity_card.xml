@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mssd.zl.CardActivity">
+
+    <RelativeLayout style="@style/TitleStyle">
+
+        <RelativeLayout
+            android:id="@+id/card_back"
+            style="@style/backview">
+
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_hei_icon" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/card_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="卡券"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="72px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#eeeeee" />
+    </RelativeLayout>
+
+    <com.mssd.utils.MyScrollView
+        android:id="@+id/card_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/card_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#eeeeee" />
+        </RelativeLayout>
+    </com.mssd.utils.MyScrollView>
+
+    <RelativeLayout
+        android:id="@+id/isShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="400px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/nocard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="暂无可用卡券"
+            android:textColor="@color/mainUnChecked"
+            android:textSize="46px" />
+        <TextView
+            android:id="@+id/get"
+            android:layout_width="260px"
+            android:layout_height="105px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/lingqu"
+            android:gravity="center"
+            android:text="去领券"
+            android:textColor="#888888"
+            android:textSize="50px"
+            android:layout_marginTop="280px"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

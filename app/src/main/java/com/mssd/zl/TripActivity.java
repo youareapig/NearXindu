@@ -183,7 +183,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
         clist.add(bean8);
         tripRecycleTop.setAdapter(new Trip_Recycle1(mlist, TripActivity.this));
 
-        tripRecycleclassify.setAdapter(new Trip_Recycle2(clist, TripActivity.this));
+        //tripRecycleclassify.setAdapter(new Trip_Recycle2(clist, TripActivity.this));
     }
 
     private void addline() {
@@ -197,7 +197,6 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                 return false;
             }
         };
-        tripRecycleList.addItemDecoration(new ListItemDecoration(78));
         tripRecycleList.setLayoutManager(linearLayoutManager);
     }
 
@@ -338,7 +337,7 @@ public class TripActivity extends AutoLayoutActivity implements ObservableScroll
                     });
                     Glide.with(TripActivity.this).load(list.get(0).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(tripShowImg);
                     tripShowText1.setText(list.get(0).getStitle());
-                    tripShowText2.setText(list.get(0).getStitle());
+                    tripShowText2.setText(list.get(0).getSname());
                     Glide.with(TripActivity.this).load(list.get(1).getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(tripShow1Img);
                     tripShow1Text1.setText(list.get(1).getStitle());
                     tripShow1Text2.setText(list.get(1).getSname());

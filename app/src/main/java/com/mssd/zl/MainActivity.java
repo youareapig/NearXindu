@@ -1,23 +1,24 @@
 package com.mssd.zl;
 
-import android.*;
 import android.Manifest;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.telephony.TelephonyManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,14 +29,17 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.mssd.html.WebActivity;
 import com.mssd.mfragment.Discover;
 import com.mssd.mfragment.Experience;
 import com.mssd.mfragment.Exploration;
 import com.mssd.mfragment.Mine;
 import com.mssd.update.UpdateAppHttpUtil;
 import com.mssd.utils.SingleModleUrl;
+import com.mssd.utils.ToastUtils;
 import com.vector.update_app.UpdateAppManager;
 import com.zhy.autolayout.AutoLayoutActivity;
+import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
 
@@ -94,6 +98,10 @@ public class MainActivity extends AutoLayoutActivity {
     private SharedPreferences.Editor editor;
     private long firstTime = 0;
     private int locationVersion = 0;
+    private boolean b;
+    private Typeface typeface;
+    private int showTag;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +111,12 @@ public class MainActivity extends AutoLayoutActivity {
         editor = sharedPreferences.edit();
         InitApp application = (InitApp) getApplication();
         locationVersion = application.location;
+        b = sharedPreferences.getBoolean("islogin", false);
+        userID = sharedPreferences.getString("userid", "0");
         getUpdate();
+        youhuirukou();
         Intent intent = getIntent();
+        showTag = intent.getIntExtra("showtag", 0);
         currentIndex = intent.getIntExtra("indextag", 0);
         if (currentIndex == 3) {
             explorationName.setTextColor(getResources().getColor(R.color.mainUnChecked));
@@ -212,7 +224,7 @@ public class MainActivity extends AutoLayoutActivity {
 
     private void changeFont() {
         AssetManager assetManager = getAssets();
-        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         experienceName.setTypeface(typeface);
         explorationName.setTypeface(typeface);
         discoverName.setTypeface(typeface);
@@ -303,7 +315,6 @@ public class MainActivity extends AutoLayoutActivity {
                 mineIcon.setImageResource(R.mipmap.wode_icon);
                 break;
             case R.id.main_mine:
-                boolean b = sharedPreferences.getBoolean("islogin", false);
                 if (b == false) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     intent.putExtra("intentTag", 1);
@@ -354,16 +365,15 @@ public class MainActivity extends AutoLayoutActivity {
     }
 
 
-
-    private void getUpdate(){
-        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Index/initial");
+    private void getUpdate() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/initial");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
-                    JSONObject json=new JSONObject(result);
-                    int nowVersion=Integer.valueOf(json.getString("version"));
-                    if (locationVersion<nowVersion){
+                    JSONObject json = new JSONObject(result);
+                    int nowVersion = Integer.valueOf(json.getString("version"));
+                    if (locationVersion < nowVersion && showTag == 1) {
                         new UpdateAppManager
                                 .Builder()
                                 //当前Activity
@@ -396,18 +406,93 @@ public class MainActivity extends AutoLayoutActivity {
             }
         });
     }
+
+    private void showYouhui() {
+        final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this, R.style.FullScreenDialog).create();
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_youhui, null);
+        v.findViewById(R.id.dialog_off).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        TextView textView = (TextView) v.findViewById(R.id.get);
+        textView.setTypeface(typeface);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (b == false) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.putExtra("intentTag", 9);
+                    startActivity(intent);
+                }else {
+                    Intent intent=new Intent(MainActivity.this, WebActivity.class);
+                    intent.putExtra("url",SingleModleUrl.singleModleUrl().getTestUrl()+"Show/active/uid/"+userID);
+                    intent.putExtra("heigh",1);
+                    startActivity(intent);
+                    dialog.cancel();
+                }
+
+            }
+        });
+        dialog.setView(v);
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(AutoRelativeLayout.LayoutParams.MATCH_PARENT, AutoRelativeLayout.LayoutParams.WRAP_CONTENT);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.alpha = 0.9f;
+        window.setAttributes(layoutParams);
+    }
+
+    private void youhuirukou() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/ishow");
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getString("data").equals("1") && showTag == 1) {
+                        showYouhui();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        JAnalyticsInterface.onPageStart(this,"首页");
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        JAnalyticsInterface.onPageStart(this, "首页");
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        JAnalyticsInterface.onPageEnd(this,"首页");
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        JAnalyticsInterface.onPageEnd(this, "首页");
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

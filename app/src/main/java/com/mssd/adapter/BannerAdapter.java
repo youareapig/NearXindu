@@ -46,14 +46,14 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        imageViews[position].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("url",list.get(position).getLink());
-                v.getContext().startActivity(intent);
-            }
-        });
+//        imageViews[position].setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(v.getContext(), WebActivity.class);
+//                intent.putExtra("url",list.get(position).getLink());
+//                v.getContext().startActivity(intent);
+//            }
+//        });
         try {
             container.addView(imageViews[position % imageViews.length], 0);
         }catch (Exception e){

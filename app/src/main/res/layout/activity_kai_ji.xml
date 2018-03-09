@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mssd.zl.KaiJiActivity">
+
+    <SurfaceView
+        android:id="@+id/kaiji_surface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout style="@style/TitleStyle">
+
+        <RelativeLayout
+            android:id="@+id/kaiji_back"
+            style="@style/backview">
+
+            <ImageView
+                android:layout_width="26px"
+                android:layout_height="49px"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/back_bai_icon" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

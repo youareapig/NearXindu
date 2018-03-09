@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mssd.data.HistoryIndexBean;
+import com.mssd.html.WebActivity;
+import com.mssd.utils.SingleModleUrl;
 import com.mssd.zl.HOFActivity;
 import com.mssd.zl.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,7 +44,7 @@ public class History_Recycle3 extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HistoryIndexBean.DataBean.T6Bean info = list.get(position);
+        final HistoryIndexBean.DataBean.T6Bean info = list.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.history1name.setText(info.getHname());
         Glide.with(activity).load(info.getUrl()).centerCrop().placeholder(R.mipmap.hui).error(R.mipmap.hui).into(viewHolder.history1img);
@@ -52,7 +54,8 @@ public class History_Recycle3 extends RecyclerView.Adapter {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(), HOFActivity.class);
+                Intent intent=new Intent(v.getContext(), WebActivity.class);
+                intent.putExtra("url", SingleModleUrl.singleModleUrl().getTestUrl()+"Show/culture/id/"+info.getId());
                 v.getContext().startActivity(intent);
             }
         });

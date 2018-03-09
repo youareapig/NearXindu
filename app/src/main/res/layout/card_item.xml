@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="630px">
+
+    <ImageView
+        android:id="@+id/card_item_img"
+        android:layout_width="1000px"
+        android:layout_height="550px"
+        android:layout_margin="40px"
+        android:background="#fff"
+        android:scaleType="centerCrop"
+        android:elevation="6dp"/>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="6dp"
+        android:layout_marginBottom="120px">
+
+        <TextView
+            android:id="@+id/bianma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编码"
+            android:textColor="#000"
+            android:textSize="42px" />
+
+        <TextView
+            android:id="@+id/cardid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:text="1234456"
+            android:textColor="#000"
+            android:textSize="42px" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <TextView
+        android:id="@+id/useTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="90px"
+        android:layout_marginRight="90px"
+        android:text="未使用"
+        android:textColor="#000"
+        android:elevation="6dp"
+        android:textSize="36px" />
+</com.zhy.autolayout.AutoRelativeLayout>

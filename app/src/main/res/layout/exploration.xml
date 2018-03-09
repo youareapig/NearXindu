@@ -285,7 +285,7 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="40px"
-                    android:text="住他们盖的房子"
+                    android:text="住他们盖的房"
                     android:textColor="@color/mainUnChecked"
                     android:textSize="72px" />
 

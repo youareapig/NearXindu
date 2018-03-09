@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mssd.zl.FoodActivity">
+    tools:context="com.mssd.zl.FoodActivity"
+    android:background="#fff">
 
     <com.mssd.utils.ObservableScrollView
         android:id="@+id/food_scroll"
@@ -89,11 +90,13 @@
                     android:id="@+id/food_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="600px" />
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="600px"
-                    android:background="#000"
-                    android:alpha="0.2"/>
+                    android:layout_height="160px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/jianbian"
+                    android:layout_marginBottom="200px"/>
                 <TextView
                     android:id="@+id/food_viewpage_title"
                     android:layout_width="wrap_content"
@@ -116,11 +119,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20px"
-                android:background="@color/bottomBG" />
+                android:background="@color/bottomBG"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="480px">
+                android:layout_height="480px"
+                android:layout_marginTop="100px"
+                android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/food_recycle2"
@@ -134,8 +140,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100px">
+                android:layout_height="wrap_content">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/food_recycle3"
@@ -175,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
+            android:background="#eeeeee" />
 
         <ImageView
             android:id="@+id/food_search"

@@ -11,10 +11,9 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.2"
-        android:background="#000" />
-
+        android:layout_height="160px"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/jianbian"/>
     <TextView
         android:id="@+id/shijia_item_text"
         android:layout_width="match_parent"
@@ -22,7 +21,8 @@
         android:textColor="#fff"
         android:textSize="48px"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="50px"
-        android:layout_marginBottom="50px"
-        android:layout_marginRight="50px"/>
+        android:layout_marginLeft="40px"
+        android:layout_marginBottom="30px"
+        android:layout_marginRight="40px"/>
+
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -1,6 +1,8 @@
 package com.mssd.place;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -57,7 +59,9 @@ public class Eat extends Fragment {
     }
 
     private void initbean() {
-
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        isShow.setTypeface(typeface);
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
     }

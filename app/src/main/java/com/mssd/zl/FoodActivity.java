@@ -122,9 +122,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
         sharedPreferences = getSharedPreferences("xindu", MODE_PRIVATE);
         userID = sharedPreferences.getString("userid", "0");
         list = new ArrayList<>();
-        locationBean1 = new LocationBean("家  .宴", R.mipmap.jiayan_icon);
-        locationBean2 = new LocationBean("食  .堂", R.mipmap.shitang_icon);
-        locationBean3 = new LocationBean("食  .家", R.mipmap.shijia_icon);
+        locationBean1 = new LocationBean("家·宴", R.mipmap.jiayan_icon);
+        locationBean2 = new LocationBean("食·堂", R.mipmap.shitang_icon);
+        locationBean3 = new LocationBean("食·家", R.mipmap.shijia_icon);
         list.add(locationBean1);
         list.add(locationBean2);
         list.add(locationBean3);
@@ -298,9 +298,9 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                     };
                     thread.start();
                     //TODO 左右滑动列表
-                    foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
-                    foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
-                    foodRecycle2.setAdapter(new Food_Recycle2(list_2, FoodActivity.this));
+//                    foodRecycle2.addItemDecoration(new SpacesItemDecoration(20));
+//                    foodRecycle2.setLayoutManager(new GridLayoutManager(FoodActivity.this, 1, LinearLayoutManager.HORIZONTAL, false));
+//                    foodRecycle2.setAdapter(new Food_Recycle2(list_2, FoodActivity.this));
                     //TODO 底部列表
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FoodActivity.this, LinearLayoutManager.VERTICAL, false) {
                         @Override
@@ -308,7 +308,6 @@ public class FoodActivity extends AutoLayoutActivity implements ViewPager.OnPage
                             return false;
                         }
                     };
-                    foodRecycle3.addItemDecoration(new ListItemDecoration(80));
                     foodRecycle3.setLayoutManager(linearLayoutManager);
                     adapter = new FoodAdapter(list_1, FoodActivity.this);
                     foodRecycle3.setAdapter(adapter);

@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class StartActivity extends AutoLayoutActivity {
     @OnClick(R.id.start_go)
     public void onViewClicked() {
         Intent intent=new Intent(StartActivity.this,MainActivity.class);
+        intent.putExtra("showtag",1);
         startActivity(intent);
         finish();
     }
@@ -90,13 +92,24 @@ public class StartActivity extends AutoLayoutActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mediaPlayer.setLooping(true);
+        //循环播放
+       // mediaPlayer.setLooping(true);
         mediaPlayer.setDisplay(startSurface.getHolder());
         mediaPlayer.prepareAsync();
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mediaPlayer.start();
+            }
+        });
+        //TODO 播放结束监听
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Intent intent=new Intent(StartActivity.this,MainActivity.class);
+                intent.putExtra("showtag",1);
+                startActivity(intent);
+                finish();
             }
         });
     }

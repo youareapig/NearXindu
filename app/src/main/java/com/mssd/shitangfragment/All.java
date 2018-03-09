@@ -1,6 +1,8 @@
 package com.mssd.shitangfragment;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -51,14 +53,16 @@ public class All extends Fragment {
     private ShiTang_Fragment_recycle adapter;
     private SharedPreferences sharedPreferences;
     private String userID;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shitangfragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
-        userID= sharedPreferences.getString("userid", "0");
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
+        userID = sharedPreferences.getString("userid", "0");
+        changeFont();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -98,10 +102,16 @@ public class All extends Fragment {
         return view;
     }
 
+    private void changeFont() {
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        isShow.setTypeface(typeface);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        userID= sharedPreferences.getString("userid", "0");
+        userID = sharedPreferences.getString("userid", "0");
         if (list != null) {
             list.clear();
         }
@@ -116,12 +126,11 @@ public class All extends Fragment {
     }
 
     public void firstBean() {
-        Log.e("tag","请求全部");
         shitangFragmentPull.setVisibility(View.GONE);
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("cid", "0");
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -144,7 +153,7 @@ public class All extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override
@@ -170,7 +179,7 @@ public class All extends Fragment {
         RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Eatlive/pageList");
         params.addBodyParameter("type", "1");
         params.addBodyParameter("cid", "0");
-        params.addBodyParameter("uid",userID);
+        params.addBodyParameter("uid", userID);
         params.addBodyParameter("page", page + "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
@@ -179,15 +188,15 @@ public class All extends Fragment {
                 ShitangNextBean bean = gson.fromJson(result, ShitangNextBean.class);
                 if (bean.getCode() == 2000) {
                     list.addAll(bean.getData());
-                    adapter.notifyItemRangeChanged(0,bean.getData().size());
-                }else {
-                    ToastUtils.showShort(getActivity(),R.string.end);
+                    adapter.notifyItemRangeChanged(0, bean.getData().size());
+                } else {
+                    ToastUtils.showShort(getActivity(), R.string.end);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override

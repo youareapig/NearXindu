@@ -1,6 +1,8 @@
 package com.mssd.shitangfragment;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -57,6 +59,7 @@ public class Cha extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         sharedPreferences = getActivity().getSharedPreferences("xindu", getActivity().MODE_PRIVATE);
         userID= sharedPreferences.getString("userid", "0");
+        changeFont();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false){
             @Override
             public boolean canScrollVertically() {
@@ -93,6 +96,11 @@ public class Cha extends Fragment {
             }
         });
         return view;
+    }
+    private void changeFont() {
+        AssetManager assetManager = getActivity().getAssets();
+        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        isShow.setTypeface(typeface);
     }
     @Override
     public void onStart() {

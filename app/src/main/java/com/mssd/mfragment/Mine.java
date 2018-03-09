@@ -2,13 +2,10 @@ package com.mssd.mfragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,13 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.facebook.rebound.ui.Util;
 import com.google.gson.Gson;
 import com.mssd.data.UpdataHeadBean;
 import com.mssd.data.UserBean;
@@ -36,11 +33,11 @@ import com.mssd.jpush.JpushActivity;
 import com.mssd.utils.CameraUtil;
 import com.mssd.utils.SingleModleUrl;
 import com.mssd.utils.ToastUtils;
+import com.mssd.zl.CardActivity;
 import com.mssd.zl.EditdataActivity;
 import com.mssd.zl.PlaceActivity;
 import com.mssd.zl.R;
 import com.mssd.zl.SettingActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
@@ -50,7 +47,6 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -60,7 +56,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -86,11 +81,16 @@ public class Mine extends Fragment {
     AutoRelativeLayout minePlace;
     @BindView(R.id.mine_setting)
     AutoRelativeLayout mineSetting;
+    @BindView(R.id.mine_text_card)
+    TextView mineTextCard;
+    @BindView(R.id.mine_card)
+    AutoRelativeLayout mineCard;
     private Unbinder unbinder;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String userid;
     private Uri imgUrl;
+    private Typeface typeface;
 
     @Nullable
     @Override
@@ -107,12 +107,13 @@ public class Mine extends Fragment {
 
     private void changeFont() {
         AssetManager assetManager = getActivity().getAssets();
-        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
+        typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         mineEditprofil.setTypeface(typeface);
         mineName.setTypeface(typeface);
         mineTextNotice.setTypeface(typeface);
         mineTextPlace.setTypeface(typeface);
         mineTextSetting.setTypeface(typeface);
+        mineTextCard.setTypeface(typeface);
 
     }
 
@@ -122,7 +123,7 @@ public class Mine extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.mine_notice, R.id.mine_place, R.id.mine_setting, R.id.mine_editprofil, R.id.mine_head})
+    @OnClick({R.id.mine_notice, R.id.mine_place, R.id.mine_setting, R.id.mine_editprofil, R.id.mine_head,R.id.mine_card})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mine_notice:
@@ -148,6 +149,14 @@ public class Mine extends Fragment {
                         null);
                 builder.setView(layout);
                 builder.show();
+                Window window = builder.getWindow();
+                WindowManager.LayoutParams layoutParams = window.getAttributes();
+                layoutParams.width = 800;
+                window.setAttributes(layoutParams);
+                TextView t = (TextView) layout.findViewById(R.id.photograph);
+                TextView t1 = (TextView) layout.findViewById(R.id.photo);
+                t.setTypeface(typeface);
+                t1.setTypeface(typeface);
                 layout.findViewById(R.id.photograph).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -162,6 +171,10 @@ public class Mine extends Fragment {
                         builder.cancel();
                     }
                 });
+                break;
+            case R.id.mine_card:
+                Intent intent4=new Intent(getActivity(), CardActivity.class);
+                startActivity(intent4);
                 break;
         }
     }
@@ -271,17 +284,17 @@ public class Mine extends Fragment {
                             .load(bean.getData().getHeadpic())
                             .placeholder(R.mipmap.yuan)
                             .error(R.mipmap.yuan)
-                            .bitmapTransform(new CenterCrop(getActivity()),new CropCircleTransformation(getActivity()))
+                            .bitmapTransform(new CenterCrop(getActivity()), new CropCircleTransformation(getActivity()))
                             .into(mineHead);
                 } else {
-                    ToastUtils.showShort(getActivity(),"上传失败!");
+                    ToastUtils.showShort(getActivity(), "上传失败!");
                 }
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override
@@ -315,24 +328,24 @@ public class Mine extends Fragment {
                                 .load(bean.getData().getHeadpic())
                                 .placeholder(R.mipmap.yuan)
                                 .error(R.mipmap.yuan)
-                                .bitmapTransform(new CenterCrop(getActivity()),new CropCircleTransformation(getActivity()))
+                                .bitmapTransform(new CenterCrop(getActivity()), new CropCircleTransformation(getActivity()))
                                 .into(mineHead);
-                        editor.putString("userHead",bean.getData().getHeadpic());
+                        editor.putString("userHead", bean.getData().getHeadpic());
                         editor.commit();
                     }
                     if (bean.getData().getUname() != "") {
                         mineName.setText(bean.getData().getUname());
-                        editor.putString("userName",bean.getData().getUname());
+                        editor.putString("userName", bean.getData().getUname());
                         editor.commit();
                     }
-                }else {
-                    ToastUtils.showShort(getActivity(),R.string.erroe);
+                } else {
+                    ToastUtils.showShort(getActivity(), R.string.erroe);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.showShort(getActivity(),R.string.erroe);
+                ToastUtils.showShort(getActivity(), R.string.erroe);
             }
 
             @Override

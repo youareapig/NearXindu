@@ -138,7 +138,6 @@ public class Experience extends Fragment {
                 return false;
             }
         };
-        experenceRecycle.addItemDecoration(new ListItemDecoration(80));
         experenceRecycle.setLayoutManager(linearLayoutManager);
         experienceRecycleTop.addItemDecoration(new SpacesItemDecoration(20));
         experienceRecycleTop.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));

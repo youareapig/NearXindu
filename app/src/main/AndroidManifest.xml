@@ -43,7 +43,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- =====================极光推送配置================= -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -236,6 +236,12 @@
         </activity>
         <activity
             android:name=".XCMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KaiJiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CardActivity"
             android:screenOrientation="portrait" />
     </application>
 

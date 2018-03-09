@@ -114,7 +114,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
     private List<TansuoBean.DataBean.MealBean> list1;
     private List<TansuoBean.DataBean.StayBean> list2;
     private List<TansuoBean.DataBean.LineBean> list3;
-    //NetWorkBroadcastReceiver mNetBroadcastReceiver;
 
     @Nullable
     @Override
@@ -126,35 +125,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
         return view;
     }
 
-/*    @Override
-    public void onNetWorkChange(int netMobile) {
-        Log.e("tag", "网络状态" + netMobile);
-        if (netMobile == 1||netMobile==0) {
-            getNetBean();
-        }
-        super.onNetWorkChange(netMobile);
-    }
-
-    //TODO 注册广播
-    @Override
-    public void onResume() {
-        if (mNetBroadcastReceiver == null) {
-            mNetBroadcastReceiver = new NetWorkBroadcastReceiver();
-        }
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        getActivity().registerReceiver(mNetBroadcastReceiver, filter);
-        super.onResume();
-
-    }
-
-    //TODO 销毁广播
-    @Override
-    public void onPause() {
-        getActivity().unregisterReceiver(mNetBroadcastReceiver);
-        super.onPause();
-
-    }*/
 
     @Override
     public void onResume() {
@@ -273,7 +243,6 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
             case R.id.exploration_classfiy1:
                 intent1 = new Intent(getActivity(), HistoryActivity.class);
                 startActivity(intent1);
-                //getActivity().overridePendingTransition(R.anim.in,R.anim.out);
                 break;
             case R.id.exploration_classfiy2:
                 intent2 = new Intent(getActivity(), FoodActivity.class);
@@ -350,6 +319,7 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.e("tag","首页"+result);
                 explorationScroll.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
                 TansuoBean bean = gson.fromJson(result, TansuoBean.class);

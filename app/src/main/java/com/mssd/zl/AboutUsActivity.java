@@ -5,6 +5,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +18,10 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -30,12 +37,12 @@ public class AboutUsActivity extends AutoLayoutActivity {
     @BindView(R.id.aboutus_title)
     TextView aboutusTitle;
     @BindView(R.id.aboutus_content)
-    TextView aboutusContent;
+    WebView aboutusContent;
     @BindView(R.id.about_back)
     RelativeLayout aboutBack;
     private Unbinder unbinder;
     private Typeface typeface, typeface1;
-
+    private WebSettings webSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +63,6 @@ public class AboutUsActivity extends AutoLayoutActivity {
         AssetManager assetManager = getAssets();
         typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
-        aboutusContent.setTypeface(typeface);
         aboutusTitle.setTypeface(typeface1);
     }
 
@@ -72,7 +78,14 @@ public class AboutUsActivity extends AutoLayoutActivity {
                 try {
                     aboutusContent.setVisibility(View.VISIBLE);
                     JSONObject jsonObject = new JSONObject(result);
-                    aboutusContent.setText(jsonObject.getString("data"));
+                    webSettings=aboutusContent.getSettings();
+                    webSettings.setJavaScriptEnabled(true);
+                    webSettings.setBlockNetworkImage(false);
+                    webSettings.setLoadWithOverviewMode(true);
+                    webSettings.setUseWideViewPort(true);
+                    webSettings.setTextZoom(250);
+                    aboutusContent.loadDataWithBaseURL(null, getNewContent(jsonObject.getString("data")), "text/html", "utf-8", null);
+                    aboutusContent.setWebViewClient(new WebViewClient());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,6 +111,14 @@ public class AboutUsActivity extends AutoLayoutActivity {
                 return false;
             }
         });
+    }
+    private String getNewContent(String htmltext) {
+        Document doc = Jsoup.parse(htmltext);
+        Elements elements = doc.getElementsByTag("img");
+        for (Element element : elements) {
+            element.attr("width", "100%").attr("height", "auto");
+        }
+        return doc.toString();
     }
     @Override
     protected void onResume() {

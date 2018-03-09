@@ -124,7 +124,6 @@ public class StayActivity extends AutoLayoutActivity implements ObservableScroll
                 return false;
             }
         };
-        stayRecycle.addItemDecoration(new ListItemDecoration(120));
         stayRecycle.setLayoutManager(linearLayoutManager);
     }
 

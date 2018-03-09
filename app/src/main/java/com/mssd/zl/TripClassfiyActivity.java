@@ -108,7 +108,9 @@ public class TripClassfiyActivity extends AutoLayoutActivity {
     private void changeFont() {
         AssetManager assetManager = getAssets();
         Typeface typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
+        Typeface typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         tripclassfiyText1.setTypeface(typeface1);
+        isShow.setTypeface(typeface);
     }
 
     private void addline() {

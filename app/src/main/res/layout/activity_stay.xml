@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mssd.zl.StayActivity">
+    tools:context="com.mssd.zl.StayActivity"
+    android:background="#fff">
 
     <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
         android:id="@+id/stay_pull"
@@ -119,9 +120,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px">
+                    android:layout_height="wrap_content">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/stay_recycle"
@@ -182,6 +181,6 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:background="#bfbfbf" />
+            android:background="#eeeeee" />
     </RelativeLayout>
 </FrameLayout>

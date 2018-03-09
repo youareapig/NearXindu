@@ -108,7 +108,7 @@ public class SettingActivity extends AutoLayoutActivity {
     private void changeFont() {
         InitApp application = (InitApp) getApplication();
         locationVersion = application.location;
-        Log.e("tag","当前版本号"+locationVersion);
+        Log.e("tag", "当前版本号" + locationVersion);
         AssetManager assetManager = getAssets();
         typeface = Typeface.createFromAsset(assetManager, "fonts/ltqh.ttf");
         typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
@@ -149,6 +149,8 @@ public class SettingActivity extends AutoLayoutActivity {
                 startActivity(intent2);
                 break;
             case R.id.setting_video:
+                Intent intent1 = new Intent(SettingActivity.this, KaiJiActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.setting_update:
                 if (isUpdate.equals("Yes")) {
@@ -166,7 +168,7 @@ public class SettingActivity extends AutoLayoutActivity {
                     final AlertDialog dialog = new AlertDialog.Builder(SettingActivity.this).create();
                     LayoutInflater inflater = getLayoutInflater();
                     View v = inflater.inflate(R.layout.bestversion, null);
-                    TextView textView= (TextView) v.findViewById(R.id.versionText);
+                    TextView textView = (TextView) v.findViewById(R.id.versionText);
                     textView.setTypeface(typeface);
                     dialog.setView(v);
                     dialog.show();
@@ -237,19 +239,19 @@ public class SettingActivity extends AutoLayoutActivity {
     }
 
 
-    private void getUpdate(){
-        RequestParams params=new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl()+"Index/initial");
+    private void getUpdate() {
+        RequestParams params = new RequestParams(SingleModleUrl.singleModleUrl().getTestUrl() + "Index/initial");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("tag",result);
+                Log.e("tag", result);
                 try {
-                    JSONObject json=new JSONObject(result);
-                    int nowVersion=Integer.valueOf(json.getString("version"));
-                    if (locationVersion<nowVersion){
+                    JSONObject json = new JSONObject(result);
+                    int nowVersion = Integer.valueOf(json.getString("version"));
+                    if (locationVersion < nowVersion) {
                         isUpdate = "Yes";
                         settingUpdateText1.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         settingUpdateText1.setVisibility(View.GONE);
                         isUpdate = "No";
                     }
@@ -274,17 +276,18 @@ public class SettingActivity extends AutoLayoutActivity {
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        JAnalyticsInterface.onPageStart(this,"设置");
+        JAnalyticsInterface.onPageStart(this, "设置");
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        JAnalyticsInterface.onPageEnd(this,"设置");
+        JAnalyticsInterface.onPageEnd(this, "设置");
     }
 
 }

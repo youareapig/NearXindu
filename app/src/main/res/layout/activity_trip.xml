@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mssd.zl.TripActivity">
+    tools:context="com.mssd.zl.TripActivity"
+    android:background="#fff">
 
     <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
         android:id="@+id/trip_refresh"
@@ -176,12 +177,13 @@
                     android:layout_marginTop="100px"
                     android:background="@color/bottomBG"
                     android:paddingRight="20px"
-                    android:paddingTop="10px" />
+                    android:paddingTop="10px"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
-                    android:layout_marginTop="-10px"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="82px">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/trip_recycle_list"
@@ -219,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
-                android:background="#bfbfbf" />
+                android:background="#eeeeee" />
 
             <ImageView
                 android:id="@+id/trip_search"

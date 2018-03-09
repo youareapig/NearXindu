@@ -2,30 +2,27 @@ package com.mssd.html;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.just.library.AgentWeb;
-import com.just.library.ChromeClientCallbackManager;
+import com.mssd.utils.NewWebView;
 import com.mssd.utils.ToastUtils;
 import com.mssd.zl.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,20 +33,28 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class WebActivity extends AutoLayoutActivity {
-    @BindView(R.id.layout)
-    RelativeLayout layout;
+    //    @BindView(R.id.layout)
+//    RelativeLayout layout;
     @BindView(R.id.talk_back)
     RelativeLayout talkBack;
     @BindView(R.id.talk_title)
     TextView talkTitle;
     @BindView(R.id.web_share)
     ImageView webShare;
-    private AgentWeb agentWeb;
+    @BindView(R.id.webview)
+    NewWebView webview;
+    @BindView(R.id.titleview)
+    RelativeLayout titleview;
+    @BindView(R.id.line)
+    TextView line;
+    @BindView(R.id.backicon)
+    ImageView backicon;
+    //private AgentWeb agentWeb;
     private Unbinder unbinder;
-    private String url, Title, imgUrl,shareContent;
+    private String url, Title, imgUrl, shareContent;
     private StringBuffer sb;
-    private WebView webView;
-
+    private WebSettings webSettings;
+    private int heigh,num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,24 +67,68 @@ public class WebActivity extends AutoLayoutActivity {
     private void init() {
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
+        num=intent.getIntExtra("heigh",0);
+        if (num==1){
+            heigh=3000;
+        }else {
+            heigh=800;
+        }
         Log.e("tag", "address" + url);
-        agentWeb = AgentWeb.with(this)//传入Activity or Fragment
-                .setAgentWebParent(layout, new LinearLayout.LayoutParams(-1, -1))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams ,第一个参数和第二个参数应该对应。
-                .useDefaultIndicator()// 使用默认进度条
-                .defaultProgressBarColor() // 使用默认进度条颜色
-                .setReceivedTitleCallback(mCallback) //设置 Web 页面的 title 回调
-                .createAgentWeb()//
-                .ready()
-                .go(url);
-        webView = agentWeb.getWebCreator().get();
-        webView.setVerticalScrollBarEnabled(false);
-        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
-        webView.setWebViewClient(new WebViewClient() {
+//        agentWeb = AgentWeb.with(this)//传入Activity or Fragment
+//                .setAgentWebParent(layout, new LinearLayout.LayoutParams(-1, -1))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams ,第一个参数和第二个参数应该对应。
+//                .useDefaultIndicator()// 使用默认进度条
+//                .defaultProgressBarColor() // 使用默认进度条颜色
+//                .setReceivedTitleCallback(mCallback) //设置 Web 页面的 title 回调
+//                .createAgentWeb()//
+//                .ready()
+//                .go(url);
+//        webView = agentWeb.getWebCreator().get();
+        //       webView.setVerticalScrollBarEnabled(false);
+        webSettings = webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+//        webSettings.setAppCachePath("");
+        webSettings.setSupportZoom(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setDisplayZoomControls(true);
+        webview.loadUrl(url);
+        webview.setOnScrollChangeListener(new NewWebView.OnScrollChangeListener() {
+            @Override
+            public void onPageEnd(int l, int t, int oldl, int oldt) {
+
+            }
+
+            @Override
+            public void onPageTop(int l, int t, int oldl, int oldt) {
+
+            }
+
+            @Override
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                if (t > heigh) {
+                    titleview.setBackgroundColor(Color.parseColor("#ffffff"));
+                    line.setVisibility(View.VISIBLE);
+                    backicon.setImageResource(R.mipmap.back_hei_icon);
+                    webShare.setImageResource(R.mipmap.share2);
+                } else {
+                    titleview.setBackgroundColor(Color.parseColor("#00000000"));
+                    line.setVisibility(View.GONE);
+                    backicon.setImageResource(R.mipmap.back_bai_icon);
+                    webShare.setImageResource(R.mipmap.share);
+                }
+            }
+        });
+        webview.addJavascriptInterface(new InJavaScriptLocalObj(), "java_obj");
+        webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                Title = view.getTitle();
                 view.loadUrl("javascript:window.java_obj.showSource(" + "document.getElementsByTagName('img')[0].src);");
-               // view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
+                // view.loadUrl("javascript:window.java_obj.showDescription(document.documentElement.outerHTML);void(0)");
                 view.loadUrl("javascript:window.java_obj.showDescription(document.getElementById('share').innerHTML);");
             }
 
@@ -104,16 +153,16 @@ public class WebActivity extends AutoLayoutActivity {
         talkTitle.setTypeface(typeface1);
     }
 
-    private ChromeClientCallbackManager.ReceivedTitleCallback mCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
-
-        @Override
-
-        public void onReceivedTitle(WebView view, String title) {
-            //talkTitle.setText(title);
-            Title = title;
-        }
-
-    };
+//    private ChromeClientCallbackManager.ReceivedTitleCallback mCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
+//
+//        @Override
+//
+//        public void onReceivedTitle(WebView view, String title) {
+//            //talkTitle.setText(title);
+//            Title = title;
+//        }
+//
+//    };
 
     public final class InJavaScriptLocalObj {
         @JavascriptInterface
@@ -129,14 +178,18 @@ public class WebActivity extends AutoLayoutActivity {
 //            while (m.find()) {
 //                sb.append(m.group(1));
 //            }
-            shareContent=str;
-            Log.e("tag","分享内容"+str);
+            shareContent = str;
+            Log.e("tag", "分享内容" + str);
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (agentWeb.handleKeyEvent(keyCode, event)) {
+//        if (agentWeb.handleKeyEvent(keyCode, event)) {
+//            return true;
+//        }
+        if (keyCode == KeyEvent.KEYCODE_BACK && webview.canGoBack()) {
+            webview.goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -145,22 +198,22 @@ public class WebActivity extends AutoLayoutActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        agentWeb.getWebLifeCycle().onPause();
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        //agentWeb.getWebLifeCycle().onPause();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        agentWeb.getWebLifeCycle().onResume();
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        //agentWeb.getWebLifeCycle().onResume();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        agentWeb.getWebLifeCycle().onDestroy();
+        //agentWeb.getWebLifeCycle().onDestroy();
     }
 
     @OnClick({R.id.talk_back, R.id.web_share})
@@ -172,8 +225,8 @@ public class WebActivity extends AutoLayoutActivity {
             case R.id.web_share:
                 try {
                     showShare();
-                }catch (Exception e){
-                    ToastUtils.showShort(this,"正在加载请稍后");
+                } catch (Exception e) {
+                    ToastUtils.showShort(this, "正在加载请稍后");
                 }
                 break;
         }
@@ -193,7 +246,7 @@ public class WebActivity extends AutoLayoutActivity {
         oks.setTitleUrl(url);
 // text是分享文本，所有平台都需要这个字段
         if (shareContent == null) {
-            shareContent="有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。";
+            shareContent = "有远山而往，有近水则涉。寻境此心安处，不用千里外，推门出便是。";
         }
         oks.setText(shareContent);
 // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数

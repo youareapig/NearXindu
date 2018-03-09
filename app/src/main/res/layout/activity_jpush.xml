@@ -61,5 +61,5 @@
         android:text="暂无数据"
         android:textColor="@color/mainUnChecked"
         android:textSize="46px"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>

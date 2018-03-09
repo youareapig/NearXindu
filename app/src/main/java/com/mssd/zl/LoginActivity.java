@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mssd.data.LoginBean;
+import com.mssd.html.WebActivity;
 import com.mssd.html.WebsActivity;
 import com.mssd.utils.ClassPathResource;
 import com.mssd.utils.CountDownTimerUtils;
@@ -65,7 +66,7 @@ public class LoginActivity extends AutoLayoutActivity {
     RelativeLayout loginBack;
     private Unbinder unbinder;
     private Typeface typeface, typeface1;
-    private String string_userphone, string_code;
+    private String string_userphone, string_code,userID;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private int intentTag;
@@ -247,6 +248,12 @@ public class LoginActivity extends AutoLayoutActivity {
                             Intent intent7 = new Intent(LoginActivity.this, WebsActivity.class);
                             intent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent7);
+                            break;
+                        case 9:
+                            Intent intent8=new Intent(LoginActivity.this, MainActivity.class);
+                            intent8.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent8.putExtra("showtag",1);
+                            startActivity(intent8);
                             break;
                     }
 
