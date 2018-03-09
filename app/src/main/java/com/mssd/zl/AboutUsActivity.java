@@ -65,7 +65,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
         typeface1 = Typeface.createFromAsset(assetManager, "fonts/sxsl.ttf");
         aboutusTitle.setTypeface(typeface1);
     }
-
+//测试测试
     private void getBean() {
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this, R.drawable.frame, R.style.dialog);
         customProgressDialog.setCanceledOnTouchOutside(false);
