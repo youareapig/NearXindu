@@ -53,6 +53,7 @@ public class AboutUsActivity extends AutoLayoutActivity {
                 "深圳热点新闻",//设置浏览的内容的名称
                 "news", //设置浏览的内容类型
                 30);
+//        测试git
         browseEvent.addKeyValue("key_browse_event_extra3", "")
                 .addKeyValue("key_browse_event_extra4", "浏览11111");
         JAnalyticsInterface.onEvent(this, browseEvent);
