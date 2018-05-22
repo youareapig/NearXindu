@@ -30,7 +30,7 @@ public class BannerAdapter extends PagerAdapter {
         if (imageViews==null){
             return 0;
         }
-            return imageViews.length;
+            return Integer.MAX_VALUE;
     }
 
     @Override

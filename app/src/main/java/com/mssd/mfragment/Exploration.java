@@ -181,19 +181,16 @@ public class Exploration extends BaseFragment implements ViewPager.OnPageChangeL
         }
         explorationViewpager.setOnPageChangeListener(Exploration.this);
         explorationViewpager.setAdapter(new BannerAdapter(viewpagerImage,bannerList));
+        explorationViewpager.setCurrentItem(1000*bannerList.size());
         handler = new Handler() {
-            int bannerNo = 0;
+
 
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                int curItem=explorationViewpager.getCurrentItem();
                 try {
-                    if (explorationViewpager.getCurrentItem() == viewpagerImage.length - 1) {
-                        bannerNo = 0;
-                    } else {
-                        bannerNo = explorationViewpager.getCurrentItem() + 1;
-                    }
-                    explorationViewpager.setCurrentItem(bannerNo, true);
+                    explorationViewpager.setCurrentItem(curItem+1);
                 } catch (Exception e) {
 
                 }
